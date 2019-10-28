@@ -1,0 +1,13 @@
+{
+    "python.venvPath": "${workspaceFolder}/backend/env/Scripts/python3",
+    "python.pythonPath": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37-32",
+    "editor.formatOnSave": true,
+    "python.linting.pep8Enabled": true,
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_django"
+    ],
+    "python.linting.pep8Args": [
+        "--ignor[e=E501"
+    ]
+}
