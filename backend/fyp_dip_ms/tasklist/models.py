@@ -75,11 +75,11 @@ class AuthUserUserPermissions(models.Model):
 
 
 class Comment(models.Model):
-    commentid = models.AutoField(db_column='commentId', primary_key=True)
-    taskid = models.ForeignKey('Task', models.DO_NOTHING, db_column='taskId')  # Field name made lowercase.
-    userid = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='userId')  # Field name made lowercase.
+    comment_id = models.AutoField(db_column='commentId', primary_key=True)
+    task_id = models.ForeignKey('Task', models.DO_NOTHING, db_column='taskId')  # Field name made lowercase.
+    user_id = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='userId')  # Field name made lowercase.
     content = models.CharField(max_length=3000, blank=True, null=True)
-    creationdate = models.DateTimeField(db_column='creationDate')  # Field name made lowercase.
+    creation_date = models.DateTimeField(db_column='creationDate')  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -130,27 +130,27 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
-class Projects(models.Model):
-    projectid = models.AutoField(db_column='projectId', primary_key=True)  # Field name made lowercase.
-    projectname = models.CharField(db_column='projectName', max_length=100)  # Field name made lowercase.
-    projectdescription = models.CharField(db_column='projectDescription', max_length=3000, blank=True, null=True)  # Field name made lowercase.
+class Project(models.Model):
+    project_id = models.AutoField(db_column='projectId', primary_key=True)  # Field name made lowercase.
+    project_name = models.CharField(db_column='projectName', max_length=100)  # Field name made lowercase.
+    project_description = models.CharField(db_column='projectDescription', max_length=3000, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
-        db_table = 'projects'
+        db_table = 'project'
 
 
 class Task(models.Model):
-    taskid = models.AutoField(db_column='taskId', primary_key=True)  # Field name made lowercase.
-    projectid = models.ForeignKey(Projects, models.DO_NOTHING, db_column='projectId')  # Field name made lowercase.
-    studentid = models.ForeignKey(AuthUser, models.DO_NOTHING, related_name='studentid', db_column='studentId')  # Field name made lowercase.
-    tutorid = models.ForeignKey(AuthUser, models.DO_NOTHING, related_name='tutorid', db_column='tutorId')  # Field name made lowercase.
-    tasktype = models.CharField(db_column='taskType', max_length=17, blank=True, null=True)  # Field name made lowercase.
-    taskcreateddate = models.DateTimeField(db_column='taskCreatedDate')  # Field name made lowercase.
-    taskduedate = models.DateTimeField(db_column='taskDueDate')  # Field name made lowercase.
-    submissiondate = models.DateTimeField(db_column='submissionDate')  # Field name made lowercase.
+    task_id = models.AutoField(db_column='taskId', primary_key=True)  # Field name made lowercase.
+    project_id = models.ForeignKey(Project, models.DO_NOTHING, db_column='projectId')  # Field name made lowercase.
+    student_id = models.ForeignKey(AuthUser, models.DO_NOTHING, related_name='studentid', db_column='studentId')  # Field name made lowercase.
+    tutor_id = models.ForeignKey(AuthUser, models.DO_NOTHING, related_name='tutorid', db_column='tutorId')  # Field name made lowercase.
+    task_type = models.CharField(db_column='taskType', max_length=17, blank=True, null=True)  # Field name made lowercase.
+    task_created_date = models.DateTimeField(db_column='taskCreatedDate')  # Field name made lowercase.
+    task_due_date = models.DateTimeField(db_column='taskDueDate')  # Field name made lowercase.
+    submission_date = models.DateTimeField(db_column='submissionDate')  # Field name made lowercase.
     content = models.CharField(max_length=3000, blank=True, null=True)
-    hoursspent = models.IntegerField(db_column='hoursSpent', blank=True, null=True)  # Field name made lowercase.
+    hours_spent = models.IntegerField(db_column='hoursSpent', blank=True, null=True)  # Field name made lowercase.
     status = models.CharField(max_length=9, blank=True, null=True)
 
     class Meta:

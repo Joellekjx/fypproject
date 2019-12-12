@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import Task from '../components/Task'
+import CalendarView from '../components/Calendar'
 
-class TaskList extends React.Component {
+class CalendarViewPage extends React.Component {
 
     state = {
         task: []
@@ -21,9 +21,9 @@ class TaskList extends React.Component {
 
     render() {
         return (
-            <Task data={this.state.task}/>
+            <CalendarView data={this.state.task}/>
         )
     }
 }
 
-export default TaskList;
+export default CalendarViewPage;
