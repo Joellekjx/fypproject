@@ -53,6 +53,9 @@ class AuthUser(models.Model):
         managed = False
         db_table = 'auth_user'
 
+    def __str__(self):
+        return self.first_name + self.last_name
+
 
 class AuthUserGroups(models.Model):
     user = models.ForeignKey(AuthUser, models.DO_NOTHING)
@@ -75,11 +78,11 @@ class AuthUserUserPermissions(models.Model):
 
 
 class Comment(models.Model):
-    comment_id = models.AutoField(db_column='commentId', primary_key=True)
-    task_id = models.ForeignKey('Task', models.DO_NOTHING, db_column='taskId')  # Field name made lowercase.
-    user_id = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='userId')  # Field name made lowercase.
+    comment_id = models.AutoField(db_column='comment_Id', primary_key=True)  # Field name made lowercase.
+    task = models.ForeignKey('Task', models.DO_NOTHING, db_column='task_Id')  # Field name made lowercase.
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='user_Id')  # Field name made lowercase.
     content = models.CharField(max_length=3000, blank=True, null=True)
-    creation_date = models.DateTimeField(db_column='creationDate')  # Field name made lowercase.
+    creation_date = models.DateTimeField(db_column='creation_Date')  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -131,28 +134,62 @@ class DjangoSession(models.Model):
 
 
 class Project(models.Model):
-    project_id = models.AutoField(db_column='projectId', primary_key=True)  # Field name made lowercase.
-    project_name = models.CharField(db_column='projectName', max_length=100)  # Field name made lowercase.
-    project_description = models.CharField(db_column='projectDescription', max_length=3000, blank=True, null=True)  # Field name made lowercase.
+    project_id = models.AutoField(db_column='project_Id', primary_key=True)  # Field name made lowercase.
+    project_name = models.CharField(db_column='project_Name', max_length=100)  # Field name made lowercase.
+    project_description = models.CharField(db_column='project_Description', max_length=3000, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
         db_table = 'project'
+    
+    def __str__(self):
+        return self.project_name
 
 
 class Task(models.Model):
-    task_id = models.AutoField(db_column='taskId', primary_key=True)  # Field name made lowercase.
-    project_id = models.ForeignKey(Project, models.DO_NOTHING, db_column='projectId')  # Field name made lowercase.
-    student_id = models.ForeignKey(AuthUser, models.DO_NOTHING, related_name='studentid', db_column='studentId')  # Field name made lowercase.
-    tutor_id = models.ForeignKey(AuthUser, models.DO_NOTHING, related_name='tutorid', db_column='tutorId')  # Field name made lowercase.
-    task_type = models.CharField(db_column='taskType', max_length=17, blank=True, null=True)  # Field name made lowercase.
-    task_created_date = models.DateTimeField(db_column='taskCreatedDate')  # Field name made lowercase.
-    task_due_date = models.DateTimeField(db_column='taskDueDate')  # Field name made lowercase.
-    submission_date = models.DateTimeField(db_column='submissionDate')  # Field name made lowercase.
-    content = models.CharField(max_length=3000, blank=True, null=True)
-    hours_spent = models.IntegerField(db_column='hoursSpent', blank=True, null=True)  # Field name made lowercase.
-    status = models.CharField(max_length=9, blank=True, null=True)
+    task_id = models.AutoField(db_column='task_Id', primary_key=True)  # Field name made lowercase.
+    project_id = models.ForeignKey(Project, models.DO_NOTHING, db_column='project_Id')  # Field name made lowercase.
+    student_id = models.ForeignKey(AuthUser, models.DO_NOTHING, related_name='student_id', db_column='student_Id')  # Field name made lowercase.
+    tutor_id = models.ForeignKey(AuthUser, models.DO_NOTHING, related_name='tutor_id', db_column='tutor_Id')  # Field name made lowercase.
+    
+    task_type_choices = (
+        ('Meeting Notes','Meeting Notes'),
+        ('FYP Plan Strategy','FYP Plan Strategy'),
+        ('Interim Report','Interim Report'),
+        ('Final Report','Final Report')
+    )
 
+    task_type = models.CharField(db_column='task_Type', max_length=17, choices=task_type_choices)  # Field name made lowercase.
+    task_created_date = models.DateTimeField(db_column='task_Created_Date')  # Field name made lowercase.
+    task_due_date = models.DateTimeField(db_column='task_Due_Date')  # Field name made lowercase.
+    submission_date = models.DateTimeField(db_column='submission_Date', blank=True, null=True)  # Field name made lowercase.
+    content = models.CharField(max_length=3000, blank=True, null=True)
+    hours_spent = models.IntegerField(db_column='hours_Spent', blank=True, null=True)  # Field name made lowercase.
+    status = models.CharField(max_length=15, blank=True, null=True)
+    ordering = ('task_due_date', 'task_type', 'student_id')
     class Meta:
         managed = False
         db_table = 'task'
+
+    def __str__(self):
+        return str(self.task_due_date.strftime('%d %b %Y')) + ' ' + str(self.student_id) + ' ' + str(self.task_type)
+
+    def due_date(self):
+        return str(self.task_due_date.strftime('%d %b %Y'))
+
+    due_date.admin_order_field = 'task_due_date'
+
+    def student(self):
+        return self.student_id
+        
+    student.admin_order_field = 'student_id'
+
+class TaskAttachDocument(models.Model):
+    task_attach_document_id = models.AutoField(db_column='task_Attach_Document_Id', primary_key=True)  # Field name made lowercase.
+    task_id = models.ForeignKey(Task, models.DO_NOTHING, db_column='task_Id')  # Field name made lowercase.
+    attach_document = models.CharField(db_column='attach_Document', max_length=100)  # Field name made lowercase.
+    uploaded_date = models.DateTimeField(db_column='uploaded_Date')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'task_attach_document'

@@ -4,6 +4,12 @@ from django.contrib import admin
 
 from .models import Task, Comment, Project
 
-admin.site.register(Task)
+class TaskAdmin(admin.ModelAdmin):
+    model = Task
+    list_display = ('task_type', 'due_date', 'student')
+    list_filter = ('task_type', 'task_due_date', 'student_id')
+
+admin.site.register(Task, TaskAdmin)
 admin.site.register(Comment)
 admin.site.register(Project)
+
