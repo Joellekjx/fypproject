@@ -153,6 +153,7 @@ class Task(models.Model):
     tutor_id = models.ForeignKey(AuthUser, models.DO_NOTHING, related_name='tutor_id', db_column='tutor_Id')  # Field name made lowercase.
     
     task_type_choices = (
+        ('Weekly Report','Weekly Report'),
         ('Meeting Notes','Meeting Notes'),
         ('FYP Plan Strategy','FYP Plan Strategy'),
         ('Interim Report','Interim Report'),
