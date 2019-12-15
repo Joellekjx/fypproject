@@ -44,11 +44,16 @@ const CalendarView = (props) => {
             let due_date = new Date(dataSource[i].task_due_date); 
             let render_date = value._d;
             
-            if (due_date.getFullYear() == render_date.getFullYear()) {
-                if (due_date.getMonth() == render_date.getMonth()) {
-                    if (due_date.getDate() == render_date.getDate()) {
+            if (due_date.getFullYear() === render_date.getFullYear()) {
+                if (due_date.getMonth() === render_date.getMonth()) {
+                    if (due_date.getDate() === render_date.getDate()) {
                         console.log(due_date);
                         console.log(render_date);
+                        var currentdate = new Date(); 
+                        if ((currentdate > due_date) && (dataSource[i].status === 'Pending')) {
+                          dataSource[i].status = 'Late';
+                          // Need to update database or smt here maybe? or find a way to automatically update status...
+                        }
                         switch(dataSource[i].status) {
                             case 'Pending':
                                 dataSource[i].status = 'processing';
@@ -100,21 +105,6 @@ const CalendarView = (props) => {
 
     return (
         <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender} />
-    //   <List
-    //     itemLayout="horizontal"
-    //     dataSource={props.data}
-    //     renderItem={item => (
-    //       <List.Item>
-    //         <List.Item.Meta
-    //           // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-    //           title={<a href="https://ant.design">{item.taskid}. {item.tasktype}</a>}
-    //           description={item.status}
-    //         />
-    //         {item.taskduedate}
-    //       </List.Item>
-  
-    //     )}
-    //   />
     )
   }
   

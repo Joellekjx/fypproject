@@ -165,7 +165,15 @@ class Task(models.Model):
     submission_date = models.DateTimeField(db_column='submission_Date', blank=True, null=True)  # Field name made lowercase.
     content = models.CharField(max_length=3000, blank=True, null=True)
     hours_spent = models.IntegerField(db_column='hours_Spent', blank=True, null=True)  # Field name made lowercase.
-    status = models.CharField(max_length=15, blank=True, null=True)
+    
+    status_choices = (
+        ('Pending','Pending'),
+        ('Completed','Completed'),
+        ('Late','Late'),
+        ('Late Submission','Late Submission')
+    )
+    
+    status = models.CharField(max_length=15, blank=True, null=True, choices=status_choices)
     ordering = ('task_due_date', 'task_type', 'student_id')
     class Meta:
         managed = False
