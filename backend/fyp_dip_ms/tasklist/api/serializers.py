@@ -16,7 +16,7 @@ class userNameSerializer(serializers.ModelSerializer):
         model = AuthUser
         fields = ('first_name', 'last_name')
 
-class taskSerializer(serializers.ModelSerializer):
+class taskSerializerNoId(serializers.ModelSerializer):
     project_id = projectSerializer()
     student_id = userDetailsSerializer()
     tutor_id = userDetailsSerializer()
@@ -39,6 +39,12 @@ class taskSerializer(serializers.ModelSerializer):
         task = Task.objects.create(projectid=project, studentid=student, tutorid=tutor, **validated_data)
         # task = task.objects.create(studentid=id, **validated_data)
         return task
+
+class taskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task 
+        fields = ('task_id', 'project_id', 'student_id', 'tutor_id', 'task_type', 'task_created_date', 'task_due_date', 'submission_date', 'content', 'hours_spent', 'status')
+
 
 class commentSerializer(serializers.ModelSerializer):
     user_id = userNameSerializer()

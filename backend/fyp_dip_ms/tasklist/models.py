@@ -174,7 +174,7 @@ class Task(models.Model):
         ('Late Submission','Late Submission')
     )
     
-    status = models.CharField(max_length=15, blank=True, null=True, choices=status_choices)
+    status = models.CharField(max_length=15, choices=status_choices)
     ordering = ('task_due_date', 'task_type', 'student_id')
     class Meta:
         managed = False
