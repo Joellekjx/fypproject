@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from 'axios';
 import EventForm from './eventForm';
 import { Calendar, momentLocalizer, Navigate } from 'react-big-calendar';
 import moment from "moment";
@@ -46,6 +47,38 @@ class MainCalender extends Component {
         isAddModalOpen: false,
       }
   };  
+
+  componentDidMount(){
+    axios.get('http://127.0.0.1:8000/api/task/')
+        .then(res => {
+            this.setState({
+                task: res.data
+            })
+            console.log(res.data);
+        })
+    
+  }
+
+
+  pushDataIntoData = () => {
+    console.log('data original: ');
+    console.log(this.state.data);
+    for (var i=0; i< this.state.task.length; i++) {
+        var start = new Date(this.state.task[i].task_due_date);
+        var starttime = new Date(start.setHours(0,0,0,0));
+        var newdata = {
+            Id: this.state.task[i].task_id,
+            title: this.state.task[i].task_type,
+            start: starttime,
+            end: new Date(this.state.task[i].task_due_date),
+            event_type: this.state.task[i].task_type
+        }
+        this.state.events.push(newdata);
+    }
+    console.log('new data: ');
+    console.log(this.state.data);
+    return this.state.data;
+  }
 
   handleClose = () => {
     this.setState({isAddModalOpen: false })
