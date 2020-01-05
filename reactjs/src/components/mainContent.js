@@ -14,30 +14,34 @@ import axios from 'axios';
 
 class MainContent extends React.Component{
     //Leave this blank first
+    state = {
+        task: [],
+        data: []
+    }
     // state = {
     //     task: [],
     //     data = [
             
     //     ]
     // }
-    constructor(props) {
-        super(props);
-        // super(...arguments);
-        this.state = {
-            task: [],
-            data: [{ //format: Id {task_id}, Subject {task_type}, StartTime, EndTime
-                Id: 1,
-                Subject: 'Hello',
-                StartTime: new Date(2020, 1, 13, 9, 30),
-                EndTime: new Date(2020, 1, 15, 11, 0)
-            }, {
-                Id: 2,
-                Subject: 'What',
-                StartTime: new Date(2020, 1, 12, 9, 30),
-                EndTime: new Date(2020, 1, 12, 12, 0)
-            }
-        ]
-        }
+    // constructor(props) {
+    //     super(props);
+    //     // super(...arguments);
+    //     this.state = {
+    //         task: [],
+    //         data: [{ //format: Id {task_id}, Subject {task_type}, StartTime, EndTime
+    //             Id: 1,
+    //             Subject: 'Hello',
+    //             StartTime: new Date(2020, 1, 13, 9, 30),
+    //             EndTime: new Date(2020, 1, 15, 11, 0)
+    //         }, {
+    //             Id: 2,
+    //             Subject: 'What',
+    //             StartTime: new Date(2020, 1, 12, 9, 30),
+    //             EndTime: new Date(2020, 1, 12, 12, 0)
+    //         }
+    //     ]
+    //     }
         // this.dataManager = new DataManager({
         //     url: 'http://127.0.0.1:8000/api/task/',
         //     adaptor: new ODataV4Adaptor
@@ -56,7 +60,7 @@ class MainContent extends React.Component{
     //         EndTime: new Date(2020, 2, 15, 12, 0)
     //     }
     // ];
-    }
+    // }
 
     componentDidMount(){
         axios.get('http://127.0.0.1:8000/api/task/')
@@ -66,7 +70,7 @@ class MainContent extends React.Component{
                 })
                 console.log(res.data);
                 // console.log(this.state.task);
-                this.pushDataIntoData();
+                // this.pushDataIntoData();
             })
         
     }
@@ -79,20 +83,37 @@ class MainContent extends React.Component{
     // }
 
     pushDataIntoData = () => {
-        // console.log(this.state.data);
-        let key = 0;
-        var stateCopy = Object.assign({}, this.state); //copies this.state entirely
-        stateCopy.data = stateCopy.data.slice();
-        stateCopy.data[key] = Object.assign({}, stateCopy.data[key]); //copies this.state.data[key] into stateCopy.data[key]
-        let newState = this.state.task[key].task_type; //try and update the Subject as "task_type"
-        stateCopy.data[key].Subject = newState;
-        this.setState(stateCopy);
+        console.log('data original: ');
+        console.log(this.state.data);
+        for (var i=0; i< this.state.task.length; i++) {
+            var start = new Date(this.state.task[i].task_due_date);
+            var starttime = new Date(start.setHours(0,0,0,0));
+            var newdata = {
+                Id: this.state.task[i].task_id,
+                Subject: this.state.task[i].task_type,
+                StartTime: starttime,
+                EndTime: new Date(this.state.task[i].task_due_date),
+                Status: this.state.task[i].status
+            }
+            this.state.data.push(newdata);
+        }
+        console.log('new data: ');
+        console.log(this.state.data);
+        return this.state.data;
+
+        // let key = 0;
+        // var stateCopy = Object.assign({}, this.state); //copies this.state entirely
+        // stateCopy.data = stateCopy.data.slice();
+        // stateCopy.data[key] = Object.assign({}, stateCopy.data[key]); //copies this.state.data[key] into stateCopy.data[key]
+        // let newState = this.state.task[key].task_type; //try and update the Subject as "task_type"
+        // stateCopy.data[key].Subject = newState;
+        // this.setState(stateCopy);
     }
     
     renderMainCalendar() {
         // this.pushDataIntoData();
         return(
-            <ScheduleComponent selectedDate={new Date(2020, 1, 15)} eventSettings={{ dataSource: this.state.data }}>
+            <ScheduleComponent selectedDate={new Date()} eventSettings={{ dataSource: this.pushDataIntoData() }}>
                 <ViewsDirective>
                     <ViewDirective option='Month' showWeekend={false} isSelected/>
                     <ViewDirective option='Week' showWeekend={false}/>
