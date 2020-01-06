@@ -7,6 +7,7 @@ import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { withRouter } from "react-router-dom";
 import './styles.scss';
 import WorkMonth from '../lib/WorkMonth';
+import { observer, PropTypes as MobXPropTypes } from "mobx-react";
 // import * as dates from 'date-arithmetic'
 import AddEventDialog from './addEventDialog';
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
@@ -15,7 +16,6 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Dialog } from "@material-ui/core";
 const localizer = momentLocalizer(moment);
 const DnDCalendar = withDragAndDrop(Calendar);
-
 
 /**
  * Note to self: Need to spruce up "add event" onClick in Calendar + add event button
@@ -55,15 +55,16 @@ class MainCalender extends Component {
             this.setState({
                 task: res.data
             })
-            console.log(res.data);
+            // console.log(res.data);
         })
     
   }
 
 
   pushDataIntoData = () => {
-    console.log('events original: ');
-    console.log(this.state.events);
+    // console.log("this runs push data into data once")
+    // console.log('events original: ');
+    // console.log(this.state.events);
     for (var i=0; i< this.state.task.length; i++) {
         var start = new Date(this.state.task[i].task_due_date);
         var starttime = new Date(start.setHours(0,0,0,0));
@@ -76,8 +77,8 @@ class MainCalender extends Component {
         }
         this.state.events.push(newdata);
     }
-    console.log('new events: ');
-    console.log(this.state.events);
+    // console.log('new events: ');
+    // console.log(this.state.events);
     return this.state.events;
   }
 
@@ -85,11 +86,11 @@ class MainCalender extends Component {
     this.setState({isAddModalOpen: false })
   }
 
-  handleSelect = () => {
-    return(
-      <AddEventDialog />
-    )
-  }
+  // handleSelect = () => {
+  //   return(
+  //     <AddEventDialog />
+  //   )
+  // }
     
   onEventResize = ({ event, start, end }) => {
     const { events } = this.state
@@ -145,6 +146,7 @@ class MainCalender extends Component {
   }
 
   toggleAddModal = event => {
+    console.log("adding event in toggle add modal");
       this.setState({
         currentEvent: event,
         isAddModalOpen: !this.state.isAddModalOpen,
@@ -153,13 +155,20 @@ class MainCalender extends Component {
 
   renderDialog = () => {
     return(
-      <Dialog open={this.state.isAddModalOpen} toggle={this.toggleAddModal} onClose={this.handleClose}>
-        <EventForm handleClose={() => this.handleClose()} />
-      </Dialog>
+      <React.Fragment>
+        <Dialog open={this.state.isAddModalOpen} toggle={this.toggleAddModal} onClose={this.handleClose}>
+          <EventForm handleClose={() => this.handleClose()} />
+        </Dialog>
+      </React.Fragment>
     )
   }
 
   render(){
+    const { calendarStore } = this.props;
+    // console.log(calendarStore);
+    const { getAllData } = calendarStore;
+    console.log(getAllData);
+    // console.log("above: main calendar, get title only")
       return(
           <div className="MainCalendar">
               <DnDCalendar
@@ -179,10 +188,11 @@ class MainCalender extends Component {
                   dayLayoutAlgorithm={this.state.dayLayoutAlgorithm}
               />
               {this.renderDialog()}
-              
+
           </div>
       )
     }
 }
 
+MainCalender = observer(MainCalender);
 export default withRouter(MainCalender);

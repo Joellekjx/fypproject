@@ -4,6 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import EventForm from './eventForm';
 
 export default function AddEventDialog() {
+  console.log("this runs add event dialog once")
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
