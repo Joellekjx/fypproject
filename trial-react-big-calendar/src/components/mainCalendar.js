@@ -27,21 +27,22 @@ class MainCalender extends Component {
   constructor(props){
       super(props)
       this.state = {
+        task: [],
         events: [
-          {
-            id: 0,
-            start: new Date(),
-            end: new Date(moment().add(5, "days")),
-            title: "Some title",
-            event_type: 'Weekly Report'
-          },
-          {
-            id: 1,
-            start: new Date(2019, 11, 2),
-            end: new Date(moment().subtract(20, "days")),
-            title: "What",
-            event_type: 'Meeting'
-          }
+          // {
+          //   id: 0,
+          //   start: new Date(),
+          //   end: new Date(moment().add(5, "days")),
+          //   title: "Some title",
+          //   event_type: 'Weekly Report'
+          // },
+          // {
+          //   id: 1,
+          //   start: new Date(2019, 11, 2),
+          //   end: new Date(moment().subtract(20, "days")),
+          //   title: "What",
+          //   event_type: 'Meeting'
+          // }
         ],
         dayLayoutAlgorithm: 'no-overlap',
         isAddModalOpen: false,
@@ -61,8 +62,8 @@ class MainCalender extends Component {
 
 
   pushDataIntoData = () => {
-    console.log('data original: ');
-    console.log(this.state.data);
+    console.log('events original: ');
+    console.log(this.state.events);
     for (var i=0; i< this.state.task.length; i++) {
         var start = new Date(this.state.task[i].task_due_date);
         var starttime = new Date(start.setHours(0,0,0,0));
@@ -75,9 +76,9 @@ class MainCalender extends Component {
         }
         this.state.events.push(newdata);
     }
-    console.log('new data: ');
-    console.log(this.state.data);
-    return this.state.data;
+    console.log('new events: ');
+    console.log(this.state.events);
+    return this.state.events;
   }
 
   handleClose = () => {
@@ -167,7 +168,7 @@ class MainCalender extends Component {
                   defaultView="month"
                   views={{month: WorkMonth, week: true}}
                   // views={{month: true, week: true}}
-                  events={this.state.events}
+                  events={this.pushDataIntoData()}
                   localizer={localizer}
                   onEventResize={this.onEventResize}
                   resizable
@@ -178,6 +179,7 @@ class MainCalender extends Component {
                   dayLayoutAlgorithm={this.state.dayLayoutAlgorithm}
               />
               {this.renderDialog()}
+              
           </div>
       )
     }
