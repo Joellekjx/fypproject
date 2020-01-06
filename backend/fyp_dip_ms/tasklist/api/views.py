@@ -8,12 +8,47 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 
 class taskViewSet(viewsets.ModelViewSet):
-	queryset = Task.objects.all()
 	serializer_class = taskSerializer
+	def get_queryset(self):
+		queryset = Task.objects.all()
+
+		project_id = self.request.query_params.get('project_id', None)
+		if project_id is not None:
+			queryset = queryset.filter(project_id__project_id=project_id)
+		
+		student_id = self.request.query_params.get('student_id', None)
+		if student_id is not None:
+			queryset = queryset.filter(student_id__id=student_id)
+
+		tutor_id = self.request.query_params.get('tutor_id', None)
+		if tutor_id is not None:
+			queryset = queryset.filter(tutor_id__id=tutor_id)
+
+		task_type = self.request.query_params.get('task_type', None)
+		if task_type is not None:
+			queryset = queryset.filter(task_type=task_type)
+
+		status = self.request.query_params.get('status', None)
+		if status is not None:
+			queryset = queryset.filter(status=status)
+
+		return queryset
 
 class commentViewSet(viewsets.ModelViewSet):
-	queryset = Comment.objects.all()
 	serializer_class = commentSerializer
+
+	def get_queryset(self):
+		queryset = Comment.objects.all()
+
+		task_id = self.request.query_params.get('task_id', None)
+		if task_id is not None:
+			queryset = queryset.filter(task_id__task_id=task_id)
+		
+		user_id = self.request.query_params.get('user_id', None)
+		if user_id is not None:
+			queryset = queryset.filter(user_id__id=user_id)
+		
+		return queryset
 
 class projectViewSet(viewsets.ModelViewSet):
 	queryset = Project.objects.all()
