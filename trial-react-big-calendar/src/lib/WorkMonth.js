@@ -31,8 +31,6 @@ const workDaysRange = function(start, end, unit = 'day') {
     current = dates.add(current, 1, unit)
   }
   days = days.filter(date => isWorkDay(date))
-  console.log('inside workdaysrange:')
-  console.log(days);
   return days
 }
 
@@ -45,8 +43,6 @@ class WorkMonthView extends MonthView {
     let { date, localizer, className } = this.props,
       month = visibleWorkDays(date, localizer),
       weeks = chunk(month, 5)
-      // console.log(weeks);
-      console.log(weeks[0])
     this._weekCount = weeks.length
     return (
       <div className={cn('rbc-month-view', className)}>

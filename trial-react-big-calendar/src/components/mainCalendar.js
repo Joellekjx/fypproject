@@ -28,7 +28,7 @@ class MainCalender extends Component {
       super(props)
       this.state = {
         task: [],
-        events: [
+        events: [ //prolly dont need this alr
           // {
           //   id: 0,
           //   start: new Date(),
@@ -50,47 +50,25 @@ class MainCalender extends Component {
   };  
 
   componentDidMount(){
+    const { calendarStore } = this.props;
+    const { addData } = calendarStore;
     axios.get('http://127.0.0.1:8000/api/task/')
         .then(res => {
-            this.setState({
-                task: res.data
+            res.data.map(indivRes => {
+              this.setState(prevState => ({
+                task:[...prevState.task, indivRes]
+              }))
+              var start = new Date(indivRes.task_due_date);
+              var starttime = new Date(start.setHours(0, 0, 0, 0));
+              var end = new Date(indivRes.task_due_date);
+              addData({Id: indivRes.task_id, title: indivRes.task_type, start: starttime, end: end, event_type: indivRes.task_type})
             })
-            // console.log(res.data);
         })
-    
-  }
-
-
-  pushDataIntoData = () => {
-    // console.log("this runs push data into data once")
-    // console.log('events original: ');
-    // console.log(this.state.events);
-    for (var i=0; i< this.state.task.length; i++) {
-        var start = new Date(this.state.task[i].task_due_date);
-        var starttime = new Date(start.setHours(0,0,0,0));
-        var newdata = {
-            Id: this.state.task[i].task_id,
-            title: this.state.task[i].task_type,
-            start: starttime,
-            end: new Date(this.state.task[i].task_due_date),
-            event_type: this.state.task[i].task_type
-        }
-        this.state.events.push(newdata);
-    }
-    // console.log('new events: ');
-    // console.log(this.state.events);
-    return this.state.events;
   }
 
   handleClose = () => {
     this.setState({isAddModalOpen: false })
   }
-
-  // handleSelect = () => {
-  //   return(
-  //     <AddEventDialog />
-  //   )
-  // }
     
   onEventResize = ({ event, start, end }) => {
     const { events } = this.state
@@ -146,7 +124,7 @@ class MainCalender extends Component {
   }
 
   toggleAddModal = event => {
-    console.log("adding event in toggle add modal");
+    // console.log("adding event in toggle add modal");
       this.setState({
         currentEvent: event,
         isAddModalOpen: !this.state.isAddModalOpen,
@@ -165,10 +143,7 @@ class MainCalender extends Component {
 
   render(){
     const { calendarStore } = this.props;
-    // console.log(calendarStore);
-    const { getAllData } = calendarStore;
-    console.log(getAllData);
-    // console.log("above: main calendar, get title only")
+    const { getData } = calendarStore;
       return(
           <div className="MainCalendar">
               <DnDCalendar
@@ -176,8 +151,7 @@ class MainCalender extends Component {
                   defaultDate={new Date()}
                   defaultView="month"
                   views={{month: WorkMonth, week: true}}
-                  // views={{month: true, week: true}}
-                  events={this.pushDataIntoData()}
+                  events={getData}
                   localizer={localizer}
                   onEventResize={this.onEventResize}
                   resizable
