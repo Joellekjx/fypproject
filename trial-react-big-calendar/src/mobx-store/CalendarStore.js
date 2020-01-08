@@ -8,10 +8,8 @@ class CalendarStore {
     }
 
     get getData() {
-        console.log("im in get data and leaving!");
         return this.newData;
     }
-
 }
 
 decorate(CalendarStore, {

@@ -51,7 +51,7 @@ class MainCalender extends Component {
 
   componentDidMount(){
     const { calendarStore } = this.props;
-    const { addData } = calendarStore;
+    const { addData, getData } = calendarStore;
     axios.get('http://127.0.0.1:8000/api/task/')
         .then(res => {
             res.data.map(indivRes => {
@@ -61,7 +61,10 @@ class MainCalender extends Component {
               var start = new Date(indivRes.task_due_date);
               var starttime = new Date(start.setHours(0, 0, 0, 0));
               var end = new Date(indivRes.task_due_date);
-              addData({Id: indivRes.task_id, title: indivRes.task_type, start: starttime, end: end, event_type: indivRes.task_type})
+              
+              if(getData.length != res.data.length) {
+                addData({Id: indivRes.task_id, title: indivRes.task_type, start: starttime, end: end, event_type: indivRes.task_type})
+              }
             })
         })
   }
@@ -106,14 +109,8 @@ class MainCalender extends Component {
   //   })
   // }
 
-  routeToRightPage = (event) => { //get the event_type, then route to the right place
-      const { events } = this.state;
-      let eventType = '';
-      events.map(existingEvent => {
-          if(existingEvent.id === event.id){
-              return eventType = existingEvent.event_type;
-          }
-        })
+  routeToRightPage = (event) => {
+      const eventType = event.event_type;
       if (eventType === 'Weekly Report') {
           this.props.history.push('/weeklyreport')
       } else if (eventType==='Meeting'){
@@ -124,7 +121,6 @@ class MainCalender extends Component {
   }
 
   toggleAddModal = event => {
-    // console.log("adding event in toggle add modal");
       this.setState({
         currentEvent: event,
         isAddModalOpen: !this.state.isAddModalOpen,
