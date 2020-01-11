@@ -9,7 +9,6 @@ import './styles.scss';
 import WorkMonth from '../lib/WorkMonth';
 import { observer, PropTypes as MobXPropTypes } from "mobx-react";
 // import * as dates from 'date-arithmetic'
-import AddEventDialog from './addEventDialog';
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 // import TimeGrid from 'react-big-calendar/lib/TimeGrid'
@@ -29,20 +28,6 @@ class MainCalender extends Component {
       this.state = {
         task: [],
         events: [ //prolly dont need this alr
-          // {
-          //   id: 0,
-          //   start: new Date(),
-          //   end: new Date(moment().add(5, "days")),
-          //   title: "Some title",
-          //   event_type: 'Weekly Report'
-          // },
-          // {
-          //   id: 1,
-          //   start: new Date(2019, 11, 2),
-          //   end: new Date(moment().subtract(20, "days")),
-          //   title: "What",
-          //   event_type: 'Meeting'
-          // }
         ],
         dayLayoutAlgorithm: 'no-overlap',
         isAddModalOpen: false,
@@ -62,7 +47,7 @@ class MainCalender extends Component {
               var starttime = new Date(start.setHours(0, 0, 0, 0));
               var end = new Date(indivRes.task_due_date);
               
-              if(getData.length != res.data.length) {
+              if(getData.length !== res.data.length) {
                 addData({Id: indivRes.task_id, title: indivRes.task_type, start: starttime, end: end, event_type: indivRes.task_type})
               }
             })
