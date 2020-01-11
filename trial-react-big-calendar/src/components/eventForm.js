@@ -65,7 +65,7 @@ function EventForm ({handleClose}) {
               1. Event Category (weekly report, meeting or others)
               1a. If "others", need to pop up a textfield to fill in what's the others
               2. Start Date & Time
-              3. End Date & Time
+              3. End Date & Time //would task_due_date be the same??
               4. Offer to repeat? But optional
 
             */}

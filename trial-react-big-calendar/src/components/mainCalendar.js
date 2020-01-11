@@ -26,9 +26,9 @@ class MainCalender extends Component {
   constructor(props){
       super(props)
       this.state = {
-        task: [],
-        events: [ //prolly dont need this alr
-        ],
+        // task: [],
+        // events: [ //prolly dont need this alr
+        // ],
         dayLayoutAlgorithm: 'no-overlap',
         isAddModalOpen: false,
       }
@@ -36,20 +36,21 @@ class MainCalender extends Component {
 
   componentDidMount(){
     const { calendarStore } = this.props;
-    const { addData, getData } = calendarStore;
+    const { addData, getData, getDataLength } = calendarStore;
     axios.get('http://127.0.0.1:8000/api/task/')
         .then(res => {
             res.data.map(indivRes => {
-              this.setState(prevState => ({
-                task:[...prevState.task, indivRes]
-              }))
+              console.log("indivRes below");
+              console.log(indivRes);
               var start = new Date(indivRes.task_due_date);
               var starttime = new Date(start.setHours(0, 0, 0, 0));
-              var end = new Date(indivRes.task_due_date);
+              var endtime = new Date(indivRes.task_due_date);
               
-              if(getData.length !== res.data.length) {
-                addData({Id: indivRes.task_id, title: indivRes.task_type, start: starttime, end: end, event_type: indivRes.task_type})
-              }
+              if(getDataLength <= res.data.length) {
+                // addData(indivRes);
+                addData({Id: indivRes.task_id, title: indivRes.task_type, start: starttime, end: endtime, event_type: indivRes.task_type})
+                // addData(Id= indivRes.task_id, title= indivRes.task_type, start=starttime, end=endtime, event_type= indivRes.task_type)
+              } 
             })
         })
   }
@@ -124,7 +125,11 @@ class MainCalender extends Component {
 
   render(){
     const { calendarStore } = this.props;
-    const { getData } = calendarStore;
+    const { getData, getDataLength } = calendarStore;
+    console.log("getData below:")
+    console.log(getData);
+    console.log("get data LENGTH!!!")
+    console.log(getDataLength);
       return(
           <div className="MainCalendar">
               <DnDCalendar

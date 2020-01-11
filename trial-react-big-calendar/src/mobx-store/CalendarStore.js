@@ -10,12 +10,17 @@ class CalendarStore {
     get getData() {
         return this.newData;
     }
+
+    get getDataLength(){
+        return this.newData.length;
+    }
 }
 
 decorate(CalendarStore, {
     newData: observable,
     addData: action,
     getData: computed,
+    getDataLength: computed,
 })
 
 export default CalendarStore;
