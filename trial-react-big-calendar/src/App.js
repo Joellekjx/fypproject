@@ -3,8 +3,6 @@ import MainCalendar from './components/mainCalendar';
 import LeftSideColumn from './components/leftSideColumn';
 import { Grid } from '@material-ui/core';
 import { observer } from "mobx-react";
-import MomentUtils from '@date-io/moment';
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 // import moment from 'moment';
 import axios from 'axios';
 
@@ -43,7 +41,7 @@ class App extends Component {
   render() {
     const { calendarStore } = this.props;
     return (
-      <MuiPickersUtilsProvider utils={MomentUtils}>
+      // <MuiPickersUtilsProvider utils={MomentUtils}>
         <div className="App">
           <Grid container>
             <Grid item xs={2}>

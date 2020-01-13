@@ -26,6 +26,9 @@ class MainCalender extends Component {
   constructor(props){
       super(props)
       this.state = {
+        // task: [],
+        // events: [ //prolly dont need this alr
+        // ],
         dayLayoutAlgorithm: 'no-overlap',
         isAddModalOpen: false,
         currentEvent: '',
@@ -34,15 +37,18 @@ class MainCalender extends Component {
 
   componentDidMount(){
     const { calendarStore } = this.props;
-    const { addData, getData, getDataLength } = calendarStore;
+    const { addData, getDataLength } = calendarStore;
     axios.get('http://127.0.0.1:8000/api/task/')
         .then(res => {
             res.data.map(indivRes => {
+              // console.log("indivRes below");
+              // console.log(indivRes);
               var start = new Date(indivRes.task_due_date);
               var starttime = new Date(start.setHours(0, 0, 0, 0));
               var endtime = new Date(indivRes.task_due_date);
               
-              if(getDataLength <= res.data.length) {
+              if(getDataLength !== res.data.length) {
+                // addData(indivRes);
                 addData({
                   Id: indivRes.task_id, 
                   title: indivRes.task_type, 
@@ -50,6 +56,7 @@ class MainCalender extends Component {
                   end: endtime, 
                   event_type: indivRes.task_type
                 })
+                // addData(Id= indivRes.task_id, title= indivRes.task_type, start=starttime, end=endtime, event_type= indivRes.task_type)
               } 
             })
         })
@@ -113,7 +120,6 @@ class MainCalender extends Component {
       })
   };
 
-
   renderDialog = () => {
     const { currentEvent } = this.state;
     return(
@@ -127,7 +133,7 @@ class MainCalender extends Component {
 
   render(){
     const { calendarStore } = this.props;
-    const { getData } = calendarStore;
+    const { getData, getDataLength } = calendarStore; //why the fk is getDataLength affecting appearance??
       return(
           <div className="MainCalendar">
               <DnDCalendar
@@ -145,6 +151,7 @@ class MainCalender extends Component {
                   onSelectSlot={this.toggleAddModal}
                   dayLayoutAlgorithm={this.state.dayLayoutAlgorithm}
               />
+              {/* {console.log(event)} */}
               {this.renderDialog()}
           </div>
       )

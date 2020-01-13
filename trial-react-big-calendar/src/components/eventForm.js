@@ -9,8 +9,12 @@ import { TextField, Select, InputLabel, Grid, FormLabel, FormControlLabel, makeS
 // import DatePicker from './dateTimePicker';
 // import { useStyles } from '@material-ui/pickers/views/Month/MonthView';
 // import {  } from '@material-ui/core';
-import { DatePicker } from '@material-ui/pickers';
-import moment from 'moment';
+import { DatePicker, TimePicker, DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+// import moment from 'moment';
+
+// import MomentUtils from '@date-io/moment';
+// import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from '@date-io/date-fns';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -26,6 +30,7 @@ const useStyles = makeStyles(theme => ({
 function EventForm ({handleClose, start, end}) {
   const classes = useStyles();
   const [ category, setCategory ] = React.useState('');
+  // const [selectedDate, handleDateChange] = useState(new Date());
   const [selectedDate, handleDateChange] = useState(new Date());
   // const [state, setState] = useState({
   //   startDate: null,
@@ -37,70 +42,77 @@ function EventForm ({handleClose, start, end}) {
   //   setCategory(event.target.value || '');
   // }
 
-  const handleDateChangeFn = date => {
-    handleDateChange(date)
-  }
+  // const handleDateChangeFn = date => {
+  //   handleDateChange(date)
+  // }
+
+  
 
   console.log("this is in eventform");
   console.log(start);
   console.log(end);
 
   return (
-    <div>
-        <DialogTitle id="alert-dialog-title">Add Calendar Event</DialogTitle>
-        <DialogContent>
-          <form className={classes.container} action="/" method="POST" onSubmit={(e) => { e.preventDefault(); alert('Submitted form!'); this.handleClose(); } }>
-            {/* 1st FormControl: Select Category */}
-            <FormControl className={classes.formControl} fullWidth>
-                  <InputLabel htmlFor="demo-dialog-select-label">Category</InputLabel>
-                  <Select
-                    labelId="demo-dialog-select-label"
-                    value={category}
-                    // input={<Input />}
-                    // onChange={handleChange}
-                    id="select-category"
-                  > 
-                    <MenuItem value="Weekly Report">Weekly Report</MenuItem>
-                    <MenuItem value="Meetings">Meeting</MenuItem>
-                    <MenuItem value="Others">Others</MenuItem>
-                  </Select>
-            </FormControl>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <div>
+          <DialogTitle id="alert-dialog-title">Add Calendar Event</DialogTitle>
+          <DialogContent>
+            <form className={classes.container} action="/" method="POST" onSubmit={(e) => { e.preventDefault(); alert('Submitted form!'); this.handleClose(); } }>
+              {/* 1st FormControl: Select Category */}
+              <FormControl className={classes.formControl} fullWidth>
+                    <InputLabel htmlFor="demo-dialog-select-label">Category</InputLabel>
+                    <Select
+                      labelId="demo-dialog-select-label"
+                      value={category}
+                      // input={<Input />}
+                      // onChange={handleChange}
+                      id="select-category"
+                    > 
+                      <MenuItem value="Weekly Report">Weekly Report</MenuItem>
+                      <MenuItem value="Meetings">Meeting</MenuItem>
+                      <MenuItem value="Others">Others</MenuItem>
+                    </Select>
+              </FormControl>
 
-            {/* 2nd FormControl: Select Date & Time */}
-            <DatePicker
-              // label="Basic example"
-              // value={selectedDate}
-              // onChange={handleDateChange}
-              // animateYearScrolling
-              onChange = {handleDateChangeFn}
-              name="startDate"
-              dateformat="DD/MM/YYYY"
-              // selected={handleDateChange(selectedDate)}
-            />
+              {/* 2nd FormControl: Select Date & Time */}
+              {/* <DatePicker
+                // label="Basic example"
+                // value={selectedDate}
+                // onChange={handleDateChange}
+                // animateYearScrolling
+                onChange = {handleDateChangeFn}
+                name="startDate"
+                dateformat="DD/MM/YYYY"
+                // selected={handleDateChange(selectedDate)}
+              /> */}
+              <DatePicker value={selectedDate} onChange={handleDateChange} />
+              <TimePicker value={selectedDate} onChange={handleDateChange} />
+             <DateTimePicker value={selectedDate} onChange={handleDateChange} />
 
-            {/* 3rd FormControl: Option to repeat until? */}
-            {/* 
-              1. Event Category (weekly report, meeting or others)
-              1a. If "others", need to pop up a textfield to fill in what's the others
-              2. Start Date & Time
-              3. End Date & Time //would task_due_date be the same??
-              4. Offer to repeat? But optional
+              {/* 3rd FormControl: Option to repeat until? */}
+              {/* 
+                1. Event Category (weekly report, meeting or others)
+                1a. If "others", need to pop up a textfield to fill in what's the others
+                2. Start Date & Time
+                3. End Date & Time //would task_due_date be the same??
+                4. Offer to repeat? But optional
 
-            */}
-            {/* <TextField name="event"/> */}
-            {/* <TextField name="pwd" type="password"/> */}
-            {/* <DatePicker /> */}
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            Add Event
-          </Button>
-        </DialogActions>
-    </div>
+              */}
+              {/* <TextField name="event"/> */}
+              {/* <TextField name="pwd" type="password"/> */}
+              {/* <DatePicker /> */}
+            </form>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleClose} color="primary" autoFocus>
+              Add Event
+            </Button>
+          </DialogActions>
+      </div>
+    </MuiPickersUtilsProvider>
   );
 }
 
