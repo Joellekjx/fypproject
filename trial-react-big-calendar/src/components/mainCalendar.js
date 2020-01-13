@@ -26,11 +26,9 @@ class MainCalender extends Component {
   constructor(props){
       super(props)
       this.state = {
-        // task: [],
-        // events: [ //prolly dont need this alr
-        // ],
         dayLayoutAlgorithm: 'no-overlap',
         isAddModalOpen: false,
+        currentEvent: '',
       }
   };  
 
@@ -40,16 +38,18 @@ class MainCalender extends Component {
     axios.get('http://127.0.0.1:8000/api/task/')
         .then(res => {
             res.data.map(indivRes => {
-              console.log("indivRes below");
-              console.log(indivRes);
               var start = new Date(indivRes.task_due_date);
               var starttime = new Date(start.setHours(0, 0, 0, 0));
               var endtime = new Date(indivRes.task_due_date);
               
               if(getDataLength <= res.data.length) {
-                // addData(indivRes);
-                addData({Id: indivRes.task_id, title: indivRes.task_type, start: starttime, end: endtime, event_type: indivRes.task_type})
-                // addData(Id= indivRes.task_id, title= indivRes.task_type, start=starttime, end=endtime, event_type= indivRes.task_type)
+                addData({
+                  Id: indivRes.task_id, 
+                  title: indivRes.task_type, 
+                  start: starttime, 
+                  end: endtime, 
+                  event_type: indivRes.task_type
+                })
               } 
             })
         })
@@ -95,7 +95,7 @@ class MainCalender extends Component {
   //   })
   // }
 
-  routeToRightPage = (event) => {
+  routeToRightPage = (event) => { //maybe want to come back and double check this??
       const eventType = event.event_type;
       if (eventType === 'Weekly Report') {
           this.props.history.push('/weeklyreport')
@@ -106,18 +106,20 @@ class MainCalender extends Component {
       }
   }
 
-  toggleAddModal = event => {
+  toggleAddModal = (event) => {
       this.setState({
         currentEvent: event,
         isAddModalOpen: !this.state.isAddModalOpen,
       })
   };
 
+
   renderDialog = () => {
+    const { currentEvent } = this.state;
     return(
       <React.Fragment>
         <Dialog open={this.state.isAddModalOpen} toggle={this.toggleAddModal} onClose={this.handleClose}>
-          <EventForm handleClose={() => this.handleClose()} />
+          <EventForm start={currentEvent.start} end={currentEvent.end} handleClose={() => this.handleClose()} />
         </Dialog>
       </React.Fragment>
     )
@@ -125,11 +127,7 @@ class MainCalender extends Component {
 
   render(){
     const { calendarStore } = this.props;
-    const { getData, getDataLength } = calendarStore;
-    console.log("getData below:")
-    console.log(getData);
-    console.log("get data LENGTH!!!")
-    console.log(getDataLength);
+    const { getData } = calendarStore;
       return(
           <div className="MainCalendar">
               <DnDCalendar
@@ -148,7 +146,6 @@ class MainCalender extends Component {
                   dayLayoutAlgorithm={this.state.dayLayoutAlgorithm}
               />
               {this.renderDialog()}
-
           </div>
       )
     }

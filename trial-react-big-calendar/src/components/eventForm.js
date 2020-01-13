@@ -10,6 +10,7 @@ import { TextField, Select, InputLabel, Grid, FormLabel, FormControlLabel, makeS
 // import { useStyles } from '@material-ui/pickers/views/Month/MonthView';
 // import {  } from '@material-ui/core';
 import { DatePicker } from '@material-ui/pickers';
+import moment from 'moment';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -22,14 +23,27 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function EventForm ({handleClose}) {
+function EventForm ({handleClose, start, end}) {
   const classes = useStyles();
   const [ category, setCategory ] = React.useState('');
   const [selectedDate, handleDateChange] = useState(new Date());
+  // const [state, setState] = useState({
+  //   startDate: null,
+  //   endDate: null,
+  //   // focusedInput: START_DATE
+  // })
 
-  const handleChange = event => {
-    setCategory(event.target.value || '');
+  // const handleChange = event => {
+  //   setCategory(event.target.value || '');
+  // }
+
+  const handleDateChangeFn = date => {
+    handleDateChange(date)
   }
+
+  console.log("this is in eventform");
+  console.log(start);
+  console.log(end);
 
   return (
     <div>
@@ -43,7 +57,7 @@ function EventForm ({handleClose}) {
                     labelId="demo-dialog-select-label"
                     value={category}
                     // input={<Input />}
-                    onChange={handleChange}
+                    // onChange={handleChange}
                     id="select-category"
                   > 
                     <MenuItem value="Weekly Report">Weekly Report</MenuItem>
@@ -54,10 +68,14 @@ function EventForm ({handleClose}) {
 
             {/* 2nd FormControl: Select Date & Time */}
             <DatePicker
-              label="Basic example"
-              value={selectedDate}
-              onChange={handleDateChange}
-              animateYearScrolling
+              // label="Basic example"
+              // value={selectedDate}
+              // onChange={handleDateChange}
+              // animateYearScrolling
+              onChange = {handleDateChangeFn}
+              name="startDate"
+              dateformat="DD/MM/YYYY"
+              // selected={handleDateChange(selectedDate)}
             />
 
             {/* 3rd FormControl: Option to repeat until? */}

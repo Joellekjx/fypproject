@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { Grid } from "@material-ui/core";
 import moment from 'moment';
-import AddEventDialog from './addEventDialog';
+import AddEventButton from './addEventButton';
 
 class LeftSideColumn extends Component {
     constructor(props){
@@ -36,7 +36,7 @@ class LeftSideColumn extends Component {
             <div className="LeftSideColumn">
                 <Grid container>
                     <Grid item xs={6}>
-                        <AddEventDialog />
+                        <AddEventButton />
                     </Grid>
                     <Grid item xs={6}>
                         Week counter
