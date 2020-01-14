@@ -32,11 +32,12 @@ class LeftSideColumn extends Component {
     render(){
         // const date = moment();
         // console.log(date);
+        const { calendarStore } = this.props;
         return(
             <div className="LeftSideColumn">
                 <Grid container>
                     <Grid item xs={6}>
-                        <AddEventButton />
+                        <AddEventButton calendarStore={calendarStore}/>
                     </Grid>
                     <Grid item xs={6}>
                         Week counter

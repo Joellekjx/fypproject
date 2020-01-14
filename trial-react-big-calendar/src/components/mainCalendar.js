@@ -122,10 +122,11 @@ class MainCalender extends Component {
 
   renderDialog = () => {
     const { currentEvent } = this.state;
+    const { calendarStore } = this.props;
     return(
       <React.Fragment>
         <Dialog open={this.state.isAddModalOpen} toggle={this.toggleAddModal} onClose={this.handleClose}>
-          <EventForm start={currentEvent.start} end={currentEvent.end} handleClose={() => this.handleClose()} />
+          <EventForm calendarStore={calendarStore} start={currentEvent.start} end={currentEvent.end} handleClose={() => this.handleClose()} />
         </Dialog>
       </React.Fragment>
     )

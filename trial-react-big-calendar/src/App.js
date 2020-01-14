@@ -45,7 +45,7 @@ class App extends Component {
         <div className="App">
           <Grid container>
             <Grid item xs={2}>
-              <LeftSideColumn />
+              <LeftSideColumn calendarStore={calendarStore}/>
             </Grid>
             <Grid item xs={10}>
               <MainCalendar calendarStore={calendarStore} />

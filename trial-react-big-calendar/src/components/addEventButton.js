@@ -81,6 +81,7 @@ export default class AddEventButton extends Component {
 
 
   render(){
+    const { calendarStore } = this.props;
     const { open } = this.state;
     // console.log(start.setHours(0, 0, 0, 0))
     var start = new Date();
@@ -99,7 +100,7 @@ export default class AddEventButton extends Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <EventForm start={start} end={end} onSubmit={(event) => this.handleFormSubmit(event)} handleClose={() => this.handleClose()}/>                      
+          <EventForm calendarStore={calendarStore} start={start} end={end} onSubmit={(event) => this.handleFormSubmit(event)} handleClose={() => this.handleClose()}/>                      
         </Dialog>
       </div>
     )
