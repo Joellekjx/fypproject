@@ -35,15 +35,20 @@ function EventForm ({handleClose, start, end, calendarStore}) {
     }
 
     if (category===""){
-      setCategory('Others');
+      calendarStore.addData({
+        title: "Others",
+        start: selectedStartDate,
+        end: selectedEndDate,
+        event_type: "Others"
+      })
+    } else {
+      calendarStore.addData({
+          title: category,
+          start: selectedStartDate,
+          end: selectedEndDate,
+          event_type: category
+      })
     }
-
-    calendarStore.addData({
-      title: category,
-      start: selectedStartDate,
-      end: selectedEndDate,
-      event_type: category
-    })
     handleClose();
   }
 
@@ -68,7 +73,7 @@ function EventForm ({handleClose, start, end, calendarStore}) {
                           id="select-category"
                         > 
                           <MenuItem value="Weekly Report">Weekly Report</MenuItem>
-                          <MenuItem value="Meeting">Meeting</MenuItem>
+                          <MenuItem value="Meeting Notes">Meeting</MenuItem>
                           <MenuItem value="Others">Others</MenuItem>
                         </Select>
                   </FormControl>
