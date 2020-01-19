@@ -19,8 +19,7 @@ class LeftSideColumn extends Component {
         let difference = semEnd.diff(semStart, 'week');
         return(
             <div>
-                Hello<br/>
-                {difference}
+                Week {difference}
             </div>
         )
     }
@@ -40,7 +39,6 @@ class LeftSideColumn extends Component {
                         <AddEventButton calendarStore={calendarStore}/>
                     </Grid>
                     <Grid item xs={6}>
-                        Week counter
                         {this.renderWeekCounter()}
                     </Grid>
                 </Grid>

@@ -11,8 +11,8 @@ class WeeklyReport extends Component {
 
     componentDidMount(){
         const { calendarStore } = this.props;
-        const { addData, getData } = calendarStore;
-        //no need to call "axios get" here because the data is alr in the store when u load "mainCalendar"
+        // const { addData, getData } = calendarStore;
+        //no need to call "axios get" here because the data is alr in the store when u load "App.js"
         // need to write some codes to get the student id to filter further
         // axios.get('http://127.0.0.1:8000/api/task/?task_type=weekly report&student_id=2' )
         //     .then(res => {
@@ -36,10 +36,6 @@ class WeeklyReport extends Component {
         const { calendarStore } = this.props;
         const { getSelectedData } = calendarStore;
         console.log(getSelectedData);
-        console.log(getSelectedData.Id);
-        console.log("get id above");
-        console.log(getSelectedData.title);
-        console.log("get title above");
         return(
             <div>
                 Hello Weekly Report

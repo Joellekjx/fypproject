@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import axios from 'axios';
 import EventForm from './eventForm';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from "moment";
@@ -8,11 +7,8 @@ import { withRouter } from "react-router-dom";
 import './styles.scss';
 import WorkMonth from '../lib/WorkMonth';
 import { observer, PropTypes as MobXPropTypes } from "mobx-react";
-// import * as dates from 'date-arithmetic'
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-// import TimeGrid from 'react-big-calendar/lib/TimeGrid'
-import WeeklyReport from './weeklyReport';
 import { Dialog } from "@material-ui/core";
 
 const localizer = momentLocalizer(moment);
@@ -75,13 +71,19 @@ class MainCalender extends Component {
   //   })
   // }
 
-  routeToRightPage = (event) => { //maybe want to come back and double check this??
+  routeToRightPage = (event) => {
     const eventType = event.event_type;
     const { calendarStore } = this.props;
     const { addSelectedData } = calendarStore;
-    console.log(event);
-    console.log("inside routetorightpage");
-    addSelectedData(event);
+
+    addSelectedData({
+      Id: event.Id,
+      title: event.title,
+      start: event.start,
+      end: event.end,
+      event_type: event.event_type,
+      status: event.status,
+    });
 
     switch(eventType){
       case "Weekly Report":

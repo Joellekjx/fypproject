@@ -3,7 +3,6 @@ import MainCalendar from './components/mainCalendar';
 import LeftSideColumn from './components/leftSideColumn';
 import { Grid } from '@material-ui/core';
 import { observer } from "mobx-react";
-// import moment from 'moment';
 import axios from 'axios';
 
 class App extends Component {
