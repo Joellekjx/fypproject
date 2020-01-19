@@ -74,3 +74,24 @@ Home Page --- contains leftSideColumn and mainCalendar
     |____Weekly Report Page
     |
     |____
+
+### How to start backend on your first time:
+```
+cd backend
+virtualenv env
+source env/bin/activate
+cd env
+pip install -r requirements.txt
+(for the mysqlclient, if you face issues, you run) env LDFLAGS="-I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib" pip install mysqlclient
+cd ..
+cd fyp_dip_ms/
+python manage.py runserver
+```
+
+## How to start backend subsequently:
+```
+cd backend
+source env/bin/activate
+cd fyp_dip_ms/
+python manage.py runserver
+```

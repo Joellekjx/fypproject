@@ -7,36 +7,29 @@ import { observer } from "mobx-react";
 import axios from 'axios';
 
 class App extends Component {
-//   constructor(props){
-//     super(props)
-//     this.state = {
-//       task: [],
-//     }
-// };  
-
-//   componentDidMount(){
-//     const { calendarStore } = this.props;
-//     const { addData, getData } = calendarStore;
-//     axios.get('http://127.0.0.1:8000/api/task/')
-//         .then(res => {
-//             res.data.map(indivRes => {
-//               this.setState(prevState => ({
-//                 task:[...prevState.task, indivRes]
-//               }))
-//               var start = new Date(indivRes.task_due_date);
-//               var starttime = new Date(start.setHours(0, 0, 0, 0));
-//               var end = new Date(indivRes.task_due_date);
+   componentDidMount(){
+    const { calendarStore } = this.props;
+    const { addData, getDataLength } = calendarStore;
+    axios.get('http://127.0.0.1:8000/api/task/')
+        .then(res => {
+            res.data.map(indivRes => {
+              var start = new Date(indivRes.task_due_date);
+              var starttime = new Date(start.setHours(0, 0, 0, 0));
+              var endtime = new Date(indivRes.task_due_date);
               
-//               console.log("get data length");
-//               console.log(getData.length);
-//               console.log("res data length: ");
-//               console.log(res.data.length);
-//               if(getData.length <= res.data.length) {
-//                 addData({Id: indivRes.task_id, title: indivRes.task_type, start: starttime, end: end, event_type: indivRes.task_type})
-//               }
-//             })
-//         })
-//   }
+              if(getDataLength !== res.data.length) {
+                addData({
+                  Id: indivRes.task_id, 
+                  title: indivRes.task_type, 
+                  start: starttime, 
+                  end: endtime, 
+                  event_type: indivRes.task_type,
+                  status: indivRes.status
+                })
+              } 
+            })
+        })
+  }
 
   render() {
     const { calendarStore } = this.props;

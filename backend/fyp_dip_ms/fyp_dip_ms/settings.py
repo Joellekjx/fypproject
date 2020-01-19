@@ -93,14 +93,12 @@ DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'fypdb',
-        'USER': 'root',
-        'PASSWORD': 'xxxx',
+        'USER': 'fyp',
+        'PASSWORD': 'xxxx1!',
         'HOST': 'localhost',
         'PORT': '3306',
-
     }
 }
 

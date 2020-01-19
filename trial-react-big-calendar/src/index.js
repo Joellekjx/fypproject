@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
@@ -39,7 +39,7 @@ const routing = (
         <div>
             <Route exact path="/" component={PassPropsToApp}/>
             <Route path="/weeklyreport" component={PassPropsToWR} />
-            <Route path="/meetings" component={PassPropsToMeeting} />
+            {/* <Route path="/meetings" component={PassPropsToMeeting} /> */}
         </div>
     </Router>
 )

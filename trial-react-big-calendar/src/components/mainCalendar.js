@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import axios from 'axios';
+// import axios from 'axios';
 import EventForm from './eventForm';
-import { Calendar, momentLocalizer, Navigate } from 'react-big-calendar';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from "moment";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { withRouter } from "react-router-dom";
@@ -12,9 +12,12 @@ import { observer, PropTypes as MobXPropTypes } from "mobx-react";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 // import TimeGrid from 'react-big-calendar/lib/TimeGrid'
+import WeeklyReport from './weeklyReport';
 import { Dialog } from "@material-ui/core";
+
 const localizer = momentLocalizer(moment);
 const DnDCalendar = withDragAndDrop(Calendar);
+
 
 /**
  * Note to self: Need to spruce up "add event" onClick in Calendar + add event button
@@ -31,30 +34,6 @@ class MainCalender extends Component {
         currentEvent: '',
       }
   };  
-
-  componentDidMount(){
-    const { calendarStore } = this.props;
-    const { addData, getDataLength } = calendarStore;
-    axios.get('http://127.0.0.1:8000/api/task/')
-        .then(res => {
-            res.data.map(indivRes => {
-              var start = new Date(indivRes.task_due_date);
-              var starttime = new Date(start.setHours(0, 0, 0, 0));
-              var endtime = new Date(indivRes.task_due_date);
-              
-              if(getDataLength !== res.data.length) {
-                addData({
-                  Id: indivRes.task_id, 
-                  title: indivRes.task_type, 
-                  start: starttime, 
-                  end: endtime, 
-                  event_type: indivRes.task_type,
-                  status: indivRes.status
-                })
-              } 
-            })
-        })
-  }
 
   handleClose = () => {
     this.setState({isAddModalOpen: false })
@@ -97,14 +76,23 @@ class MainCalender extends Component {
   // }
 
   routeToRightPage = (event) => { //maybe want to come back and double check this??
-      const eventType = event.event_type;
-      if (eventType === 'Weekly Report') {
-          this.props.history.push('/weeklyreport')
-      } else if (eventType==='Meeting Notes'){
-          this.props.history.push('/meetings')
-      } else {
-          return "Nothing";
-      }
+    const eventType = event.event_type;
+    const { calendarStore } = this.props;
+    const { addSelectedData } = calendarStore;
+    console.log(event);
+    console.log("inside routetorightpage");
+    addSelectedData(event);
+
+    switch(eventType){
+      case "Weekly Report":
+        this.props.history.push('/weeklyreport');
+        break;
+      case "Meeting Notes":
+        this.props.history.push('/meetings');
+        break;
+      default:
+        return "Nothing";
+    }
   }
 
   toggleAddModal = (event) => {
@@ -130,51 +118,50 @@ class MainCalender extends Component {
   render(){
     const { calendarStore } = this.props;
     const { getData, getDataLength } = calendarStore; //why the fk is getDataLength affecting appearance??
-      return(
-          <div className="MainCalendar">
-              <DnDCalendar
-                  selectable
-                  defaultDate={new Date()}
-                  defaultView="month"
-                  views={{month: WorkMonth, week: true}}
-                  events={getData}
-                  localizer={localizer}
-                  onEventResize={this.onEventResize}
-                  resizable
-                  style={{ height: "100vh" }}
-                  onSelectEvent={(event)=>this.routeToRightPage(event)}
-                  // onSelectEvent={this.toggleEditModal}
-                  // eventPropGetter={event => this.renderEventStatusColour(event)}
-                  eventPropGetter={
-                    (event, start, end, isSelected) => {
-                      let newStyle = {
-                        backgroundColor: "lightgrey",
-                        color: 'black',
-                        borderRadius: "0px",
-                        border: "none"
-                      };
-                      switch(event.status){
-                        case "Completed":
-                          newStyle.backgroundColor = "lightgrey"; break;
-                        case "Pending":
-                          newStyle.backgroundColor = "lightgreen"; break;
-                        default:
-                          newStyle.backgroundColor = "lightgreen"; break;
-                      }
-                
-                      return {
-                        className: "",
-                        style: newStyle
-                      };
-                    }
+    return(
+      <div className="MainCalendar">
+          <DnDCalendar
+              selectable
+              defaultDate={new Date()}
+              defaultView="month"
+              views={{month: WorkMonth, week: true}}
+              events={getData}
+              localizer={localizer}
+              onEventResize={this.onEventResize}
+              resizable
+              style={{ height: "100vh" }}
+              onSelectEvent={(event)=>this.routeToRightPage(event)}
+              // onSelectEvent={this.toggleEditModal}
+              // eventPropGetter={event => this.renderEventStatusColour(event)}
+              eventPropGetter={
+                (event) => {
+                  let newStyle = {
+                    backgroundColor: "lightgrey",
+                    color: 'black',
+                    borderRadius: "0px",
+                    border: "none"
+                  };
+                  switch(event.status){
+                    case "Completed":
+                      newStyle.backgroundColor = "lightgrey"; break;
+                    case "Pending":
+                      newStyle.backgroundColor = "lightgreen"; break;
+                    default:
+                      newStyle.backgroundColor = "lightgreen"; break;
                   }
-                  onSelectSlot={this.toggleAddModal}
-                  dayLayoutAlgorithm={this.state.dayLayoutAlgorithm}
-              />
-              {this.renderDialog()}
-          </div>
-      )
-    }
+                  return {
+                    className: "",
+                    style: newStyle
+                  };
+                }
+              }
+              onSelectSlot={this.toggleAddModal}
+              dayLayoutAlgorithm={this.state.dayLayoutAlgorithm}
+          />
+          {this.renderDialog()}
+      </div>
+    )
+  }
 }
 
 MainCalender = observer(MainCalender);
