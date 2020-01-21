@@ -5,6 +5,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import WeeklyReportContent from './ContentFolder/weeklyReportContent';
+import MeetingsContent from './ContentFolder/meetingsContent';
 import { Drawer, CssBaseline, AppBar, Toolbar, List, Typography, Divider, IconButton, ListItem, ListItemText } from '@material-ui/core';
 import axiosGet from './AxiosCalling/axiosGet';
 
@@ -66,16 +67,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function WeeklyReport({ calendarStore }){
-  console.log(calendarStore.getData);
+export default function ContentRouting({ calendarStore }){
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
     const pageEvents = ['Weekly Report', 'Meetings', 'Other Submissions'];
     const [currentPageEvent, setCurrentPageEvent] = React.useState(calendarStore.getDefaultState);
-    // console.log(this.props.location.state.defaultState);
-    console.log(calendarStore.getDefaultState);
-    console.log("inside contentrouting");
 
     async function fetchData(){
       if(calendarStore.getData.length == 0){
@@ -94,6 +91,22 @@ export default function WeeklyReport({ calendarStore }){
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const renderSwitchCase = (param) => {
+    // console.log(param);
+    // console.log("param above");
+    switch(param){
+        case 'Meetings':
+            return <MeetingsContent />
+        case 'Weekly Report':
+            return <WeeklyReportContent />
+        case 'Other Submissions':
+            // return <FreelancerSettings />
+            return "Hello Others"
+        default:
+            return "No drawer found";
+    }
+}
 
   return ( //Note: pls change the color of the app bar/toolbar lol
     <div className={classes.root}>
@@ -158,30 +171,8 @@ export default function WeeklyReport({ calendarStore }){
         })}
       >
         <div className={classes.drawerHeader} />
-        <WeeklyReportContent />
+        {renderSwitchCase(currentPageEvent)}
       </main>
     </div>
   );
 }
-
-// class WeeklyReport extends Component {
-//     constructor(props){
-//         super(props)
-//         this.state = {
-//           task: [],
-//         }
-//     };  
-
-//     render(){
-//         const { calendarStore } = this.props;
-//         const { getSelectedData } = calendarStore;
-//         console.log(getSelectedData);
-//         return(
-//             <div>
-//                 {/* <WeeklyReportNavigation /> */}
-//             </div>
-//         )
-//     }
-// }
-
-// export default WeeklyReport;

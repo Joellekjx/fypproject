@@ -4,7 +4,6 @@ import './index.css';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import ContentRouting from './components/contentRouting';
-// import Meeting from './components/meeting';
 import CalendarStore from './mobx-store/CalendarStore';
 import * as serviceWorker from './serviceWorker';
 
@@ -26,21 +25,11 @@ const PassPropsToWR = () => {
     )
 }
 
-// const PassPropsToMeeting = () => {
-//     return(
-//         <Meeting
-//             calendarStore={calendarStore}
-//         />
-//     )
-// }
-
 const routing = (
     <Router>
         <div>
             <Route exact path="/" component={PassPropsToApp}/>
-            <Route path="/weeklyreport" component={PassPropsToWR} /> 
-            {/* pathname above subject to change */}
-            {/* <Route path="/meetings" component={PassPropsToMeeting} /> */}
+            <Route path="/contentrouter" component={PassPropsToWR} /> 
         </div>
     </Router>
 )

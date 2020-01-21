@@ -87,11 +87,11 @@ class MainCalender extends Component {
 
     switch(eventType){
       case "Weekly Report":
-        this.props.history.push('/weeklyreport');
+        this.props.history.push('/contentrouter');
         break;
       case "Meeting Notes":
         changeDefaultState('Meetings');
-        this.props.history.push('/weeklyreport');
+        this.props.history.push('/contentrouter');
         break;
       default:
         return "Nothing";
