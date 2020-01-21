@@ -11,6 +11,7 @@ class CalendarStore {
         status: '',
     }; //for moving between maincalendar to say weekly report
     //this is a SPECIFIC onClick event
+    defaultState = 'Weekly Report' //available as: 'Weekly Report', 'Meetings', 'Other Submissions'
 
     addData = (e) => {
         this.newData.push(e);
@@ -25,6 +26,10 @@ class CalendarStore {
         this.selectedData.status = status;
     }
 
+    changeDefaultState = (e) => {
+        this.defaultState = e;
+    }
+
     get getData() {
         return this.newData;
     }
@@ -36,16 +41,23 @@ class CalendarStore {
     get getDataLength(){
         return this.newData.length;
     }
+
+    get getDefaultState(){
+        return this.defaultState;
+    }
 }
 
 decorate(CalendarStore, {
     newData: observable,
     selectedData: observable,
+    defaultState: observable,
     addData: action,
     addSelectedData: action,
+    changeDefaultState: action,
     getData: computed,
     getSelectedData: computed,
     getDataLength: computed,
+    getDefaultState: computed,
 })
 
 export default CalendarStore;

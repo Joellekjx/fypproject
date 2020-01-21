@@ -74,7 +74,7 @@ class MainCalender extends Component {
   routeToRightPage = (event) => {
     const eventType = event.event_type;
     const { calendarStore } = this.props;
-    const { addSelectedData } = calendarStore;
+    const { addSelectedData, changeDefaultState } = calendarStore;
 
     addSelectedData({
       Id: event.Id,
@@ -90,7 +90,8 @@ class MainCalender extends Component {
         this.props.history.push('/weeklyreport');
         break;
       case "Meeting Notes":
-        this.props.history.push('/meetings');
+        changeDefaultState('Meetings');
+        this.props.history.push('/weeklyreport');
         break;
       default:
         return "Nothing";

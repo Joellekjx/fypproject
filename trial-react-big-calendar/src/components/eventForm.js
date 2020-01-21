@@ -73,7 +73,7 @@ function EventForm ({handleClose, start, end, calendarStore}) {
                           id="select-category"
                         > 
                           <MenuItem value="Weekly Report">Weekly Report</MenuItem>
-                          <MenuItem value="Meeting">Meeting</MenuItem>
+                          <MenuItem value="Meeting Notes" label="Meeting">Meeting</MenuItem>
                           <MenuItem value="Others">Others</MenuItem>
                         </Select>
                   </FormControl>
