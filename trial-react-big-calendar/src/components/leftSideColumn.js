@@ -35,12 +35,12 @@ class LeftSideColumn extends Component {
         return(
             <div className="LeftSideColumn">
                 <Grid container>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <AddEventButton calendarStore={calendarStore}/>
                     </Grid>
-                    <Grid item xs={6}>
+                    {/* <Grid item xs={6}>
                         {this.renderWeekCounter()}
-                    </Grid>
+                    </Grid> */}
                 </Grid>
                 </div>
         )

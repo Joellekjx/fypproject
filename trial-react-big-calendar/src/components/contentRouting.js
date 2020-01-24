@@ -6,8 +6,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import WeeklyReportContent from './ContentFolder/weeklyReportContent';
 import MeetingsContent from './ContentFolder/meetingsContent';
-import { Drawer, CssBaseline, AppBar, Toolbar, List, Typography, Divider, IconButton, ListItem, ListItemText } from '@material-ui/core';
-import axiosGet from './AxiosCalling/axiosGet';
+import { Drawer, CssBaseline, AppBar, Toolbar, List, Typography, Divider, IconButton, ListItem, ListItemText, Box } from '@material-ui/core';
+import axiosGetFullData from './AxiosCalling/axiosGetFullData';
 
 const drawerWidth = 240;
 
@@ -76,7 +76,7 @@ export default function ContentRouting({ calendarStore }){
 
     async function fetchData(){
       if(calendarStore.getData.length == 0){
-        axiosGet(calendarStore);
+        axiosGetFullData(calendarStore);
       }
     }
 
@@ -99,7 +99,7 @@ export default function ContentRouting({ calendarStore }){
         case 'Meetings':
             return <MeetingsContent />
         case 'Weekly Report':
-            return <WeeklyReportContent />
+            return <WeeklyReportContent calendarStore={calendarStore}/>
         case 'Other Submissions':
             // return <FreelancerSettings />
             return "Hello Others"
@@ -129,8 +129,10 @@ export default function ContentRouting({ calendarStore }){
           </IconButton>
           <div style={{width: "100%"}}>
             <div style={{float: 'left'}}>
-            <Typography variant="h6" noWrap>
+            <Typography variant="h5" noWrap>
+              <Box fontWeight="fontWeightBold">
                 {currentPageEvent}
+              </Box>
             </Typography>
             </div>
             <div style={{float: 'right'}}>

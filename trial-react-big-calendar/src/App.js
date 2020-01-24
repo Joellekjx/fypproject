@@ -3,14 +3,13 @@ import MainCalendar from './components/mainCalendar';
 import LeftSideColumn from './components/leftSideColumn';
 import { Grid } from '@material-ui/core';
 import { observer } from "mobx-react";
-import './components/AxiosCalling/axiosGet';
-import axiosGet from "./components/AxiosCalling/axiosGet";
+import axiosGetFullData from "./components/AxiosCalling/axiosGetFullData";
 
 class App extends Component {
    componentDidMount(){
     const { calendarStore } = this.props;
     if(calendarStore.getData.length == 0){
-      axiosGet(calendarStore);
+      axiosGetFullData(calendarStore);
     }
   }
 
@@ -19,10 +18,10 @@ class App extends Component {
     return (
         <div className="App">
           <Grid container>
-            <Grid item xs={2}>
+            <Grid item xs={1}>
               <LeftSideColumn calendarStore={calendarStore}/>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
               <MainCalendar calendarStore={calendarStore} />
             </Grid>
           </Grid>
