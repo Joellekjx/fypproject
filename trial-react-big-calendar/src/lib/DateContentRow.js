@@ -70,6 +70,16 @@ class DateContentRow extends React.Component {
     })
   }
 
+  renderSemester = (date, index) => {
+    //  console.log(date)
+    //  console.log(dates.today())
+    if (dates.diff(date, dates.today()) == 0) {
+      console.log(true)
+      return 'week'
+    }
+    // return 'week ' + dates.today()
+  }
+
   renderDummy = () => {
     let { className, range, renderHeader } = this.props
     return (
@@ -153,7 +163,8 @@ class DateContentRow extends React.Component {
           components={components}
           longPressThreshold={longPressThreshold}
         />
-
+        
+        {range.map(this.renderSemester)}
         <div className="rbc-row-content">
           {renderHeader && (
             <div className="rbc-row " ref={this.createHeadingRef}>
