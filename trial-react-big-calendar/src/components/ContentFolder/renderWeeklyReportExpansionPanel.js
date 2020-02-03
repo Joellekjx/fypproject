@@ -11,6 +11,8 @@ import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 
+//leaving this here as reference for future lol
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -64,7 +66,7 @@ export default function DetailedExpansionPanel() {
             <Typography className={classes.secondaryHeading}>Select trip destination</Typography>
           </div>
         </ExpansionPanelSummary>
-        
+
         <ExpansionPanelDetails className={classes.details}>
           <div className={classes.column} />
           <div className={classes.column}>
