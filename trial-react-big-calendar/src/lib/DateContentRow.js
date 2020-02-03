@@ -11,6 +11,8 @@ import EventRow from './EventRow'
 import EventEndingRow from './EventEndingRow'
 import * as DateSlotMetrics from '../utils/DateSlotMetrics'
 
+import axios from 'axios'
+
 class DateContentRow extends React.Component {
   constructor(...args) {
     super(...args)
@@ -69,13 +71,30 @@ class DateContentRow extends React.Component {
       ),
     })
   }
-
-  renderSemester = (date, index) => {
+  getSemesterStart = () => {
+    axios.get('http://127.0.0.1:8000/api/task/')
+    .then(res => console.log(res))
+  }
+  
+  renderSemester = (date) => {
     //  console.log(date)
     //  console.log(dates.today())
-    if (dates.diff(date, dates.today()) == 0) {
-      console.log(true)
-      return 'week'
+    let sem_start_date = new Date(2020, 0, 13)
+    if (date >= sem_start_date
+      && dates.diff(date, sem_start_date) % 7 == 0) {
+
+      let week_no = dates.diff(date, sem_start_date, 'day') / 7 + 1
+      // console.log(week_no)
+      if (week_no == 8) {
+        return 'Recess Week'
+      } else if (week_no > 14) {
+        return ''
+      } else if (week_no > 8) {
+        week_no -= 1
+      } 
+      // console.log(sem_start_date)
+      // console.log(dates.diff(dates.yesterday(), date, 'day'))
+      return 'Week ' + week_no
     }
     // return 'week ' + dates.today()
   }
@@ -163,7 +182,7 @@ class DateContentRow extends React.Component {
           components={components}
           longPressThreshold={longPressThreshold}
         />
-        
+        {this.getSemesterStart}
         {range.map(this.renderSemester)}
         <div className="rbc-row-content">
           {renderHeader && (
