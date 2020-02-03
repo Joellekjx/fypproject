@@ -4,6 +4,10 @@ import axios from 'axios';
 * Obviously if you can sort the data (axiosGetFullData) INSTEAD of storing again into store
 * Would be the best alternative
 * So for now we shall use this cheap method lol
+
+Next time you can try:
+* .filter(event => event.event_type === 'Weekly Report')
+* in order to do a filter then map
 */
 
 export default function axiosGetWeeklyReport(calendarStore){

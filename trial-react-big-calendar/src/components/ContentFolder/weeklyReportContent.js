@@ -40,54 +40,18 @@ class WeeklyReportContent extends Component {
     }
   }
 
-  renderWeeklyReportData = () => {
-    const { calendarStore } = this.props;
-    const { getWeeklyReportData } = calendarStore;
-    console.log(getWeeklyReportData);
-    return(
-      <Grid container spacing={3}>
-        <Grid item xs={1} />
-        <Grid item xs={2}>
-          {/* Week nos. */}
-        </Grid>
-        <Grid item xs={2}>         
-          <List>
-            {getWeeklyReportData.map((text, index) => (
-              <ListItem>
-                <ListItemText key={index} primary={text.status} />
-              </ListItem>
-            ))}
-          </List>
-          {/* Also have this. The rest... */}
-        </Grid>
-        <Grid item xs={2}> 
-        {/* only thing we have?? lol */}
-          <List>
-            {getWeeklyReportData.map((text, index) => (
-              <ListItem>
-                <ListItemText primary={text.event_type} />
-              </ListItem>
-            ))}
-          </List>
-        </Grid>
-        <Grid item xs={2}>
-          {/* Submitted date */}
-        </Grid>
-        <Grid item xs={2}>
-          {/* No. of hours */}
-        </Grid>
-      </Grid>
-    )
-  }
-
   renderWeeklyReportExpansionPanel = () => {
     const { calendarStore, classes } = this.props;
     const { getWeeklyReportData} = calendarStore;
 
     return(
-      getWeeklyReportData.map((text, index) => (
-        <div className={classes.root}>
-          <ExpansionPanel defaultExpanded style={{overflow: 'hidden'}}>
+      getWeeklyReportData
+        .sort((a,b) => { //sort the dates so most recent date of submission is below
+          return new Date(a.start).getTime() - new Date(b.end).getTime()
+        })
+        .map((text, index) => (
+        <div className={classes.root} key={index}>
+          <ExpansionPanel  defaultExpanded style={{overflow: 'hidden'}}>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon/>}
             >
@@ -175,7 +139,6 @@ class WeeklyReportContent extends Component {
 
   render(){
     const { calendarStore } = this.props;
-    const { getWeeklyReportData } = calendarStore;
     return(
     <div style={{width: '100%'}}>
       <div>
@@ -184,7 +147,6 @@ class WeeklyReportContent extends Component {
             {this.renderHeader()} 
             {/* Honestly a bit buggy looking lol need to fix sticky issue else push expansion panel to the back */}
           </Paper>
-          {/* {this.renderWeeklyReportData()} */}
           {this.renderWeeklyReportExpansionPanel()}
         </Paper>
       </div>
