@@ -29,8 +29,6 @@ class LeftSideColumn extends Component {
       }
 
     render(){
-        // const date = moment();
-        // console.log(date);
         const { calendarStore } = this.props;
         return(
             <div className="LeftSideColumn">

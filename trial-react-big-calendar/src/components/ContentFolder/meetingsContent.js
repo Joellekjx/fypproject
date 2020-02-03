@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function WeeklyReportContent() {
+export default function MeetingsContent() {
   return (
     <div>
       Hello meetings content<br/>

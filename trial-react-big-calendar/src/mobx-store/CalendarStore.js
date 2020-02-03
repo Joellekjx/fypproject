@@ -2,14 +2,7 @@ import { decorate, observable, action, computed } from "mobx"
 
 class CalendarStore {
     newData = [];
-    selectedData = {
-        Id: '',
-        title: '',
-        start: '',
-        end: '',
-        event_type: '',
-        status: '',
-    }; //for moving between maincalendar to say weekly report
+    selectedData = {}; //for moving between maincalendar to say weekly report
     //this is a SPECIFIC onClick event
     defaultState = 'Weekly Report' //available as: 'Weekly Report', 'Meetings', 'Other Submissions'
     weeklyReportData = [];

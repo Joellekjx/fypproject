@@ -7,6 +7,7 @@ import { Select, InputLabel, makeStyles, FormControl, MenuItem, Grid } from '@ma
 import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { observer } from 'mobx-react-lite';
+import axiosPostCalendarEvent from './AxiosCalling/axiosPostCalendarEvent';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -34,19 +35,28 @@ function EventForm ({handleClose, start, end, calendarStore}) {
       e.preventDefault();
     }
 
-    if (category===""){
-      calendarStore.addData({
+    //check the date somewhere
+    //but let's do a risky post first
+
+    if (category===""){ 
+      //note to self: axios.posting "others" doesn't work. needs to be specific
+      axiosPostCalendarEvent(selectedStartDate, selectedEndDate, "Final Report", "Pending");
+      calendarStore.addData({ //note to self: u need to somehow use the task id
+        //then maybe u can consider deleting... but how lol
         title: "Others",
         start: selectedStartDate,
         end: selectedEndDate,
-        event_type: "Others"
+        event_type: "Others",
+        status: "Pending"
       })
     } else {
+      axiosPostCalendarEvent(selectedStartDate, selectedEndDate, category, "Pending")
       calendarStore.addData({
           title: category,
           start: selectedStartDate,
           end: selectedEndDate,
-          event_type: category
+          event_type: category,
+          status: "Pending"
       })
     }
     handleClose();
