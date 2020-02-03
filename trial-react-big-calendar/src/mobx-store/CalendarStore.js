@@ -6,7 +6,7 @@ class CalendarStore {
     //this is a SPECIFIC onClick event
     defaultState = 'Weekly Report' //available as: 'Weekly Report', 'Meetings', 'Other Submissions'
     weeklyReportData = [];
-    totalHoursSpent = "";
+    totalHoursSpent = "0";
 
     addData = (e) => {
         this.newData.push(e);

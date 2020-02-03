@@ -25,7 +25,7 @@ class LeftSideColumn extends Component {
     }
 
       consoleClick = () => {
-          console.log("click");
+        //   console.log("click");
       }
 
     render(){

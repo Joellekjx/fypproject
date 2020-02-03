@@ -49,7 +49,7 @@ class WeeklyReportContent extends Component {
 
     return(
       getWeeklyReportData
-        .sort((a,b) => { //sort the dates so most recent date of submission is below
+        .slice().sort((a,b) => { //sort the dates so most recent date of submission is below
           return new Date(a.start).getTime() - new Date(b.end).getTime()
         })
         .map((text, index) => (

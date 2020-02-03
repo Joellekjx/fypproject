@@ -8,7 +8,7 @@ import axiosGetFullData from "./components/AxiosCalling/axiosGetFullData";
 class App extends Component {
    componentDidMount(){
     const { calendarStore } = this.props;
-    if(calendarStore.getData.length == 0){
+    if(calendarStore.getData.length === 0){
       axiosGetFullData(calendarStore);
     }
   }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
@@ -18,7 +18,6 @@ const PassPropsToApp = () => {
 }
 
 const PassPropsToWR = () => {
-    console.log(calendarStore.getTotalHoursSpent);
     return(
         <ContentRouting
             calendarStore={calendarStore}

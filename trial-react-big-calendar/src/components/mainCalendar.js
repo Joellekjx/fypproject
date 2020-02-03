@@ -29,7 +29,7 @@ class MainCalender extends Component {
         isAddModalOpen: false,
         currentEvent: '',
       }
-  };  
+  }  
 
   handleClose = () => {
     this.setState({isAddModalOpen: false })
@@ -152,6 +152,8 @@ class MainCalender extends Component {
                       newStyle.backgroundColor = "lightgreen"; break;
                     case "Late Submission":
                       newStyle.backgroundColor = "lightyellow"; break;
+                    case "Late":
+                      newStyle.backgroundColor = "#ffcccb"; break;
                     default:
                       newStyle.backgroundColor = "lightgreen"; break;
                   }

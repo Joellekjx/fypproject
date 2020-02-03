@@ -11,7 +11,6 @@ Next time you can try:
 */
 
 export default function axiosGetWeeklyReport(calendarStore){
-    console.log('refresh and where u at? inside weekly report')
     var totalHours = 0;
     axios.get('http://127.0.0.1:8000/api/task/?task_type=weekly report')
         .then(res => {
@@ -32,7 +31,7 @@ export default function axiosGetWeeklyReport(calendarStore){
                 submission_date: indivRes.submission_date,
                 })
             })
-            if(calendarStore.getTotalHoursSpent === ""){
+            if(calendarStore.getTotalHoursSpent === "0"){
                 calendarStore.setTotalHoursSpent(totalHours);
             }
         })
