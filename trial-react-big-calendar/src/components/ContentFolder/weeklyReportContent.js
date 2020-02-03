@@ -5,6 +5,8 @@ import { observer } from 'mobx-react';
 import moment from 'moment';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { withStyles } from '@material-ui/core/styles';
+import WeeklyReportSubmissionPage from './weeklyReportSubmissionPage';
+import WeeklyReportCommentBox from './weeklyReportCommentBox';
 
 const useStyles = (theme) => ({
   root: {
@@ -21,7 +23,8 @@ const useStyles = (theme) => ({
     alignItems: 'center',
   },
   column: {
-    flexBasis: '33.33%',
+    flexBasis: '50%',
+    padding: '0 30px',
   }
 })
 
@@ -79,13 +82,10 @@ class WeeklyReportContent extends Component {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className={classes.details}>
               <div className={classes.column}>
-                Hello col 1
+                <WeeklyReportSubmissionPage calendarStore={calendarStore} />
               </div>
               <div className={classes.column}>
-                Hello col 2
-              </div>
-              <div className={classes.column}>
-                Hello col 3
+                <WeeklyReportCommentBox calendarStore={calendarStore} />
               </div>
             </ExpansionPanelDetails>
           </ExpansionPanel>
@@ -138,7 +138,6 @@ class WeeklyReportContent extends Component {
   }
 
   render(){
-    const { calendarStore } = this.props;
     return(
     <div style={{width: '100%'}}>
       <div>
