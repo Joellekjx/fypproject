@@ -8,6 +8,7 @@ import WeeklyReportContent from './ContentFolder/weeklyReportContent';
 import MeetingsContent from './ContentFolder/meetingsContent';
 import { Drawer, CssBaseline, AppBar, Toolbar, List, Typography, Divider, IconButton, ListItem, ListItemText, Box } from '@material-ui/core';
 import axiosGetFullData from './AxiosCalling/axiosGetFullData';
+import SideBarImg from "./img/sidebar-selected.svg";
 
 const drawerWidth = 240;
 
@@ -65,14 +66,27 @@ const useStyles = makeStyles(theme => ({
     }),
     marginLeft: 0,
   },
+  selected: {
+    "&.Mui-selected": {
+      // backgroundColor: "rgba(241,241,242,0.05)",
+      backgroundColor: "rgba(128, 128, 128, 0.2)",
+      // backgroundImage: `url(${SideBarImg})`,
+      width: "100%",
+      float: "left",
+      WebkitBoxShadow: "10px 10px 15px 0px rgba(0,0,0,0.05)",
+      boxShadow: "10px 10px 15px 0px rgba(0,0,0,0.05)",
+      MozBoxShadow: "10px 10px 15px 0px rgba(0,0,0,0.05)"
+    }
+  }
 }));
 
 export default function ContentRouting({ calendarStore }){
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
-    const pageEvents = ['Weekly Report', 'Meetings', 'Other Submissions'];
-    const [currentPageEvent, setCurrentPageEvent] = React.useState(calendarStore.getDefaultState);
+  const pageEvents = ['Weekly Report', 'Meetings', 'Other Submissions'];
+  const [currentPageEvent, setCurrentPageEvent] = React.useState(calendarStore.getDefaultState);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
     async function fetchData(){
       if(calendarStore.getData.length == 0){
@@ -107,6 +121,11 @@ export default function ContentRouting({ calendarStore }){
             return "No drawer found";
     }
 }
+  
+  const onClickHandler = (text, index) => {
+    setCurrentPageEvent(text);
+    setSelectedIndex(index);
+  }
 
   return ( //Note: pls change the color of the app bar/toolbar lol
     <div className={classes.root}>
@@ -161,7 +180,15 @@ export default function ContentRouting({ calendarStore }){
         <Divider />
         <List>
           {pageEvents.map((text, index) => (
-            <ListItem button key={text} onClick={() => setCurrentPageEvent(text)}>
+            <ListItem 
+              selected={selectedIndex === index}
+              button key={text} 
+              onClick={() => onClickHandler(text, index)}
+              classes={{
+                // gutters: classes.gutters,
+                selected: classes.selected
+              }}
+            >
               <ListItemText primary={text} />
             </ListItem>
           ))}

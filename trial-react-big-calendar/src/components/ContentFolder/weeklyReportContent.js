@@ -1,7 +1,11 @@
 import React, { Component, useEffect } from 'react';
-import { Paper, Typography, Grid, Box, Button } from '@material-ui/core';
+import { Paper, Typography, Grid, Box, Button, List, ListItem, ListItemText, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core';
 import axiosGetWeeklyReport from '../AxiosCalling/axiosGetWeeklyReport';
 import { observer } from 'mobx-react';
+import moment from 'moment';
+// import RenderWeeklyReportExpansionPanel from './renderWeeklyReportExpansionPanel';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 // import { toJS } from 'mobx';
 
 /**
@@ -13,7 +17,7 @@ class WeeklyReportContent extends Component {
   constructor(props){
     super(props);
     this.state = {
-      weeklyReportArray: []
+      weeklyReportArray: [],
     }
   }
 
@@ -28,15 +32,79 @@ class WeeklyReportContent extends Component {
     const { calendarStore } = this.props;
     const { getWeeklyReportData } = calendarStore;
     console.log(getWeeklyReportData);
-    // console.log(getWeeklyReportData);
-    // getWeeklyReportData.map((item, i) => {
-    //   console.log('hello')
-    //   return "hello"
-    // })
-    // calendarStore.weeklyReportData.map((item, i) => {
-    //   console.log(item.Id)
-    //   return <li>{item.Id}</li>
-    // })
+    return(
+      <Grid container spacing={3}>
+        <Grid item xs={1} />
+        <Grid item xs={2}>
+          {/* Week nos. */}
+        </Grid>
+        <Grid item xs={2}>         
+          <List>
+            {getWeeklyReportData.map((text, index) => (
+              <ListItem>
+                <ListItemText key={index} primary={text.status} />
+              </ListItem>
+            ))}
+          </List>
+          {/* Also have this. The rest... */}
+        </Grid>
+        <Grid item xs={2}> 
+        {/* only thing we have?? lol */}
+          <List>
+            {getWeeklyReportData.map((text, index) => (
+              <ListItem>
+                <ListItemText primary={text.event_type} />
+              </ListItem>
+            ))}
+          </List>
+        </Grid>
+        <Grid item xs={2}>
+          {/* Submitted date */}
+        </Grid>
+        <Grid item xs={2}>
+          {/* No. of hours */}
+        </Grid>
+      </Grid>
+    )
+  }
+
+  renderWeeklyReportExpansionPanel = () => {
+    const { calendarStore } = this.props;
+    const { getWeeklyReportData} = calendarStore;
+
+    return(
+      getWeeklyReportData.map((text, index) => (
+        <ExpansionPanel defaultExpanded style={{overflow: 'hidden'}}>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon/>}
+          >
+            <Grid container spacing={3}>
+              <Grid item xs={1} />
+              <Grid item xs={2}>
+                {/* Week nos. */}
+              </Grid>
+              <Grid item xs={2}>
+                {/* Status */}
+                {text.status}
+              </Grid>
+              <Grid item xs={2}> 
+                {/* Submission date -- need to format it to reflect date only */}
+                {text.event_type}
+              </Grid>
+              <Grid item xs={2}>
+                {/* Submitted date */}
+              </Grid>
+              <Grid item xs={2}>
+                {/* No. of hours */}
+              </Grid>
+            </Grid>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            Hello
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      ))
+    )
   }
 
   renderHeader = () => {
@@ -83,25 +151,36 @@ class WeeklyReportContent extends Component {
   }
 
   render(){
+    const { calendarStore } = this.props;
+    const { getWeeklyReportData } = calendarStore;
     return(
     <div style={{width: '100%'}}>
       <div>
         <Paper>
-          <Paper style={{position: "sticky", top: '4rem'}}>
-            {this.renderHeader()}
+          <Paper style={{position: "sticky", top: '4.5rem', height: '50px'}}>
+            {this.renderHeader()} 
+            {/* Honestly a bit buggy looking lol need to fix sticky issue else push expansion panel to the back */}
           </Paper>
-          <br/>
-          <br/>
-          hello
-          <br/>
-          <br/>
-          {this.renderWeeklyReportData()}
+          {/* {this.renderWeeklyReportData()} */}
+          {this.renderWeeklyReportExpansionPanel()}
         </Paper>
       </div>
       <Paper>
         
       </Paper>
 
+      {/* Can u do smth about changing the dates to print them? */}
+      {/* {getWeeklyReportData.map(item => )} */}
+      {/* {getWeeklyReportData.map(item => console.log(item.end))} */}
+      {getWeeklyReportData.map((text, index) => (
+        <ListItem>
+          <ListItemText>
+            {/* {text.end} */}
+            {console.log(text.end)}
+            ok
+          </ListItemText>
+        </ListItem>
+      ))}
     </div>
     )
   }
@@ -109,104 +188,3 @@ class WeeklyReportContent extends Component {
 
 WeeklyReportContent = observer(WeeklyReportContent);
 export default WeeklyReportContent;
-
-// export default function WeeklyReportContent({calendarStore}) {
-//   // const [placeholder, setPlaceholder] = React.useState(calendarStore.getWeeklyReportData);
-//   // const [placeholder, setPlaceholder] = React.useState(toJS(calendarStore.getWeeklyReportData));
-
-//   async function fetchData(){
-//     if(calendarStore.getWeeklyReportData.length == 0){
-//       axiosGetWeeklyReport(calendarStore);
-//     }
-//   }
-
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
-
-//   // const renderWeeklyReportData = () => {
-//   //   console.log("inside renderweeklyreportdata")
-//   //   console.log(placeholder);
-//   //   // console.log('weekly report data above')
-//   //   // console.log(toJS(placeholder.Id));
-
-//   //   // calendarStore.getWeeklyReportData.map((item, i) => {
-//   //   //   console.log(item.Id)
-//   //   //   <li key={i}>Hello</li>
-//   //   // })
-//   //   // placeholder.map((anObjectMapped, index) => {
-//   //   //   console.log(toJS(anObjectMapped));
-//   //   //   return(
-//   //   //     console.log("hello?")
-//   //   //     // <p key={anObjectMapped.Id}>{anObjectMapped.title}</p>
-//   //   //   )
-//   //   // })
-//   //   placeholder.map(data => console.log(data));
-//   //   console.log("lol wtf??")
-//   // }
-
-//   const renderHeader = () => {
-//     return(
-//       <Grid container spacing={3}>
-//         <Grid item xs={1}/>
-//         <Grid item xs={2}>
-//           <Typography variant="subtitle1">
-//             <Box fontWeight="fontWeightBold">
-//               Week No.
-//             </Box>
-//           </Typography>
-//         </Grid>
-//         <Grid item xs={2}>
-//           <Typography variant="subtitle1">
-//             <Box fontWeight="fontWeightBold">
-//               Submission Status
-//             </Box>
-//           </Typography>
-//         </Grid>
-//         <Grid item xs={2}>
-//           <Typography variant="subtitle1">
-//             <Box fontWeight="fontWeightBold">
-//               Submission Date
-//             </Box>
-//           </Typography>
-//         </Grid>
-//         <Grid item xs={2}>
-//           <Typography variant="subtitle1">
-//             <Box fontWeight="fontWeightBold">
-//               Submitted Date
-//             </Box>
-//           </Typography>
-//         </Grid>
-//         <Grid item xs={2}>
-//           <Typography variant="subtitle1">
-//             <Box fontWeight="fontWeightBold">
-//               No. of hours
-//             </Box>
-//           </Typography>
-//         </Grid>
-//       </Grid>
-//     )
-//   }
-
-//   return (
-//     <div style={{width: '100%'}}>
-//       <div>
-//         <Paper>
-//           <Paper style={{position: "sticky", top: '4rem'}}>
-//             {renderHeader()}
-//           </Paper>
-//           <br/>
-//           <br/>
-//           hello
-//           <br/>
-//           <br/>
-//           {/* {renderWeeklyReportData()} */}
-//         </Paper>
-//       </div>
-//       <Paper>
-        
-//       </Paper>
-
-//     </div>
-//   );
-// }
