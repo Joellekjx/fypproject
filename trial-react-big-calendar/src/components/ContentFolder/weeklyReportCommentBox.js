@@ -8,8 +8,16 @@ const useStyles = (theme) => ({
     width: '100%',
   },
   heading: {
+    fontSize: theme.typography.pxToRem(20),
+    fontWeight: 'bold'
+  },
+  secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: 'bold'
+  },
+  bodyText: {
+    fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary,
   },
 })
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Paper, Typography, Grid, Box, List, ListItem, ListItemText, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Divider } from '@material-ui/core';
+import { Paper, Typography, Grid, Box, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Divider } from '@material-ui/core';
 import axiosGetWeeklyReport from '../AxiosCalling/axiosGetWeeklyReport';
 import { observer } from 'mobx-react';
 import moment from 'moment';
