@@ -68,9 +68,7 @@ const useStyles = makeStyles(theme => ({
   },
   selected: {
     "&.Mui-selected": {
-      // backgroundColor: "rgba(241,241,242,0.05)",
       backgroundColor: "rgba(128, 128, 128, 0.2)",
-      // backgroundImage: `url(${SideBarImg})`,
       width: "100%",
       float: "left",
       WebkitBoxShadow: "10px 10px 15px 0px rgba(0,0,0,0.05)",
@@ -89,7 +87,9 @@ export default function ContentRouting({ calendarStore }){
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
     async function fetchData(){
-      if(calendarStore.getData.length == 0){
+      if(calendarStore.getData.length === 0){
+        console.log(calendarStore.getData.length);
+        console.log('what is happening');
         axiosGetFullData(calendarStore);
       }
     }
@@ -107,8 +107,6 @@ export default function ContentRouting({ calendarStore }){
   };
 
   const renderSwitchCase = (param) => {
-    // console.log(param);
-    // console.log("param above");
     switch(param){
         case 'Meetings':
             return <MeetingsContent />
@@ -125,6 +123,10 @@ export default function ContentRouting({ calendarStore }){
   const onClickHandler = (text, index) => {
     setCurrentPageEvent(text);
     setSelectedIndex(index);
+  }
+
+  const determineTotalHourView = () => {
+    return currentPageEvent === "Weekly Report" ? "Total no. of hours: " + calendarStore.getTotalHoursSpent  : "";
   }
 
   return ( //Note: pls change the color of the app bar/toolbar lol
@@ -156,7 +158,8 @@ export default function ContentRouting({ calendarStore }){
             </div>
             <div style={{float: 'right'}}>
             <Typography variant="subtitle1" noWrap>
-                Total no. of hours: 34 
+                {/* Total no. of hours: 34 */}
+                {determineTotalHourView()} 
                 {/* rmb to change the "hours" */}
             </Typography>
             </div>

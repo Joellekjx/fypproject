@@ -6,6 +6,7 @@ class CalendarStore {
     //this is a SPECIFIC onClick event
     defaultState = 'Weekly Report' //available as: 'Weekly Report', 'Meetings', 'Other Submissions'
     weeklyReportData = [];
+    totalHoursSpent = "";
 
     addData = (e) => {
         this.newData.push(e);
@@ -28,6 +29,10 @@ class CalendarStore {
         this.defaultState = e;
     }
 
+    setTotalHoursSpent = (hours) => {
+        this.totalHoursSpent = hours;
+    }
+
     get getData() {
         return this.newData;
     }
@@ -47,6 +52,10 @@ class CalendarStore {
     get getWeeklyReportData(){
         return this.weeklyReportData;
     }
+
+    get getTotalHoursSpent(){
+        return this.totalHoursSpent;
+    }
 }
 
 decorate(CalendarStore, {
@@ -54,15 +63,18 @@ decorate(CalendarStore, {
     selectedData: observable,
     defaultState: observable,
     weeklyReportData: observable,
+    totalHoursSpent: observable,
     addData: action,
     addSelectedData: action,
     changeDefaultState: action,
     addWeeklyReportData: action,
+    setTotalHoursSpent: action,
     getData: computed,
     getSelectedData: computed,
     getDataLength: computed,
     getDefaultState: computed,
-    getWeeklyReportData: computed
+    getWeeklyReportData: computed,
+    getTotalHoursSpent: computed,
 })
 
 export default CalendarStore;

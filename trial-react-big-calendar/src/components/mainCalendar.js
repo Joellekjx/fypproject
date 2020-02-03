@@ -150,6 +150,8 @@ class MainCalender extends Component {
                       newStyle.backgroundColor = "lightgrey"; break;
                     case "Pending":
                       newStyle.backgroundColor = "lightgreen"; break;
+                    case "Late Submission":
+                      newStyle.backgroundColor = "lightyellow"; break;
                     default:
                       newStyle.backgroundColor = "lightgreen"; break;
                   }

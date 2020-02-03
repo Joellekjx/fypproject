@@ -18,6 +18,7 @@ const PassPropsToApp = () => {
 }
 
 const PassPropsToWR = () => {
+    console.log(calendarStore.getTotalHoursSpent);
     return(
         <ContentRouting
             calendarStore={calendarStore}

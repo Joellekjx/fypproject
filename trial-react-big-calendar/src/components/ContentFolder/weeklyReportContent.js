@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Paper, Typography, Grid, Box, List, ListItem, ListItemText, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core';
+import { Paper, Typography, Grid, Box, List, ListItem, ListItemText, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Divider } from '@material-ui/core';
 import axiosGetWeeklyReport from '../AxiosCalling/axiosGetWeeklyReport';
 import { observer } from 'mobx-react';
 import moment from 'moment';
@@ -20,7 +20,7 @@ const useStyles = (theme) => ({
     color: theme.palette.text.secondary,
   },
   details: {
-    alignItems: 'center',
+    float: 'center',
   },
   column: {
     flexBasis: '50%',
@@ -38,7 +38,7 @@ class WeeklyReportContent extends Component {
 
   componentDidMount(){
     const { calendarStore } = this.props;
-    if (calendarStore.getWeeklyReportData.length == 0){
+    if (calendarStore.getWeeklyReportData.length === 0){
       axiosGetWeeklyReport(calendarStore);
     }
   }
@@ -58,7 +58,7 @@ class WeeklyReportContent extends Component {
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon/>}
             >
-              <Grid container spacing={3}>
+              <Grid container spacing={4}>
                 <Grid item xs={1} />
                 <Grid item xs={2}>
                   {/* Week nos. */}
@@ -74,20 +74,23 @@ class WeeklyReportContent extends Component {
                 </Grid>
                 <Grid item xs={2}>
                   {/* Submitted date */}
+                  <Typography className={classes.secondaryHeading}>{moment(text.submission_date).format("DD/MM/YYYY")}</Typography>
                 </Grid>
                 <Grid item xs={2}>
                   {/* No. of hours */}
+                  <Typography className={classes.secondaryHeading}>{text.hours_spent}</Typography>
                 </Grid>
               </Grid>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className={classes.details}>
               <div className={classes.column}>
-                <WeeklyReportSubmissionPage calendarStore={calendarStore} />
+                <WeeklyReportSubmissionPage calendarStore={calendarStore} hours_spent={text.hours_spent} content={text.content} status={text.status} />
               </div>
               <div className={classes.column}>
-                <WeeklyReportCommentBox calendarStore={calendarStore} />
+                <WeeklyReportCommentBox calendarStore={calendarStore} status={text.status} />
               </div>
             </ExpansionPanelDetails>
+            <Divider/>
           </ExpansionPanel>
         </div>
       ))
@@ -115,7 +118,7 @@ class WeeklyReportContent extends Component {
         <Grid item xs={2}>
           <Typography variant="subtitle1">
             <Box fontWeight="fontWeightBold">
-              Submission Date
+              Deadline
             </Box>
           </Typography>
         </Grid>

@@ -8,8 +8,16 @@ const useStyles = (theme) => ({
     width: '100%',
   },
   heading: {
+    fontSize: theme.typography.pxToRem(20),
+    fontWeight: 'bold'
+  },
+  secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: 'bold'
+  },
+  bodyText: {
+    fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary,
   },
   paper: {
     width: '80%',
@@ -26,21 +34,52 @@ class WeeklyReportSubmissionPage extends Component {
     }
   }
 
-  renderWeeklyReportSubmissionPaper = () => {
-    const { classes } = this.props;
+  renderWeeklyReportCompletedPaper = () => {
+    const { classes, content, hours_spent } = this.props;
     return(
       <Paper elevation={1} className={classes.paper}>
-        Hours spent: <br/>
-        Things completed:
+        <div style={{display: 'flex', padding: '10px'}}>
+          <Typography className={classes.secondaryHeading}>
+            Hours spent: &nbsp; 
+          </Typography>
+          <Typography className={classes.bodyText}>
+            {hours_spent}
+          </Typography>
+        </div>
+        <div style={{padding: '0 10px 10px 10px'}}>
+          <Typography className={classes.secondaryHeading}>
+            Things completed:
+          </Typography>
+          <Typography className={classes.bodyText}>
+            {content}
+          </Typography>
+        </div>
       </Paper>
     )
   }
-  render(){
+
+  renderWeeklyReportPendingPaper = () => {
     const { classes } = this.props;
     return(
-    <div style={{width: '100%'}}>
+      <Paper elevation={1} className={classes.paper}>
+        <Typography className={classes.secondaryHeading}>
+          Hours spent: 
+        </Typography>
+        <Typography className={classes.secondaryHeading}>
+          Things completed:
+        </Typography>
+      </Paper>
+    )
+  }
+
+
+  render(){
+    const { classes, status } = this.props;
+    
+    return (
+    <div style={{width: '100%', padding: '10px'}}>
       <Typography className={classes.heading}>Weekly Report Submission</Typography>
-      {this.renderWeeklyReportSubmissionPaper()}
+      {status==="Completed"||"Late Submission" ? this.renderWeeklyReportCompletedPaper() : this.renderWeeklyReportPendingPaper()}
     </div>
     )
   }
