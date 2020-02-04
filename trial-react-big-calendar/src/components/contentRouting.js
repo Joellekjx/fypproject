@@ -70,9 +70,6 @@ const useStyles = (theme) => ({
         backgroundColor: "rgba(128, 128, 128, 0.2)",
         width: "100%",
         float: "left",
-        WebkitBoxShadow: "10px 10px 15px 0px rgba(0,0,0,0.05)",
-        boxShadow: "10px 10px 15px 0px rgba(0,0,0,0.05)",
-        MozBoxShadow: "10px 10px 15px 0px rgba(0,0,0,0.05)"
       }
     }
 })

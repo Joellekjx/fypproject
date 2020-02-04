@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { withStyles } from '@material-ui/core/styles';
 import { Typography, Paper, TextField, Button } from '@material-ui/core';
+import axiosPut from '../AxiosCalling/axiosPut';
+import moment from 'moment';
 
 const useStyles = (theme) => ({
   root: {
@@ -33,6 +35,8 @@ class WeeklyReportSubmissionPage extends Component {
     super(props);
     this.state = {
       // weeklyReportArray: [],
+      hoursSpent: "",
+      thingsCompleted: "",
     }
   }
 
@@ -60,22 +64,53 @@ class WeeklyReportSubmissionPage extends Component {
     )
   }
 
+  onSubmitForm = (e) => {
+    e.preventDefault();
+    const { Id, calendarStore, task_type, task_created, student_id, project_id, tutor_id } = this.props;
+    const { hoursSpent, thingsCompleted } = this.state;
+    var submissionTime = moment();
+    //NOTE: TASK DUE DATE==TODAY
+    if (hoursSpent === "" || thingsCompleted === ""){
+      alert("Please field in all fields");
+    } else {
+      axiosPut(Id, task_type, task_created, submissionTime, project_id, student_id, tutor_id, "Completed", thingsCompleted, hoursSpent);
+    }
+    //still not v accurate cause need:
+    //1. the form to clear
+    //2. the form needs to change to reflect the added inputs
+  }
+
+  handleChange = event => {
+    const value = event.target.value;
+    this.setState({
+      ...this.state,
+      [event.target.name]: value
+    })
+  }
+
   renderWeeklyReportPendingPaper = () => {
     const { classes } = this.props;
+    const { hoursSpent, thingsCompleted } = this.state;
+
     return(
-      <form noValidate autoComplete="off">
+      <form  noValidate autoComplete="off" onSubmit={this.onSubmitForm} method="POST">
         <Paper elevation={2} className={classes.paper}>
           <div style={{display: 'flex'}}>
             <Typography className={classes.secondaryHeading}>
               Hours spent: &nbsp;
               {/* comment: reduce the height of textfield pls */}
+              {/* also! comment: add a key value pls ==> when you add hours spent and things completed
+              it needs to be pushed into the right id*/}
             </Typography>
             <TextField 
-              id="outlined-basic" 
+              // id="outlined-basic" 
               variant="outlined" 
               size="small"
               type="number"
               style={{width: '12%'}}
+              value={hoursSpent}
+              onChange={this.handleChange}
+              name="hoursSpent"
             />
           </div>
           <Typography className={classes.secondaryHeading}>
@@ -86,24 +121,40 @@ class WeeklyReportSubmissionPage extends Component {
             multiline
             rows="7"
             style={{width: '100%'}}
+            value={thingsCompleted}
+            onChange={this.handleChange}
+            name="thingsCompleted"
           />
           <div style={{padding: '10px 0px 5px 0px'}}>
             <Button style={{}}><strong>Add attachment</strong></Button>
-            <Button variant="contained" style={{float: 'right'}}>Submit Report</Button>
+            <Button type="submit" color="primary" variant="contained" style={{float: 'right'}}>Submit Report</Button>
           </div>
         </Paper>
       </form>
     )
   }
 
+  renderSwitchPaper = (status) => {
+    switch(status){
+      case "Completed":
+      case "Late Submission":
+        return this.renderWeeklyReportCompletedPaper();
+      default:
+        return this.renderWeeklyReportPendingPaper();
+    }
+  }
+
 
   render(){
-    const { classes, status } = this.props;
-    
+    const { classes, status, calendarStore } = this.props;
+    // const { getWeeklyReportData } = calendarStore;
+    // console.log(getWeeklyReportData.student_id)
+    // console.log("hello");
+
     return (
     <div style={{width: '100%', padding: '10px'}}>
       <Typography className={classes.heading}>Weekly Report Submission</Typography>
-      {(status===("Completed"||"Late Submission")) ? this.renderWeeklyReportCompletedPaper() : this.renderWeeklyReportPendingPaper()}
+      {this.renderSwitchPaper(status)}
     </div>
     )
   }

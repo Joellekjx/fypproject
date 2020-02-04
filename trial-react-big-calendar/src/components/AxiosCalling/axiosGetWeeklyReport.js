@@ -29,6 +29,9 @@ export default function axiosGetWeeklyReport(calendarStore){
                 content: indivRes.content,
                 hours_spent: indivRes.hours_spent,
                 submission_date: indivRes.submission_date,
+                project_id: indivRes.project_id,
+                student_id: indivRes.student_id,
+                tutor_id: indivRes.tutor_id,
                 })
             })
             if(calendarStore.getTotalHoursSpent === "0"){

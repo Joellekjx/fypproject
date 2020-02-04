@@ -36,6 +36,7 @@ class WeeklyReportContent extends Component {
     }
   }
 
+  //Only update weekly report if the array is empty
   componentDidMount(){
     const { calendarStore } = this.props;
     if (calendarStore.getWeeklyReportData.length === 0){
@@ -62,6 +63,8 @@ class WeeklyReportContent extends Component {
                 <Grid item xs={1} />
                 <Grid item xs={2}>
                   {/* Week nos. */}
+                  {/* NOTE TO SELF: Pls remove this afterwards. This is just a tester!! */}
+                  <Typography className={classes.secondaryHeading}>{text.Id}</Typography>
                 </Grid>
                 <Grid item xs={2}>
                   {/* Status */}
@@ -74,7 +77,9 @@ class WeeklyReportContent extends Component {
                 </Grid>
                 <Grid item xs={2}>
                   {/* Submitted date */}
-                  <Typography className={classes.secondaryHeading}>{moment(text.submission_date).format("DD/MM/YYYY")}</Typography>
+                  <Typography className={classes.secondaryHeading}>
+                    {text.submission_date === null ? "Not submitted yet" : "Submitted on " + moment(text.submission_date).format("DD/MM/YYYY") }
+                  </Typography>
                 </Grid>
                 <Grid item xs={2}>
                   {/* No. of hours */}
@@ -84,7 +89,7 @@ class WeeklyReportContent extends Component {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className={classes.details}>
               <div className={classes.column}>
-                <WeeklyReportSubmissionPage calendarStore={calendarStore} hours_spent={text.hours_spent} content={text.content} status={text.status} />
+                <WeeklyReportSubmissionPage calendarStore={calendarStore} task_type={text.event_type} task_created={text.end} student_id={text.student_id} tutor_id={text.tutor_id} project_id={text.project_id} Id={text.Id} hours_spent={text.hours_spent} content={text.content} status={text.status} />
               </div>
               <div className={classes.column}>
                 <WeeklyReportCommentBox calendarStore={calendarStore} status={text.status} />
