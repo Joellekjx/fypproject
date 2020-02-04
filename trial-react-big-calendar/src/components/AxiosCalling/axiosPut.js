@@ -5,15 +5,15 @@ import axios from 'axios';
 export default function axiosPut(Id, task_type, task_created_date, task_due_date, projectId, studentId, tutorId, taskStatus, thingsCompleted, hoursSpent){
     console.log(Id);
     console.log("why do u change the Id here???")
-    axios.post("http://127.0.0.1:8000/api/task/?task_id=" + Id, {
-        task_id: Id,
-        task_type: task_type,
-        task_created_date: task_created_date,
-        task_due_date: task_created_date,
+    axios.put("http://127.0.0.1:8000/api/task/"+ Id, {
+        // task_id: Id,
+        // task_type: task_type,
+        // task_created_date: task_created_date,
+        // task_due_date: task_created_date,
         submission_date: task_due_date,
-        project_id: projectId,
-        student_id: studentId,
-        tutor_id: tutorId,
+        // project_id: projectId,
+        // student_id: studentId,
+        // tutor_id: tutorId,
         status: taskStatus,
         hours_spent: hoursSpent,
         content: thingsCompleted,
