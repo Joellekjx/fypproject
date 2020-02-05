@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Paper, Typography, Grid, Box, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Divider } from '@material-ui/core';
-import axiosGetWeeklyReport from '../AxiosCalling/axiosGetWeeklyReport';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { withStyles } from '@material-ui/core/styles';
 import WeeklyReportSubmissionPage from './weeklyReportSubmissionPage';
 import WeeklyReportCommentBox from './weeklyReportCommentBox';
+import axiosGetFullData from "../AxiosCalling/axiosGetFullData";
 
 const useStyles = (theme) => ({
   root: {
@@ -34,28 +34,26 @@ class WeeklyReportContent extends Component {
     this.state = {
       weeklyReportArray: [],
     }
-  }
-
-  //Only update weekly report if the array is empty
-  componentDidMount(){
-    const { calendarStore } = this.props;
-    if (calendarStore.getWeeklyReportData.length === 0){
-      axiosGetWeeklyReport(calendarStore);
-    }
+    // this.ref = React.createRef();
+    // this.ref = [React.createRef(), React.createRef()];
+    // this.`ref${text.Id}` = React.createRef()
+    // this.ref5 = React.createRef()
   }
 
   renderWeeklyReportExpansionPanel = () => {
     const { calendarStore, classes } = this.props;
-    const { getWeeklyReportData} = calendarStore;
+    const { getData } = calendarStore;
 
     return(
-      getWeeklyReportData
+      getData
+        .filter(indivData => indivData.event_type === "Weekly Report")
         .slice().sort((a,b) => { //sort the dates so most recent date of submission is below
           return new Date(a.start).getTime() - new Date(b.end).getTime()
         })
-        .map((text, index) => (
+        .map((text, index) => {
+        return(
         <div className={classes.root} key={index}>
-          <ExpansionPanel  defaultExpanded style={{overflow: 'hidden'}}>
+          <ExpansionPanel defaultExpanded style={{overflow: 'hidden'}}>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon/>}
             >
@@ -63,8 +61,10 @@ class WeeklyReportContent extends Component {
                 <Grid item xs={1} />
                 <Grid item xs={2}>
                   {/* Week nos. */}
+                  {console.log(index)}
                   {/* NOTE TO SELF: Pls remove this afterwards. This is just a tester!! */}
                   <Typography className={classes.secondaryHeading}>{text.Id}</Typography>
+                  {text.event_type}
                 </Grid>
                 <Grid item xs={2}>
                   {/* Status */}
@@ -98,7 +98,10 @@ class WeeklyReportContent extends Component {
             <Divider/>
           </ExpansionPanel>
         </div>
-      ))
+        )  
+      }
+      // )
+      )
     )
   }
 

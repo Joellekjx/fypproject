@@ -126,5 +126,5 @@ function EventForm ({handleClose, start, end, calendarStore}) {
   );
 }
 
-EventForm = observer(EventForm);
+// EventForm = observer(EventForm);
 export default EventForm;

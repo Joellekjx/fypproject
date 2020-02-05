@@ -67,13 +67,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
-### Structure of Router
-
-Home Page --- contains leftSideColumn and mainCalendar
-    |
-    |____Weekly Report Page
-    |
-    |____
 
 ### How to start backend on your first time:
 ```
@@ -95,3 +88,7 @@ source env/bin/activate
 cd fyp_dip_ms/
 python manage.py runserver
 ```
+
+## Issues that needs to be fixed:
+1. Comment box: axios or pull in server like express & socket.io?
+2. How to 'focus' when you click on an event? Look at alternatives to history.push else Link? Alternatively look at createRef mapped -- else you might want to remove "Hash Link" in yr dependencies

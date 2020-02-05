@@ -6,10 +6,11 @@ import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { withRouter } from "react-router-dom";
 import './styles.scss';
 import WorkMonth from '../lib/WorkMonth';
-import { observer, PropTypes as MobXPropTypes } from "mobx-react";
+import { observer } from "mobx-react";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Dialog } from "@material-ui/core";
+import { HashLink as Link } from 'react-router-hash-link';
 
 const localizer = momentLocalizer(moment);
 const DnDCalendar = withDragAndDrop(Calendar);
@@ -121,7 +122,8 @@ class MainCalender extends Component {
 
   render(){
     const { calendarStore } = this.props;
-    const { getData, getDataLength } = calendarStore; //why the fk is getDataLength affecting appearance??
+    const { getData, getWeeklyReportData } = calendarStore; //why the fk is getDataLength affecting appearance??
+    console.log(getWeeklyReportData);
     return(
       <div className="MainCalendar">
           <DnDCalendar

@@ -78,7 +78,6 @@ class ContentRoutingTest extends Component {
   constructor(props){
     super(props);
     this.state = {
-      // weeklyReportArray: [],
       open: true,
       pageEvents: ['Weekly Report', 'Meetings', 'Other Submissions'],
       currentPageEvent: this.props.calendarStore.getDefaultState,

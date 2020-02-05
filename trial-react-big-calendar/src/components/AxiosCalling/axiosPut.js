@@ -3,8 +3,6 @@ import axios from 'axios';
 //axios put update a task
 //updates only: status, hours spent and thingscompleted
 export default function axiosPut(Id, task_type, task_created_date, task_due_date, projectId, studentId, tutorId, taskStatus, thingsCompleted, hoursSpent){
-    console.log(Id);
-    console.log("why do u change the Id here???")
     axios.put("http://127.0.0.1:8000/api/task/"+ Id, {
         // task_id: Id,
         // task_type: task_type,

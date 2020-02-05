@@ -66,7 +66,7 @@ class WeeklyReportSubmissionPage extends Component {
 
   onSubmitForm = (e) => {
     e.preventDefault();
-    const { Id, calendarStore, task_type, task_created, student_id, project_id, tutor_id } = this.props;
+    const { Id, task_type, task_created, student_id, project_id, tutor_id } = this.props;
     const { hoursSpent, thingsCompleted } = this.state;
     var submissionTime = moment();
     //NOTE: TASK DUE DATE==TODAY
@@ -86,6 +86,10 @@ class WeeklyReportSubmissionPage extends Component {
       ...this.state,
       [event.target.name]: value
     })
+  }
+
+  addAttachment = () => {
+    //something happens in this attachment side
   }
 
   renderWeeklyReportPendingPaper = () => {
@@ -126,7 +130,7 @@ class WeeklyReportSubmissionPage extends Component {
             name="thingsCompleted"
           />
           <div style={{padding: '10px 0px 5px 0px'}}>
-            <Button style={{}}><strong>Add attachment</strong></Button>
+            <Button onClick={this.addAttachment} style={{}}><strong>Add attachment</strong></Button>
             <Button type="submit" color="primary" variant="contained" style={{float: 'right'}}>Submit Report</Button>
           </div>
         </Paper>
@@ -146,10 +150,7 @@ class WeeklyReportSubmissionPage extends Component {
 
 
   render(){
-    const { classes, status, calendarStore } = this.props;
-    // const { getWeeklyReportData } = calendarStore;
-    // console.log(getWeeklyReportData.student_id)
-    // console.log("hello");
+    const { classes, status } = this.props;
 
     return (
     <div style={{width: '100%', padding: '10px'}}>
