@@ -47,16 +47,16 @@ class taskSerializer(serializers.ModelSerializer):
 
 
 class commentSerializer(serializers.ModelSerializer):
-    user_id = userNameSerializer()
+    # user_id = userNameSerializer()
 
     class Meta:
         model = Comment
         fields = ('comment_id', 'task_id', 'user_id', 'content', 'creation_date')
 
-    def create(self, validated_data):
-        userid_data = validated_data.pop('user_id')
-        user = AuthUser.objects.create(**userid_data)
+    # def create(self, validated_data):
+    #     userid_data = validated_data.pop('user_id')
+    #     user = AuthUser.objects.create(**userid_data)
 
-        comment = Comment.objects.create(userid=user **validated_data)
+    #     comment = Comment.objects.create(userid=user **validated_data)
 
-        return comment
+    #     return comment

@@ -79,8 +79,8 @@ class AuthUserUserPermissions(models.Model):
 
 class Comment(models.Model):
     comment_id = models.AutoField(db_column='comment_Id', primary_key=True)  # Field name made lowercase.
-    task = models.ForeignKey('Task', models.DO_NOTHING, db_column='task_Id')  # Field name made lowercase.
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='user_Id')  # Field name made lowercase.
+    task_id = models.ForeignKey('Task', models.DO_NOTHING, db_column='task_Id')  # Field name made lowercase.
+    user_id = models.ForeignKey(AuthUser, models.DO_NOTHING, related_name='user_id', db_column='user_Id')  # Field name made lowercase.
     content = models.CharField(max_length=3000, blank=True, null=True)
     creation_date = models.DateTimeField(db_column='creation_Date')  # Field name made lowercase.
 
