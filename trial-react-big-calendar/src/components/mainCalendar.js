@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Dialog } from "@material-ui/core";
-import { HashLink as Link } from 'react-router-hash-link';
+// import { HashLink as Link } from 'react-router-hash-link';
 
 const localizer = momentLocalizer(moment);
 const DnDCalendar = withDragAndDrop(Calendar);

@@ -33,11 +33,8 @@ class WeeklyReportContent extends Component {
     super(props);
     this.state = {
       weeklyReportArray: [],
+      testArray: [1, 2, 3, 4, 5],
     }
-    // this.ref = React.createRef();
-    // this.ref = [React.createRef(), React.createRef()];
-    // this.`ref${text.Id}` = React.createRef()
-    // this.ref5 = React.createRef()
   }
 
   renderWeeklyReportExpansionPanel = () => {
@@ -51,58 +48,57 @@ class WeeklyReportContent extends Component {
           return new Date(a.start).getTime() - new Date(b.end).getTime()
         })
         .map((text, index) => {
-        return(
-        <div className={classes.root} key={index}>
-          <ExpansionPanel defaultExpanded style={{overflow: 'hidden'}}>
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon/>}
-            >
-              <Grid container spacing={4}>
-                <Grid item xs={1} />
-                <Grid item xs={2}>
-                  {/* Week nos. */}
-                  {console.log(index)}
-                  {/* NOTE TO SELF: Pls remove this afterwards. This is just a tester!! */}
-                  <Typography className={classes.secondaryHeading}>{text.Id}</Typography>
-                  {text.event_type}
-                </Grid>
-                <Grid item xs={2}>
-                  {/* Status */}
-                  <Typography className={classes.secondaryHeading}>{text.status}</Typography>
-                </Grid>
-                <Grid item xs={2}> 
-                  {/* Submission date -- need to format it to reflect date only */}
-                  {/* {text.event_type} */}
-                  <Typography className={classes.secondaryHeading}>{moment(text.end).format("DD/MM/YYYY")}</Typography>
-                </Grid>
-                <Grid item xs={2}>
-                  {/* Submitted date */}
-                  <Typography className={classes.secondaryHeading}>
-                    {text.submission_date === null ? "Not submitted yet" : "Submitted on " + moment(text.submission_date).format("DD/MM/YYYY") }
-                  </Typography>
-                </Grid>
-                <Grid item xs={2}>
-                  {/* No. of hours */}
-                  <Typography className={classes.secondaryHeading}>{text.hours_spent}</Typography>
-                </Grid>
-              </Grid>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails className={classes.details}>
-              <div className={classes.column}>
-                <WeeklyReportSubmissionPage calendarStore={calendarStore} task_type={text.event_type} task_created={text.end} student_id={text.student_id} tutor_id={text.tutor_id} project_id={text.project_id} Id={text.Id} hours_spent={text.hours_spent} content={text.content} status={text.status} />
-              </div>
-              <div className={classes.column}>
-                <WeeklyReportCommentBox calendarStore={calendarStore} status={text.status} />
-              </div>
-            </ExpansionPanelDetails>
-            <Divider/>
-          </ExpansionPanel>
-        </div>
-        )  
+          return(
+            // <div className={classes.root} key={index} style={{height: '100%'}}>
+              <ExpansionPanel defaultExpanded style={{overflow: 'hidden'}} className={classes.root} key={index}>
+                <ExpansionPanelSummary
+                  expandIcon={<ExpandMoreIcon/>}
+                >
+                  <Grid container spacing={4}>
+                    <Grid item xs={1} />
+                    <Grid item xs={2}>
+                      {/* Week nos. */}
+                      {console.log(index)}
+                      {/* NOTE TO SELF: Pls remove this afterwards. This is just a tester!! */}
+                      <Typography className={classes.secondaryHeading}>{text.Id}</Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                      {/* Status */}
+                      <Typography className={classes.secondaryHeading}>{text.status}</Typography>
+                    </Grid>
+                    <Grid item xs={2}> 
+                      {/* Submission date -- need to format it to reflect date only */}
+                      {/* {text.event_type} */}
+                      <Typography className={classes.secondaryHeading}>{moment(text.end).format("DD/MM/YYYY")}</Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                      {/* Submitted date */}
+                      <Typography className={classes.secondaryHeading}>
+                        {text.submission_date === null ? "Not submitted yet" : "Submitted on " + moment(text.submission_date).format("DD/MM/YYYY") }
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                      {/* No. of hours */}
+                      <Typography className={classes.secondaryHeading}>{text.hours_spent}</Typography>
+                    </Grid>
+                  </Grid>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails className={classes.details}>
+                  <div className={classes.column}>
+                    <WeeklyReportSubmissionPage calendarStore={calendarStore} task_type={text.event_type} task_created={text.end} student_id={text.student_id} tutor_id={text.tutor_id} project_id={text.project_id} Id={text.Id} hours_spent={text.hours_spent} content={text.content} status={text.status} />
+                  </div>
+                  <div className={classes.column}>
+                    <WeeklyReportCommentBox calendarStore={calendarStore} status={text.status} />
+                  </div>
+                </ExpansionPanelDetails>
+                <Divider/>
+              </ExpansionPanel>
+            // </div>
+          )  
       }
-      // )
       )
-    )
+      )
+    // )
   }
 
   renderHeader = () => {
