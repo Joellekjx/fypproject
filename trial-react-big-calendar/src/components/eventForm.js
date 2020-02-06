@@ -6,7 +6,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Select, InputLabel, makeStyles, FormControl, MenuItem, Grid } from '@material-ui/core';
 import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { observer } from 'mobx-react-lite';
 import axiosPostCalendarEvent from './AxiosCalling/axiosPost';
 
 const useStyles = makeStyles(theme => ({
@@ -62,7 +61,6 @@ function EventForm ({handleClose, start, end, calendarStore}) {
     handleClose();
   }
 
-  // console.log(category);
 
   return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>

@@ -6,7 +6,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { withStyles } from '@material-ui/core/styles';
 import WeeklyReportSubmissionPage from './weeklyReportSubmissionPage';
 import WeeklyReportCommentBox from './weeklyReportCommentBox';
-import axiosGetFullData from "../AxiosCalling/axiosGetFullData";
 
 const useStyles = (theme) => ({
   root: {
@@ -88,7 +87,7 @@ class WeeklyReportContent extends Component {
                     <WeeklyReportSubmissionPage calendarStore={calendarStore} task_type={text.event_type} task_created={text.end} student_id={text.student_id} tutor_id={text.tutor_id} project_id={text.project_id} Id={text.Id} hours_spent={text.hours_spent} content={text.content} status={text.status} />
                   </div>
                   <div className={classes.column}>
-                    <WeeklyReportCommentBox calendarStore={calendarStore} status={text.status} />
+                    <WeeklyReportCommentBox calendarStore={calendarStore} status={text.status} id={text.Id} user_id={text.student_id} />
                   </div>
                 </ExpansionPanelDetails>
                 <Divider/>

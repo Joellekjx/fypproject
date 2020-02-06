@@ -34,7 +34,6 @@ class WeeklyReportSubmissionPage extends Component {
   constructor(props){
     super(props);
     this.state = {
-      // weeklyReportArray: [],
       hoursSpent: "",
       thingsCompleted: "",
     }
@@ -107,7 +106,6 @@ class WeeklyReportSubmissionPage extends Component {
               it needs to be pushed into the right id*/}
             </Typography>
             <TextField 
-              // id="outlined-basic" 
               variant="outlined" 
               size="small"
               type="number"
