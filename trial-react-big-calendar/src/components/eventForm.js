@@ -30,12 +30,13 @@ function EventForm ({handleClose, start, end, calendarStore}) {
   }
 
   const submitForm = e => { //note to self: need to actually check if start date is earlier than end date!!
-    if(e){
-      e.preventDefault();
-    }
+    e.preventDefault();
+
+    //Check if start and end dates are weekends
 
     //check the date somewhere
     //but let's do a risky post first
+    
 
     if (category===""){ 
       //note to self: axios.posting "others" doesn't work. needs to be specific
@@ -82,7 +83,9 @@ function EventForm ({handleClose, start, end, calendarStore}) {
                         > 
                           <MenuItem value="Weekly Report">Weekly Report</MenuItem>
                           <MenuItem value="Meeting Notes" label="Meeting">Meeting</MenuItem>
-                          <MenuItem value="Others">Others</MenuItem>
+                          <MenuItem value="FYP Plan Strategy">FYP Plan Submission</MenuItem>
+                          <MenuItem value="Interim Report">Interim Report Submission</MenuItem>
+                          <MenuItem value="Final Report">Final Report Submission</MenuItem>
                         </Select>
                   </FormControl>
                 </Grid>

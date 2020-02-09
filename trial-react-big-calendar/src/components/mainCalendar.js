@@ -122,7 +122,7 @@ class MainCalender extends Component {
 
   render(){
     const { calendarStore } = this.props;
-    const { getData } = calendarStore; //why the fk is getDataLength affecting appearance??
+    const { getData, getDataLength } = calendarStore; //why the fk is getDataLength affecting appearance??
     return(
       <div className="MainCalendar">
           <DnDCalendar
