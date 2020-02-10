@@ -21,25 +21,112 @@ const useStyles = makeStyles(theme => ({
     fontSize: theme.typography.pxToRem(15),
     padding: '5px 5px',
   },
+  selectMenu: {
+    maxHeight: '100px'
+  },
+  selected:{
+    // backgroundColor: 'red',
+    maxHeight: '100px'
+  }
 }));
 
 function EventForm ({handleClose, start, end, calendarStore}) {
-  const classes = useStyles();
-  const [ category, setCategory ] = React.useState('Meeting Notes');
-  const [selectedStartDate, handleStartDateChange] = useState(start);
-  const [selectedEndDate, handleEndDateChange] = useState(end);
+  const initialState = {
+    category: 'Meeting Notes',
+    selectedStartDate: start,
+    selectedEndDate: end,
+  }
 
-  const handleChange = event => {
-    setCategory(event.target.value || '');
+  const classes = useStyles();
+  const [{ category, selectedStartDate, selectedEndDate }, setState] = useState(initialState);
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setState(prevState => ({ ...prevState, [name]: value }));
+  };
+
+  // const handleChange = event => {
+  //   setCategory(event.target.value || '');
+  // }
+
+  const selectDropDown = (name, value) => {
+    // Mon Feb 10 2020 00:00:00 GMT+0800 (Singapore Standard Time)
+    // console.log(moment(value).format('ddd MMM DD YYYY'))
+    const dayMonthYearFormat = moment(new Date(value)).format('ddd MMM DD YYYY');
+    const gmtSGT = "GMT+0800 (Singapore Standard Time)";
+    return(
+      <React.Fragment>
+        <Select
+            name={name}
+            value={value}
+            onChange={handleChange}
+            // style={{maxHeight: '100px'}}
+            // className={classes.selectMenu}
+            // MenuProps={{maxHeight: '100px'}}
+            classes={{
+              selectMenu: classes.selectMenu
+            }}
+          >
+            <MenuItem value={dayMonthYearFormat + ' 00:00:00 ' + gmtSGT}>12:00AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + ' 00:30:00 ' + gmtSGT}>12:30AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + ' 01:00:00 ' + gmtSGT}>1:00AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + ' 01:30:00 ' + gmtSGT}>1:30AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + ' 02:00:00 ' + gmtSGT}>2:00AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + ' 02:30:00 ' + gmtSGT}>2:30AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + ' 03:00:00 ' + gmtSGT}>3:00AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 03:30:00 " + gmtSGT}>3:30AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 04:00:00 " + gmtSGT}>4:00AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 04:30:00 " + gmtSGT}>4:30AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 05:00:00 " + gmtSGT}>5:00AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 05:30:00 " + gmtSGT}>5:30AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 06:00:00 " + gmtSGT}>6:00AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 06:30:00 " + gmtSGT}>6:30AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 07:00:00 " + gmtSGT}>7:00AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 07:30:00 " + gmtSGT}>7:30AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 08:00:00 " + gmtSGT}>8:00AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 08:30:00 " + gmtSGT}>8:30AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 09:00:00 " + gmtSGT}>9:00AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 09:30:00 " + gmtSGT}>9:30AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 10:00:00 " + gmtSGT}>10:00AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 10:30:00 " + gmtSGT}>10:30AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 11:00:00 " + gmtSGT}>11:00AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 11:30:00 " + gmtSGT}>11:30AM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 12:00:00 " + gmtSGT}>12:00PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 12:30:00 " + gmtSGT}>12:30PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 13:00:00 " + gmtSGT}>1:00PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 13:30:00 " + gmtSGT}>1:30PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 14:00:00 " + gmtSGT}>2:00PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 14:30:00 " + gmtSGT}>2:30PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 15:00:00 " + gmtSGT}>3:00PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 15:30:00 " + gmtSGT}>3:30PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 16:00:00 " + gmtSGT}>4:00PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 16:30:00 " + gmtSGT}>4:30PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 17:00:00 " + gmtSGT}>5:00PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 17:30:00 " + gmtSGT}>5:30PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 18:00:00 " + gmtSGT}>6:00PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 18:30:00 " + gmtSGT}>6:30PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 19:00:00 " + gmtSGT}>7:00PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 19:30:00 " + gmtSGT}>7:30PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 20:00:00 " + gmtSGT}>8:00PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 20:30:00 " + gmtSGT}>8:30PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 21:00:00 " + gmtSGT}>9:00PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 21:30:00 " + gmtSGT}>9:30PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 22:00:00 " + gmtSGT}>10:00PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 22:30:00 " + gmtSGT}>10:30PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 23:00:00 " + gmtSGT}>11:00PM</MenuItem>
+            <MenuItem value={dayMonthYearFormat + " 23:30:00 " + gmtSGT}>11:30PM</MenuItem>
+        </Select> 
+      </React.Fragment>
+    )
   }
 
   const submitForm = e => { //note to self: need to actually check if start date is earlier than end date!!
     e.preventDefault();
-    handleEndDateChange(selectedStartDate);
+    // handleEndDateChange(selectedStartDate);
     //Check if start and end dates are weekends
-    if (selectedStartDate.getDay() === 6 || selectedStartDate.getDay() === 0){return alert("You have selected a weekend. Please choose a weekday instead.")}
-    console.log(selectedStartDate);
-    console.log(selectedEndDate);
+    // if (selectedStartDate.getDay() === 6 || selectedStartDate.getDay() === 0){return alert("You have selected a weekend. Please choose a weekday instead.")}
+    // console.log(selectedStartDate);
+    // console.log(selectedEndDate);
 
     //check the date somewhere
     //but let's do a risky post first
@@ -59,27 +146,30 @@ function EventForm ({handleClose, start, end, calendarStore}) {
     handleClose();
   }
 
+  console.log(selectedStartDate);
+
   const renderOthersFormView = () => {
     return(
       <React.Fragment>
         <Grid item xs={12}>
           <div style={{display: 'flex'}}>
             <Typography className={classes.secondaryHeading}>Submission Date:</Typography>
-            <DatePicker value={selectedStartDate} onChange={handleStartDateChange}>Choose Submission Date:</DatePicker>
+            <DatePicker value={selectedStartDate} onChange={handleChange}>Choose Submission Date:</DatePicker>
           </div>
           {/* <TimePicker label="Choose Start Time" value={selectedStartDate} onChange={handleStartDateChange} /> */}
         </Grid>
         <Grid item xs={12}>
           <div style={{display: 'flex'}}>
             <Typography className={classes.secondaryHeading}>Submission Time:</Typography>
-            <KeyboardTimePicker 
+            {/* <KeyboardTimePicker 
               value={selectedStartDate}
               onChange={handleStartDateChange} 
               KeyboardButtonProps={{
                 'aria-label': 'change time',  
               }}
               mask="__:__ _M"
-            />
+            /> */}
+            {selectDropDown('selectedStartDate', selectedStartDate)}
           </div>
         </Grid>
       </React.Fragment>
@@ -98,29 +188,35 @@ function EventForm ({handleClose, start, end, calendarStore}) {
         <Grid item xs={12}>
           <div style={{display: 'flex'}}>
             <Typography className={classes.secondaryHeading}>Meeting Date:</Typography>
-            <DatePicker value={selectedStartDate} onChange={handleStartDateChange}>Choose Submission Date:</DatePicker>
+            <DatePicker value={selectedStartDate} onChange={handleChange}>Choose Submission Date:</DatePicker>
           </div>
         </Grid>
         <Grid item xs={12}>
           <div style={{display: 'flex'}}>
             <Typography className={classes.secondaryHeading}>Timing:</Typography>
-            <KeyboardTimePicker 
+            {/* <KeyboardTimePicker 
               value={selectedStartDate}
               onChange={handleStartDateChange} 
               KeyboardButtonProps={{
                 'aria-label': 'change time',  
               }}
               mask="__:__ _M"
-            />
+            /> */}
+            {selectDropDown('selectedStartDate', selectedStartDate)}
+            {/* {selectDropDown("selectedStartDate")} */}
+            {/* {selectDropDown(moment(selectedStartDate).format("hh:mm:ss"))} */}
             <Typography className={classes.secondaryHeading}>-</Typography>
-            <KeyboardTimePicker 
+            {/* <KeyboardTimePicker 
               value={selectedEndDate}
               onChange={handleEndDateChange} 
               KeyboardButtonProps={{
                 'aria-label': 'change time',  
               }}
               mask="__:__ _M"
-            />
+            /> */}
+            {selectDropDown('selectedEndDate', selectedEndDate)}
+            {/* {selectDropDown("selectedEndDate")} */}
+            {/* {selectDropDown(moment(selectedEndDate).format("hh:mm:ss"))} */}
           </div>
         </Grid>
       </React.Fragment>
@@ -174,6 +270,7 @@ function EventForm ({handleClose, start, end, calendarStore}) {
                           value={category}
                           onChange={handleChange}
                           id="select-category"
+                          name="category"
                         > 
                           <MenuItem value="Weekly Report">Weekly Report</MenuItem>
                           <MenuItem value="Meeting Notes" label="Meeting">Meeting</MenuItem>
