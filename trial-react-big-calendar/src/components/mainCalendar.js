@@ -9,12 +9,8 @@ import WorkMonth from '../lib/WorkMonth';
 import { observer } from "mobx-react";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { Dialog, Tooltip, Paper } from "@material-ui/core";
+import { Dialog, Tooltip, Paper, Popover, Button } from "@material-ui/core";
 // import { HashLink as Link } from 'react-router-hash-link';
-// import {Overlay} from 'react-bootstrap';
-import {OverlayTrigger} from 'react-bootstrap';
-import {Popover} from 'react-bootstrap';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const localizer = momentLocalizer(moment);
 const DnDCalendar = withDragAndDrop(Calendar);
@@ -36,20 +32,44 @@ const DnDCalendar = withDragAndDrop(Calendar);
 // }
 
 function Event({ event }) {
-  let popoverClickRootClose = (
-    <Popover id="popover-trigger-click-root-close" style={{ zIndex: 10000 }}>
-      <strong>Holy guacamole!</strong> Check this info.
-      <strong>{event.title}</strong>
-    </Popover>
-  );
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  // console.log(event); //but this is every single event??? LOL how to determine sia liddat
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+
+  // console.log(event); //but this is every single event??? LOL how to determine sia liddat -- need to find an onclick tt passes the exact event
   return (
     <div>
       <div>
-        <OverlayTrigger id="help" trigger="click" rootClose container={this} placement="top" overlay={popoverClickRootClose}>
-          <div>{event.title}</div>
-        </OverlayTrigger>
+        {/* <div>{event.title}</div> */}
+        {/* <Button variant="contained" color="primary" onClick={handleClick}>{event.title}</Button> */}
+        <div onClick={handleClick}>
+          {event.title}
+        </div>
+        <Popover
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          {/* <div>{event.title}</div> */}
+          Content of popover
+          {event.title}
+        </Popover>
       </div>
     </div>
   );
@@ -200,7 +220,7 @@ class MainCalender extends Component {
               
               resizable
               style={{ height: "100vh" }}
-              onSelectEvent={(event)=>this.renderEventMoreInfo(event)}
+              // onSelectEvent={(event)=>this.renderEventMoreInfo(event)}
               components={{
                 event: Event
                 // agenda: {
@@ -208,7 +228,6 @@ class MainCalender extends Component {
                 // },
               }}
               onSelectEvent={this.toggleEditModal}
-              eventPropGetter={event => this.renderEventStatusColour(event)}
               eventPropGetter={
                 (event) => {
                   let newStyle = {
