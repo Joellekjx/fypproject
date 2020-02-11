@@ -16,30 +16,6 @@ class userNameSerializer(serializers.ModelSerializer):
         model = AuthUser
         fields = ('first_name', 'last_name')
 
-class taskSerializerNoId(serializers.ModelSerializer):
-    project_id = projectSerializer()
-    student_id = userDetailsSerializer()
-    tutor_id = userDetailsSerializer()
-
-    class Meta:
-        model = Task 
-        fields = ('task_id', 'project_id', 'student_id', 'tutor_id', 'task_type', 'task_created_date', 'task_due_date', 'submission_date', 'content', 'hours_spent', 'status')
-        # read_only_fields = ('projectid',)
-        # depth=1
-    def create(self, validated_data):
-        project_data = validated_data.pop('project_id')  
-        project = Projects.objects.create(**project_data)
-
-        studentid_data = validated_data.pop('student_id')
-        student = AuthUser.objects.create(**studentid_data)
-
-        tutorid_data = validated_data.pop('tutor_id')
-        tutor = AuthUser.objects.create(**tutorid_data)
-        
-        task = Task.objects.create(projectid=project, studentid=student, tutorid=tutor, **validated_data)
-        # task = task.objects.create(studentid=id, **validated_data)
-        return task
-
 class taskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task 
@@ -60,3 +36,32 @@ class commentSerializer(serializers.ModelSerializer):
     #     comment = Comment.objects.create(userid=user **validated_data)
 
     #     return comment
+class taskSerializerNoId(serializers.ModelSerializer):
+    # project_id = projectSerializer()
+    # student_id = userDetailsSerializer()
+    # tutor_id = userDetailsSerializer()
+    comments = commentSerializer(source='comment_set', read_only=True, many=True)
+    
+    class Meta:
+        model = Task
+        fields = ('task_id', 'project_id', 'student_id', 'tutor_id', 'task_type', 'task_created_date', 'task_due_date', 'submission_date', 'content', 'hours_spent', 'status', 'comments')
+        # read_only_fields = ('projectid',)
+        # depth=1
+    # def create(self, validated_data):
+    #     comment_data = validated_data.pop('task_id')  
+    #     comment = Comment.objects.create(**comment_data)
+
+    #     project_data = validated_data.pop('project_id')  
+    #     project = Projects.objects.create(**project_data)
+
+    #     studentid_data = validated_data.pop('student_id')
+    #     student = AuthUser.objects.create(**studentid_data)
+
+    #     tutorid_data = validated_data.pop('tutor_id')
+    #     tutor = AuthUser.objects.create(**tutorid_data)
+        
+    #     task = Task.objects.create(projectid=project, studentid=student, tutorid=tutor, comments=comment, **validated_data)
+    #     # task = task.objects.create(studentid=id, **validated_data)
+    #     return task
+
+

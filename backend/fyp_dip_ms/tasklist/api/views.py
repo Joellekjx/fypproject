@@ -2,7 +2,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework import viewsets
 
 from tasklist.models import Task, Comment, Project
-from .serializers import taskSerializer, commentSerializer, projectSerializer
+from .serializers import taskSerializer, commentSerializer, projectSerializer, taskSerializerNoId
 
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
@@ -53,4 +53,8 @@ class commentViewSet(viewsets.ModelViewSet):
 class projectViewSet(viewsets.ModelViewSet):
 	queryset = Project.objects.all()
 	serializer_class = projectSerializer
-	
+
+
+class taskCommentViewSet(viewsets.ModelViewSet):
+	queryset = Task.objects.all() 
+	serializer_class = taskSerializerNoId

@@ -6,7 +6,7 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-
+from django.contrib.postgres.fields import ArrayField
 
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
@@ -176,6 +176,7 @@ class Task(models.Model):
     
     status = models.CharField(max_length=15, choices=status_choices, default='Pending')
     ordering = ('task_due_date', 'task_type', 'student_id')
+
     class Meta:
         managed = False
         db_table = 'task'
