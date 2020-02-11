@@ -6,7 +6,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Select, InputLabel, makeStyles, FormControl, MenuItem, Grid, Typography } from '@material-ui/core';
 import { DatePicker, TimePicker, MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import axiosPostCalendarEvent from './AxiosCalling/axiosPost';
+import axiosPostCalendarEvent from '../AxiosCalling/axiosPost';
 import moment from 'moment';
 
 const useStyles = makeStyles(theme => ({

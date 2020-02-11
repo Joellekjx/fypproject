@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import EventForm from './eventForm';
+import EventForm from './MainCalendarComponents/eventForm';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from "moment";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
@@ -11,6 +11,7 @@ import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Dialog, Tooltip, Paper, Popover, Button } from "@material-ui/core";
 // import { HashLink as Link } from 'react-router-hash-link';
+import Event from './MainCalendarComponents/indivEvent';
 
 const localizer = momentLocalizer(moment);
 const DnDCalendar = withDragAndDrop(Calendar);
@@ -31,49 +32,7 @@ const DnDCalendar = withDragAndDrop(Calendar);
 //   )
 // }
 
-function Event({ event }) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-
-  // console.log(event); //but this is every single event??? LOL how to determine sia liddat -- need to find an onclick tt passes the exact event
-  return (
-    <div>
-      <div>
-        {/* <div>{event.title}</div> */}
-        {/* <Button variant="contained" color="primary" onClick={handleClick}>{event.title}</Button> */}
-        <div onClick={handleClick}>
-          {event.title}
-        </div>
-        <Popover
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-        >
-          {/* <div>{event.title}</div> */}
-          Content of popover
-          {event.title}
-        </Popover>
-      </div>
-    </div>
-  );
-}
 
 class MainCalender extends Component {
   constructor(props){

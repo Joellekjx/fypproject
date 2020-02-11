@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { Grid } from "@material-ui/core";
 import moment from 'moment';
-import AddEventButton from './addEventButton';
+import AddEventButton from './MainCalendarComponents/addEventButton';
 
 class LeftSideColumn extends Component {
     constructor(props){
