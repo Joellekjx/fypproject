@@ -1,14 +1,30 @@
 import axios from 'axios';
 
+/**
+ * 
+ * Will need a change in logic: 'weekly report' start time stays the same (take from task_due_date and set to 0000)
+ * But 'meetings' will take indivRes.creation_date (or the more exact one)
+ */
+
 export default function axiosGetFullData(calendarStore){
     var totalHours = 0;
     axios.get('http://127.0.0.1:8000/api/task/')
         .then(res => {
             res.data.map(indivRes => {
-                var start = new Date(indivRes.task_due_date);
-                var starttime = new Date(start.setHours(0, 0, 0, 0));
+                var starttime;
+                // if(indivRes.task_type === 'Weekly Report'){
+                switch(indivRes.task_type){
+                    case "Meeting Notes":
+                        starttime = new Date(indivRes.task_created_date);
+                        break;
+                    default:
+                        var start = new Date(indivRes.task_due_date);
+                        starttime = new Date(start.setHours(0, 0, 0, 0));
+                        break;
+                }
                 var endtime = new Date(indivRes.task_due_date);
                 totalHours += indivRes.hours_spent
+
                 calendarStore.addData({
                     Id: indivRes.task_id, 
                     title: indivRes.task_type, 

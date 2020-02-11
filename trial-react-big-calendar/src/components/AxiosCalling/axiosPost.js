@@ -1,6 +1,10 @@
 import axios from 'axios';
 
 //axios post creates a new task
+/**
+ * For axiosPost, if "weekly report", taskCreatedDate === taskDueDate
+ * Else if "meetings", taskCreatedDate = start timing of meeting and end timing
+ */
 export default function axiosPost(taskCreatedDate, taskDueDate, taskType, taskStatus){
     axios.post('http://127.0.0.1:8000/api/task/', {
         // task_id: taskId,

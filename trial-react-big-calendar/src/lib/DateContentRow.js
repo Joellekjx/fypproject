@@ -81,11 +81,11 @@ class DateContentRow extends React.Component {
     //  console.log(dates.today())
     let sem_start_date = new Date(2020, 0, 13)
     if (date >= sem_start_date
-      && dates.diff(date, sem_start_date) % 7 == 0) {
+      && dates.diff(date, sem_start_date) % 7 === 0) {
 
       let week_no = dates.diff(date, sem_start_date, 'day') / 7 + 1
       // console.log(week_no)
-      if (week_no == 8) {
+      if (week_no === 8) {
         return 'Recess Week'
       } else if (week_no > 14) {
         return ''

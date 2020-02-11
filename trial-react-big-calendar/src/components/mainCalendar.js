@@ -9,9 +9,10 @@ import WorkMonth from '../lib/WorkMonth';
 import { observer } from "mobx-react";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { Dialog, Tooltip, Paper, Popover, Button } from "@material-ui/core";
+import { Dialog, Paper, Popover, Button } from "@material-ui/core";
+import ContentRouter from './contentRouting';
 // import { HashLink as Link } from 'react-router-hash-link';
-import Event from './MainCalendarComponents/indivEvent';
+import CustomEventWithPopover from './MainCalendarComponents/indivEvent';
 
 const localizer = momentLocalizer(moment);
 const DnDCalendar = withDragAndDrop(Calendar);
@@ -23,16 +24,9 @@ const DnDCalendar = withDragAndDrop(Calendar);
  * Then onClick either button runs that mini component
  */
 
-// function Event({event}){ //you can use this to further style the look of each event
-//   return (
-//     <span>
-//         <strong>{event.title}</strong>
-//         {event.desc && ':  ' + event.desc}
-//     </span>
-//   )
-// }
-
-
+const Event = ({ calendarStore }) => props => {
+  return <CustomEventWithPopover event={props} calendarStore={calendarStore} />;
+}
 
 class MainCalender extends Component {
   constructor(props){
@@ -41,7 +35,6 @@ class MainCalender extends Component {
         dayLayoutAlgorithm: 'no-overlap',
         isAddModalOpen: false,
         currentEvent: '',
-        // isEventDialogOpen: false,
       }
   }  
 
@@ -85,38 +78,11 @@ class MainCalender extends Component {
   //   })
   // }
 
-  // const { onClose, selectedValue, open } = props;
-
-  // handleDialogClose = () => {
-  //   // onClose(selectedValue);
-  //   this.setState({ isEventDialogOpen: false })
-  // };
-
   renderEventMoreInfo = (event) => {
     const eventType = event.event_type;
     const { calendarStore } = this.props;
     const { addSelectedData, changeDefaultState } = calendarStore;
-    // return(
-    //   <div>
-    //     {/* Consider using a dialog la lol */}
-    //     <Dialog onClose={this.handleDialogClose} open>
-    //       <Paper style={{display: 'flex', flexWrap: 'wrap'}} elevation={2}>
-    //         {event.title}
-    //         {console.log("click inside paper???")}
-    //         hello
-    //       </Paper>
-    //     </Dialog>
-    //   </div>
-    // )
-    // const { currentEvent } = this.state;
-    // // const { calendarStore } = this.props;
-    // return(
-    //   <React.Fragment>
-    //     <Dialog open={this.state.isAddModalOpen} toggle={this.toggleAddModal} onClose={this.handleClose}>
-    //       <EventForm calendarStore={calendarStore} start={currentEvent.start} end={currentEvent.end} handleClose={() => this.handleClose()} />
-    //     </Dialog>
-    //   </React.Fragment>
-    // )
+
     addSelectedData({ //maybe need to remove liao since it doesn't seem to help v much lol
       Id: event.Id,
       title: event.title,
@@ -126,18 +92,18 @@ class MainCalender extends Component {
       status: event.status,
     });
 
-    // switch(eventType){
-    //   case "Weekly Report":
-    //     changeDefaultState('Weekly Report');
-    //     this.props.history.push('/contentrouter');
-    //     break;
-    //   case "Meeting Notes":
-    //     changeDefaultState('Meetings');
-    //     this.props.history.push('/contentrouter');
-    //     break;
-    //   default:
-    //     return "Nothing";
-    // }
+    switch(eventType){
+      case "Weekly Report":
+        changeDefaultState('Weekly Report');
+        this.props.history.push('/contentrouter');
+        break;
+      case "Meeting Notes":
+        changeDefaultState('Meetings');
+        this.props.history.push('/contentrouter');
+        break;
+      default:
+        return "Nothing";
+    }
   }
 
   toggleAddModal = (event) => {
@@ -163,6 +129,7 @@ class MainCalender extends Component {
   render(){
     const { calendarStore } = this.props;
     const { getData, getDataLength } = calendarStore; //why the fk is getDataLength affecting appearance??
+
     return(
       <div className="MainCalendar">
           <DnDCalendar
@@ -181,11 +148,13 @@ class MainCalender extends Component {
               style={{ height: "100vh" }}
               // onSelectEvent={(event)=>this.renderEventMoreInfo(event)}
               components={{
-                event: Event
-                // agenda: {
-                //   event: this.EventAgenda,
-                // },
+                event: Event({
+                  // onRoutingButtonClick: this.renderEventMoreInfo()
+                  calendarStore: calendarStore
+                })
+                // toolbar: Event({getData})
               }}
+              // components={components}
               onSelectEvent={this.toggleEditModal}
               eventPropGetter={
                 (event) => {
