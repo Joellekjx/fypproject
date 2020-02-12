@@ -179,7 +179,7 @@ class Task(models.Model):
     task_created_date = models.DateTimeField(db_column='task_Created_Date')  # Field name made lowercase.
     task_due_date = models.DateTimeField(db_column='task_Due_Date')  # Field name made lowercase.
     submission_date = models.DateTimeField(db_column='submission_Date', blank=True, null=True)  # Field name made lowercase.
-    content = models.CharField(max_length=3000, blank=True, null=True)
+    content = models.CharField(db_column='content', max_length=3000, blank=True, null=True)
     hours_spent = models.IntegerField(db_column='hours_Spent', blank=True, null=True)  # Field name made lowercase.
     
     status_choices = (
@@ -189,8 +189,9 @@ class Task(models.Model):
         ('Late Submission','Late Submission')
     )
     
-    status = models.CharField(max_length=15, choices=status_choices, default='Pending')
+    status = models.CharField(db_column='status', max_length=15, choices=status_choices, default='Pending')
     ordering = ('task_due_date', 'task_type', 'student_id')
+    desc = models.CharField(db_column='desc', max_length=300, blank=True, null=True)
 
     class Meta:
         managed = False

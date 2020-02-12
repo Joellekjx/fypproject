@@ -45,7 +45,7 @@ class taskSerializerNoId(serializers.ModelSerializer):
     
     class Meta:
         model = Task
-        fields = ('task_id', 'project_id', 'student_id', 'tutor_id', 'task_type', 'task_created_date', 'task_due_date', 'submission_date', 'content', 'hours_spent', 'status', 'comments')
+        fields = ('task_id', 'project_id', 'student_id', 'tutor_id', 'task_type', 'task_created_date', 'task_due_date', 'submission_date', 'content', 'hours_spent', 'status', 'comments', 'desc')
         # read_only_fields = ('projectid',)
         # depth=1
         
