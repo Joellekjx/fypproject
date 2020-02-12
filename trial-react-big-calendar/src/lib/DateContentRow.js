@@ -14,9 +14,14 @@ import * as DateSlotMetrics from '../utils/DateSlotMetrics'
 import axios from 'axios'
 
 class DateContentRow extends React.Component {
+  
+  state = {
+    semesterStartDates: []
+  }
+
   constructor(...args) {
     super(...args)
-
+    this.loadedSemesterStart = false
     this.slotMetrics = DateSlotMetrics.getSlotMetrics()
   }
 
@@ -71,31 +76,46 @@ class DateContentRow extends React.Component {
       ),
     })
   }
+
   getSemesterStart = () => {
-    axios.get('http://127.0.0.1:8000/api/task/')
-    .then(res => console.log(res))
+    if (this.loadedSemesterStart == false)  {
+        axios.get('http://127.0.0.1:8000/api/semesterStart/')
+        .then(res => {
+          this.setState({
+              semesterStartDates: res.data
+          })
+        console.log(res.data);
+      })  
+      this.loadedSemesterStart = true
+    }
+    
   }
   
   renderSemester = (date) => {
-    //  console.log(date)
-    //  console.log(dates.today())
-    let sem_start_date = new Date(2020, 0, 13)
-    if (date >= sem_start_date
-      && dates.diff(date, sem_start_date) % 7 == 0) {
-
+    // let sem_start_date = new Date(2020, 0, 13)
+    // console.log('renderSemester: ' + date)
+    // console.log(new Date(this.state.semesterStartDates[0].start_date))
+    for (let i=0; i < this.state.semesterStartDates.length; i++) {
+      let sem_start_date = new Date(this.state.semesterStartDates[i].start_date)
+      // console.log('sem_start_date: ' + sem_start_date)
+      if (date < sem_start_date) {
+        break
+      }
+      
       let week_no = dates.diff(date, sem_start_date, 'day') / 7 + 1
-      // console.log(week_no)
-      if (week_no == 8) {
-        return 'Recess Week'
-      } else if (week_no > 14) {
-        return ''
-      } else if (week_no > 8) {
-        week_no -= 1
-      } 
-      // console.log(sem_start_date)
-      // console.log(dates.diff(dates.yesterday(), date, 'day'))
-      return 'Week ' + week_no
+      if (week_no > 13) {
+        break
+      }
+      if (date >= sem_start_date && dates.diff(date, sem_start_date) % 7 == 0) {
+        if (week_no == 8) {
+          return 'Recess Week'
+        } else if (week_no > 8) {
+          week_no -= 1
+        } 
+        return 'Week ' + week_no
+      }
     }
+    
     // return 'week ' + dates.today()
   }
 
@@ -182,7 +202,7 @@ class DateContentRow extends React.Component {
           components={components}
           longPressThreshold={longPressThreshold}
         />
-        {this.getSemesterStart}
+        {this.getSemesterStart()}
         {range.map(this.renderSemester)}
         <div className="rbc-row-content">
           {renderHeader && (

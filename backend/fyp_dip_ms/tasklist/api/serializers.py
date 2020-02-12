@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from tasklist.models import Task, AuthUser, Project, Comment
+from tasklist.models import Task, AuthUser, Project, Comment, Semester
 
 class projectSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,6 +36,7 @@ class commentSerializer(serializers.ModelSerializer):
     #     comment = Comment.objects.create(userid=user **validated_data)
 
     #     return comment
+
 class taskSerializerNoId(serializers.ModelSerializer):
     # project_id = projectSerializer()
     # student_id = userDetailsSerializer()
@@ -47,10 +48,8 @@ class taskSerializerNoId(serializers.ModelSerializer):
         fields = ('task_id', 'project_id', 'student_id', 'tutor_id', 'task_type', 'task_created_date', 'task_due_date', 'submission_date', 'content', 'hours_spent', 'status', 'comments')
         # read_only_fields = ('projectid',)
         # depth=1
+        
     # def create(self, validated_data):
-    #     comment_data = validated_data.pop('task_id')  
-    #     comment = Comment.objects.create(**comment_data)
-
     #     project_data = validated_data.pop('project_id')  
     #     project = Projects.objects.create(**project_data)
 
@@ -64,4 +63,7 @@ class taskSerializerNoId(serializers.ModelSerializer):
     #     # task = task.objects.create(studentid=id, **validated_data)
     #     return task
 
-
+class semesterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Semester
+        fields = ('semester_id', 'semester', 'start_date')

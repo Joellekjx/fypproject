@@ -145,6 +145,21 @@ class Project(models.Model):
     def __str__(self):
         return self.project_name
 
+class Semester(models.Model):
+    semester_id = models.AutoField(db_column='semester_Id', primary_key=True)
+    semester_type_choices = (
+        ('Semester 1','Semester 1'),
+        ('Semester 2','Semester 2')
+    )
+    semester = models.CharField(db_column='semester', max_length=17, choices=semester_type_choices)
+    start_date = models.DateTimeField(db_column='start_Date')
+
+    class Meta:
+        managed = False
+        db_table = 'semester_start_date'
+
+    def __str__(self):
+        return self.semester
 
 class Task(models.Model):
     task_id = models.AutoField(db_column='task_Id', primary_key=True)  # Field name made lowercase.
