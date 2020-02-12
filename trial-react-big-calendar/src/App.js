@@ -1,14 +1,15 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import CalendarStore from './mobx-store/CalendarStore';
 import MainPage from './mainPage';
 import ContentRouting from './components/contentRouting';
+import history from './history';
 
 const calendarStore = new CalendarStore();
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <Route>
           <Route exact path="/" 
             render={(props) => (<MainPage {...props} calendarStore={calendarStore}/>)}

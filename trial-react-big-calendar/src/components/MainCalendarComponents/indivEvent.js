@@ -1,70 +1,102 @@
-import React from 'react';
+import React, { Component } from 'react';
 import moment from 'moment';
-import { Paper, Popover } from '@material-ui/core';
+import { Paper, Popover, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { withRouter } from "react-router-dom";
+import history from '../../history';
 
-/**
- * Purpose of indivEvent: prints out each event with an added Popover functionality
- * The popover contains a <Paper/> with contents like (1) title (2) content (3) start and end times (4) delete button (5) link to next page button/'see more'
- */
+const useStyles = makeStyles(theme => ({
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      '& > *': {
+      //   margin: theme.spacing(1),
+        width: theme.spacing(16),
+        height: theme.spacing(16),
+        padding: theme.spacing(5),
+      },
+    },
+  }));
 
-export default function Event({ event }) {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+export default function CustomEventWithPopover(props){
+    const classes = useStyles();
+    const { event, calendarStore } = props;
+      const [anchorEl, setAnchorEl] = React.useState(null);
   
-    const handleClick = event => {
-      setAnchorEl(event.currentTarget);
-    };
+      const handleClick = e => { //i think smth is wrong here...
+        // console.log(event);
+        setAnchorEl(e.currentTarget);
+      };
+    
+      const handleClose = () => {
+        setAnchorEl(null);
+      };
+    
+      const open = Boolean(anchorEl);
   
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
+      const onRoutingButtonClick = () => {
+        const eventType = event.event.event_type;
+        const { changeDefaultState, getDefaultState } = calendarStore;
   
-    const open = Boolean(anchorEl);
+        switch(eventType){
+          case "Weekly Report":
+            changeDefaultState('Weekly Report');
+            history.push('/contentrouter');
+            break;
+          case "Meeting Notes":
+            changeDefaultState('Meetings');
+            history.push('/contentrouter');
+            break;
+          default:
+            return "Nothing";
+        }
+      }
   
-    const renderPopoverPaper = () => {
-      var eventStart = event.start;
-  
-      return(
-        <Paper>
-          can i use a paper<br/>
-          {event.title}
-          {event.content}
-          {event.Id}
-          {/* {event.start.map(datum => return datum)} */}
-          {/* {event.start} */}
-          {console.log(moment(eventStart).format('lll'))}
-          {moment(eventStart).format('lll')}
-        </Paper>
-      )
-    }
-  
-    // console.log(event); //but this is every single event??? LOL how to determine sia liddat -- need to find an onclick tt passes the exact event
-    return (
-      <div>
-        <div>
-          {/* <div>{event.title}</div> */}
-          {/* <Button variant="contained" color="primary" onClick={handleClick}>{event.title}</Button> */}
-          <div onClick={handleClick}>
-            {event.title}
+      const renderPopoverPaper = () => {
+        var eventStart = event.start;
+        return(
+          <div className={classes.root}>
+              <Paper>
+                  can i use a paper<br/>
+                  {event.title}
+                  {event.content}
+                  {event.Id}
+                  {moment(eventStart).format('lll')}
+                  <Button>
+                      {/* This should do an axios delete */}
+                      Delete
+                  </Button>
+                  <Button variant="contained" color="primary" onClick={onRoutingButtonClick}>
+                      More Info
+                  </Button>
+              </Paper>
           </div>
-          <Popover
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'center',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
-            }}
-          >
-            {/* <div>{event.title}</div> */}
-            {/* Content of popover
-            {event.title} */}
-            {renderPopoverPaper()}
-          </Popover>
+        )
+      }
+  
+    return(
+        <div>
+          <div>
+           <div onClick={handleClick}>
+             {event.title}
+           </div>
+           <Popover
+             open={open}
+             anchorEl={anchorEl}
+             onClose={handleClose}
+             anchorOrigin={{
+               vertical: 'bottom',
+               horizontal: 'center',
+             }}
+             transformOrigin={{
+               vertical: 'top',
+               horizontal: 'center',
+             }}
+           >
+             {renderPopoverPaper()}
+             {/* hello testing */}
+           </Popover>
+         </div>
         </div>
-      </div>
-    );
-  }
+    )
+  };
