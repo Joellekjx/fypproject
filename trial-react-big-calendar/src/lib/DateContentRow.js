@@ -92,7 +92,6 @@ class DateContentRow extends React.Component {
   }
   
   renderSemester = (date) => {
-<<<<<<< HEAD
     // let sem_start_date = new Date(2020, 0, 13)
     // console.log('renderSemester: ' + date)
     // console.log(new Date(this.state.semesterStartDates[0].start_date))
@@ -107,34 +106,14 @@ class DateContentRow extends React.Component {
       if (week_no > 13) {
         break
       }
-      if (date >= sem_start_date && dates.diff(date, sem_start_date) % 7 == 0) {
-        if (week_no == 8) {
+      if (date >= sem_start_date && dates.diff(date, sem_start_date) % 7 === 0) {
+        if (week_no === 8) {
           return 'Recess Week'
         } else if (week_no > 8) {
           week_no -= 1
         } 
         return 'Week ' + week_no
       }
-=======
-    //  console.log(date)
-    //  console.log(dates.today())
-    let sem_start_date = new Date(2020, 0, 13)
-    if (date >= sem_start_date
-      && dates.diff(date, sem_start_date) % 7 === 0) {
-
-      let week_no = dates.diff(date, sem_start_date, 'day') / 7 + 1
-      // console.log(week_no)
-      if (week_no === 8) {
-        return 'Recess Week'
-      } else if (week_no > 14) {
-        return ''
-      } else if (week_no > 8) {
-        week_no -= 1
-      } 
-      // console.log(sem_start_date)
-      // console.log(dates.diff(dates.yesterday(), date, 'day'))
-      return 'Week ' + week_no
->>>>>>> 65e25e8bf34824668646a11123e4317992f29fc8
     }
     
     // return 'week ' + dates.today()
