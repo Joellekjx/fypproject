@@ -11,7 +11,7 @@ export default function axiosGetFullData(calendarStore){
     axios.get('http://127.0.0.1:8000/api/taskComment/')
         .then(res => {
             res.data.map(indivRes => {
-                console.log(indivRes);
+                // console.log(indivRes);
                 var starttime;
                 // if(indivRes.task_type === 'Weekly Report'){
                 switch(indivRes.task_type){
@@ -24,6 +24,9 @@ export default function axiosGetFullData(calendarStore){
                         break;
                 }
                 var endtime = new Date(indivRes.task_due_date);
+                console.log(starttime);
+                console.log("this is the starttime for " + indivRes.task_type);
+                console.log(endtime);
                 totalHours += indivRes.hours_spent
 
                 calendarStore.addData({

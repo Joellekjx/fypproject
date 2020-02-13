@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { withStyles } from '@material-ui/core/styles';
 import { Typography, Button, TextField, Paper } from '@material-ui/core';
-import axiosGetComment from '../AxiosCalling/axiosGetComment';
 import axiosPostComment from '../AxiosCalling/axiosPostComment';
-// import axiosPost from '../AxiosCalling/axiosPost';
 import moment from 'moment';
-import axiosGetFullData from '../AxiosCalling/axiosGetFullData';
 
 const useStyles = (theme) => ({
   root: {
