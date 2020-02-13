@@ -57,7 +57,7 @@ class WeeklyReportContent extends Component {
                     <Grid item xs={1} />
                     <Grid item xs={2}>
                       {/* Week nos. */}
-                      {console.log(index)}
+                      {/* {console.log(index)} */}
                       {/* NOTE TO SELF: Pls remove this afterwards. This is just a tester!! */}
                       <Typography className={classes.secondaryHeading}>{text.Id}</Typography>
                     </Grid>
@@ -87,7 +87,7 @@ class WeeklyReportContent extends Component {
                     <WeeklyReportSubmissionPage calendarStore={calendarStore} task_type={text.event_type} task_created={text.end} student_id={text.student_id} tutor_id={text.tutor_id} project_id={text.project_id} Id={text.Id} hours_spent={text.hours_spent} content={text.content} status={text.status} />
                   </div>
                   <div className={classes.column}>
-                    <WeeklyReportCommentBox calendarStore={calendarStore} status={text.status} id={text.Id} user_id={text.student_id} />
+                    <WeeklyReportCommentBox comments={text.comments} calendarStore={calendarStore} status={text.status} id={text.Id} user_id={text.student_id} />
                   </div>
                 </ExpansionPanelDetails>
                 <Divider/>
