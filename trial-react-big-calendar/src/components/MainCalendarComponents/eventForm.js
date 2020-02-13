@@ -43,19 +43,20 @@ function EventForm ({handleClose, start, end, calendarStore}) {
   const handleChange = e => {
     const { name, value } = e.target;
     setState(prevState => ({ ...prevState, [name]: value }));
+
+    if (category !== 'Meeting Notes'){
+      setState(prevState => ({
+        ...prevState, selectedEndDate: value
+      }))
+    }
   };
 
-  // const handleChange = event => {
-  //   setCategory(event.target.value || '');
-  // }
-
   const selectDropDown = (name, value) => {
-    // Mon Feb 10 2020 00:00:00 GMT+0800 (Singapore Standard Time)
-    // console.log(moment(value).format('ddd MMM DD YYYY'))
     const dayMonthYearFormat = moment(new Date(value)).format('ddd MMM DD YYYY');
     const gmtSGT = "GMT+0800 (Singapore Standard Time)";
     return(
       <React.Fragment>
+        {/* Need to: Show a few timings only */}
         <Select
             name={name}
             value={value}
@@ -131,22 +132,20 @@ function EventForm ({handleClose, start, end, calendarStore}) {
     //check the date somewhere
     //but let's do a risky post first
 
-    // if (category===""){ 
-    //   return alert("Please choose a category");
-    // } else {
-    //   axiosPostCalendarEvent(selectedStartDate, selectedEndDate, category, "Pending")
-    //   calendarStore.addData({
-    //       title: category,
-    //       start: selectedStartDate,
-    //       end: selectedEndDate,
-    //       event_type: category,
-    //       status: "Pending"
-    //   })
-    // }
+    if (category===""){ 
+      return alert("Please choose a category");
+    } else {
+      // axiosPostCalendarEvent(selectedStartDate, selectedEndDate, category, "Pending")
+      calendarStore.addData({
+          title: category,
+          start: selectedStartDate,
+          end: selectedEndDate,
+          event_type: category,
+          status: "Pending"
+      })
+    }
     handleClose();
   }
-
-  console.log(selectedStartDate);
 
   const renderOthersFormView = () => {
     return(
@@ -176,11 +175,11 @@ function EventForm ({handleClose, start, end, calendarStore}) {
     )
   }
 
-  const onChangeDate = (e) => {
-    console.log(e.target.value)
-    // handleStartDateChange(e.target.value);
-    // handleEndDateChange(e.target.value);
-  }
+  // const onChangeDate = (e) => {
+  //   console.log(e.target.value)
+  //   // handleStartDateChange(e.target.value);
+  //   // handleEndDateChange(e.target.value);
+  // }
 
   const renderMeetingFormView = () => {
     return(
@@ -188,7 +187,7 @@ function EventForm ({handleClose, start, end, calendarStore}) {
         <Grid item xs={12}>
           <div style={{display: 'flex'}}>
             <Typography className={classes.secondaryHeading}>Meeting Date:</Typography>
-            <DatePicker value={selectedStartDate} onChange={handleChange}>Choose Submission Date:</DatePicker>
+            <DatePicker value={selectedStartDate} name='selectedStartDate' onChange={handleChange}>Choose Submission Date:</DatePicker>
           </div>
         </Grid>
         <Grid item xs={12}>

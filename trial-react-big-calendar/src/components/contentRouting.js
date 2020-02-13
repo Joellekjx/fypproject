@@ -80,7 +80,7 @@ class ContentRoutingTest extends Component {
     this.state = {
       open: true,
       pageEvents: ['Weekly Report', 'Meetings', 'Other Submissions'],
-      currentPageEvent: this.props.calendarStore.getDefaultState,
+      currentPageEvent: 'Weekly Report',
       selectedIndex: 0
     }
   }
@@ -90,6 +90,10 @@ class ContentRoutingTest extends Component {
     if(calendarStore.getData.length === 0){
       axiosGetFullData(calendarStore);
     }
+    this.setState({
+      currentPageEvent: calendarStore.getDefaultState.state,
+      selectedIndex: calendarStore.getDefaultState.index
+    })
   }
 
   handleDrawerOpen = () => {

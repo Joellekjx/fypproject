@@ -24,9 +24,6 @@ export default function axiosGetFullData(calendarStore){
                         break;
                 }
                 var endtime = new Date(indivRes.task_due_date);
-                console.log(starttime);
-                console.log("this is the starttime for " + indivRes.task_type);
-                console.log(endtime);
                 totalHours += indivRes.hours_spent
 
                 calendarStore.addData({

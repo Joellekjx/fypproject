@@ -82,7 +82,7 @@ class WeeklyReportContent extends Component {
                     </Grid>
                   </Grid>
                 </ExpansionPanelSummary>
-                <ExpansionPanelDetails className={classes.details}>
+                <ExpansionPanelDetails className={classes.details} style={{paddingBottom: '40px'}}>
                   <div className={classes.column}>
                     <WeeklyReportSubmissionPage calendarStore={calendarStore} task_type={text.event_type} task_created={text.end} student_id={text.student_id} tutor_id={text.tutor_id} project_id={text.project_id} Id={text.Id} hours_spent={text.hours_spent} content={text.content} status={text.status} />
                   </div>
@@ -147,10 +147,14 @@ class WeeklyReportContent extends Component {
     return(
     <div style={{width: '100%'}}>
       <div>
+        <Typography style={{paddingBottom: '40px'}}>
+          Week Count/Semester
+        </Typography>
+      </div>
+      <div>
         <Paper>
-          <Paper style={{position: "sticky", top: '4.5rem', height: '50px'}}>
+          <Paper style={{position: "sticky", top: '4.5rem', height: '50px', zIndex: '2'}}>
             {this.renderHeader()} 
-            {/* Honestly a bit buggy looking lol need to fix sticky issue else push expansion panel to the back */}
           </Paper>
           {this.renderWeeklyReportExpansionPanel()}
         </Paper>

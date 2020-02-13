@@ -151,7 +151,7 @@ class WeeklyReportSubmissionPage extends Component {
     const { classes, status } = this.props;
 
     return (
-    <div style={{width: '100%', padding: '10px'}}>
+    <div style={{width: '100%'}}>
       <Typography className={classes.heading}>Weekly Report Submission</Typography>
       {this.renderSwitchPaper(status)}
     </div>

@@ -36,15 +36,15 @@ export default function CustomEventWithPopover(props){
   
       const onRoutingButtonClick = () => {
         const eventType = event.event.event_type;
-        const { changeDefaultState, getDefaultState } = calendarStore;
+        const { changeDefaultState } = calendarStore;
   
         switch(eventType){
           case "Weekly Report":
-            changeDefaultState('Weekly Report');
+            changeDefaultState({state: 'Weekly Report', index: 0});
             history.push('/contentrouter');
             break;
           case "Meeting Notes":
-            changeDefaultState('Meetings');
+            changeDefaultState({state: 'Meetings', index: 1});
             history.push('/contentrouter');
             break;
           default:
@@ -86,9 +86,9 @@ export default function CustomEventWithPopover(props){
               Why? Because when we post a weekly report (a full day event), only due date is reflected/updated
               For meetings, creation date will be the start time of meeting, due date is the end time of the meeting
              */}
-             {event.title === 'Weekly Report' ? null : `${moment(event.event.start).format('HH:mm')}-${moment(event.event.end).format('HH:mm')}`}
-             &nbsp;
-             {event.title}
+             {event.title === 'Meeting Notes' ? `${moment(event.event.start).format('HH:mm')}-${moment(event.event.end).format('HH:mm')} ` : '' }
+             
+             {event.title === "Meeting Notes" ? 'Meeting' : event.title}
            </div>
            <Popover
              open={open}
