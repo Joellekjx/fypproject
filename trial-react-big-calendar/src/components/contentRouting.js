@@ -80,8 +80,8 @@ class ContentRoutingTest extends Component {
     this.state = {
       open: true,
       pageEvents: ['Weekly Report', 'Meetings', 'Other Submissions'],
-      currentPageEvent: 'Weekly Report',
-      selectedIndex: 0
+      currentPageEvent: 'Meetings',
+      selectedIndex: 1,
     }
   }
 
@@ -108,7 +108,7 @@ class ContentRoutingTest extends Component {
     const { calendarStore } = this.props;
     switch(param){
         case 'Meetings':
-            return <MeetingsContent />
+            return <MeetingsContent calendarStore={calendarStore} />
         case 'Weekly Report':
             return <WeeklyReportContent calendarStore={calendarStore}/>
         case 'Other Submissions':

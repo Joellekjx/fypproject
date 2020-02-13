@@ -42,6 +42,10 @@ function EventForm ({handleClose, start, end, calendarStore}) {
 
   const handleChange = e => {
     const { name, value } = e.target;
+    // console.log(name);
+    // console.log("name in handlechange??")
+    // console.log(value);
+    // console.log('value in handlechange???')
     setState(prevState => ({ ...prevState, [name]: value }));
 
     if (category !== 'Meeting Notes'){
@@ -51,9 +55,24 @@ function EventForm ({handleClose, start, end, calendarStore}) {
     }
   };
 
+  // const handleStartChange = e => {
+  //   const { name, value } = e.target;
+  //   setState(selectedStartDate(value));
+  // }
+
+  // const handleEndChange = e => {
+  //   setState(selectedEndDate(e.target.value))
+  // }
+
+  // const handleCategoryChange = e => {
+  //   setState(category(e.target.value))
+  // }
+
   const selectDropDown = (name, value) => {
-    const dayMonthYearFormat = moment(new Date(value)).format('ddd MMM DD YYYY');
+    const dayMonthYearFormat = moment(value).format('ddd MMM DD YYYY');
     const gmtSGT = "GMT+0800 (Singapore Standard Time)";
+    console.log(name);
+    console.log("name above");
     return(
       <React.Fragment>
         {/* Need to: Show a few timings only */}
@@ -61,6 +80,7 @@ function EventForm ({handleClose, start, end, calendarStore}) {
             name={name}
             value={value}
             onChange={handleChange}
+            // onChange={name==="selectedStartDate"? handleStartChange : handleEndChange}
             // style={{maxHeight: '100px'}}
             // className={classes.selectMenu}
             // MenuProps={{maxHeight: '100px'}}
@@ -125,7 +145,7 @@ function EventForm ({handleClose, start, end, calendarStore}) {
     e.preventDefault();
     // handleEndDateChange(selectedStartDate);
     //Check if start and end dates are weekends
-    // if (selectedStartDate.getDay() === 6 || selectedStartDate.getDay() === 0){return alert("You have selected a weekend. Please choose a weekday instead.")}
+    // if (selectedStartDate.getDay() === 6 || selectedStartDate.getDay() === 0){return alert("You have selected a weekend. Please choose a weekday only.")}
     // console.log(selectedStartDate);
     // console.log(selectedEndDate);
 
@@ -153,7 +173,7 @@ function EventForm ({handleClose, start, end, calendarStore}) {
         <Grid item xs={12}>
           <div style={{display: 'flex'}}>
             <Typography className={classes.secondaryHeading}>Submission Date:</Typography>
-            <DatePicker value={selectedStartDate} onChange={handleChange}>Choose Submission Date:</DatePicker>
+            <DatePicker value={selectedStartDate} name="selectedStartDate" onChange={handleChange}>Choose Submission Date:</DatePicker>
           </div>
           {/* <TimePicker label="Choose Start Time" value={selectedStartDate} onChange={handleStartDateChange} /> */}
         </Grid>

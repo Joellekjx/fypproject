@@ -96,4 +96,9 @@ python manage.py runserver
 4. Meetings page
 5. Main calendar "paper" view -- add the relevant details in the paper view and also show timing for events
 6. Updating meetings
-7. Fix event form with the timings (select timing bar) and posting of the details
+7. Fix "event form" with the timings (select timing bar) and posting of the details -- currently choosing other dates is not possible once you've entered the event form
+8. Backend should be able to update statuses (e.g. late submission detection)
+9. Nitpicking: weekly report header try and align w the content
+10. Nitpicking: meetings header try and align w the content
+11. Nitpicking: clean up the props sent to weeklyreportsubmissionpage & weeklyreportcommentbox pls
+12. Double check if it is possible to POST/update to backend alr or not

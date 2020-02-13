@@ -70,7 +70,7 @@ class WeeklyReportSubmissionPage extends Component {
     var submissionTime = moment();
     //NOTE: TASK DUE DATE==TODAY
     if (hoursSpent === "" || thingsCompleted === ""){
-      alert("Please field in all fields");
+      alert("Please fill in all fields");
     } else {
       axiosPut(Id, task_type, task_created, submissionTime, project_id, student_id, tutor_id, "Completed", thingsCompleted, hoursSpent);
     }

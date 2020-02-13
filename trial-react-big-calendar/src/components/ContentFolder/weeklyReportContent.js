@@ -139,6 +139,7 @@ class WeeklyReportContent extends Component {
             </Box>
           </Typography>
         </Grid>
+        <Grid item xs={1} />
       </Grid>
     )
   }

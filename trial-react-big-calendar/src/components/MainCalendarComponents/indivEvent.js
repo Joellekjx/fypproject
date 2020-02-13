@@ -83,8 +83,6 @@ export default function CustomEventWithPopover(props){
   
       // Other things you can add: Meeting's description (mainly location), status of submission, whether there's attachments
       const renderPopoverPaper = () => {
-        var eventStart = event.event.start;
-        var eventEnd = event.event.end;
         return(
           <div className={classes.root}>
               <Paper style={{position: 'relative'}}>
@@ -95,7 +93,7 @@ export default function CustomEventWithPopover(props){
                     {formatDateView()}
                   </Typography>
                   <div style={{position: 'absolute', bottom: '0', float: 'right', paddingBottom: '15px'}}>
-                    <Button style={{marginRight: '15px'}}>
+                    <Button style={{marginRight: '5px'}}>
                         {/* This should do an axios delete */}
                         Delete
                     </Button>
