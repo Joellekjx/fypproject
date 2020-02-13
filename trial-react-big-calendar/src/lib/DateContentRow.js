@@ -98,21 +98,20 @@ class DateContentRow extends React.Component {
     for (let i=0; i < this.state.semesterStartDates.length; i++) {
       let sem_start_date = new Date(this.state.semesterStartDates[i].start_date)
       // console.log('sem_start_date: ' + sem_start_date)
-      if (date < sem_start_date) {
-        break
-      }
-      
-      let week_no = dates.diff(date, sem_start_date, 'day') / 7 + 1
-      if (week_no > 13) {
-        break
-      }
-      if (date >= sem_start_date && dates.diff(date, sem_start_date) % 7 === 0) {
-        if (week_no === 8) {
-          return 'Recess Week'
-        } else if (week_no > 8) {
-          week_no -= 1
-        } 
-        return 'Week ' + week_no
+      if (date >= sem_start_date) {
+    
+        let week_no = dates.diff(date, sem_start_date, 'day') / 7 + 1
+        if (week_no <= 14) {
+          let semester = this.state.semesterStartDates[i].semester
+          if (date >= sem_start_date && dates.diff(date, sem_start_date) % 7 === 0) {
+            if (week_no === 8) {
+              return 'Recess Week'
+            } else if (week_no > 8) {
+              week_no -= 1
+            } 
+            return semester + ' Week ' + week_no
+          }
+        }
       }
     }
     
