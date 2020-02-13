@@ -74,10 +74,20 @@ export default function CustomEventWithPopover(props){
         )
       }
   
+      // console.log(event);
+      // console.log("this is event.start in indivevent")
     return(
         <div>
           <div>
            <div onClick={handleClick}>
+             {/* Need to show timing here. How to check?
+              1. Check if the creation date == due date (disregarding timing), if so, then reflect the time
+              2. If the creation date != due date, don't show timing (a.k.a it's a full day event)
+              Why? Because when we post a weekly report (a full day event), only due date is reflected/updated
+              For meetings, creation date will be the start time of meeting, due date is the end time of the meeting
+             */}
+             {event.title === 'Weekly Report' ? null : `${moment(event.event.start).format('HH:mm')}-${moment(event.event.end).format('HH:mm')}`}
+             &nbsp;
              {event.title}
            </div>
            <Popover

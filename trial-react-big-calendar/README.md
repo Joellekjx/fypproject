@@ -90,5 +90,10 @@ python manage.py runserver
 ```
 
 ## Issues that needs to be fixed:
-1. Comment box: axios or pull in server like express & socket.io?
+1. Comment box: ~~axios~~ or pull in server like express & socket.io?
 2. How to 'focus' when you click on an event? Look at alternatives to history.push else Link? Alternatively look at createRef mapped -- else you might want to remove "Hash Link" in yr dependencies
+3. Top bar of weekly report table must be able to stay at the top and not disappear as you scroll
+4. Meetings page
+5. Main calendar "paper" view -- add the relevant details in the paper view and also show timing for events
+6. Updating meetings
+7. Fix event form with the timings (select timing bar) and posting of the details
