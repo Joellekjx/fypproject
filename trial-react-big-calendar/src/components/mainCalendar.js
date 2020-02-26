@@ -14,6 +14,7 @@ import ContentRouter from './contentRouting';
 // import { HashLink as Link } from 'react-router-hash-link';
 import CustomEventWithPopover from './MainCalendarComponents/indivEvent';
 import { withStyles } from '@material-ui/core/styles';
+import CustomToolBar from './MainCalendarComponents/CustomToolBar';
 
 const localizer = momentLocalizer(moment);
 const DnDCalendar = withDragAndDrop(Calendar);
@@ -165,6 +166,7 @@ class MainCalendar extends Component {
                 event: Event({
                   calendarStore: calendarStore
                 }),
+                toolbar: CustomToolBar,
                 month: {
                   dateHeader: ({label}) => {
                     return(
@@ -172,10 +174,9 @@ class MainCalendar extends Component {
                         <Typography className={classes.dateHeaderStyle}>{label}</Typography>
                       </React.Fragment>
                     )
-                  }
-                }
+                  },
+                },
               }}
-              // components={components}
               onSelectEvent={this.toggleEditModal}
               eventPropGetter={
                 (event) => {

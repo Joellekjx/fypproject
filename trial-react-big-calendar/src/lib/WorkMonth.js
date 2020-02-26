@@ -62,11 +62,11 @@ class WorkMonthView extends MonthView {
     let last = row[row.length - 1]
     let HeaderComponent = components.header || Header
     return workDaysRange(first, last, 'day').map((day, idx) => ( 
-      <div key={'header_' + idx} className="rbc-header">  
+      <div key={'header_' + idx} className="rbc-header" style={{fontFamily: 'Roboto', fontWeight: '400', bottomBorder: '0px solid', padding: '3px'}}>  
         <HeaderComponent
           date={day}
           localizer={localizer}
-          label={localizer.format(day, 'weekdayFormat')}
+          label={localizer.format(day, 'weekdayFormat').toUpperCase()}
         />
       </div>
     ))
