@@ -10,6 +10,7 @@ import { Drawer, CssBaseline, AppBar, Toolbar, List, Typography, Divider, IconBu
 import axiosGetFullData from './AxiosCalling/axiosGetFullData';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import history from '../history';
 
 const drawerWidth = 240;
 
@@ -124,6 +125,8 @@ class ContentRoutingTest extends Component {
           return "Hello interim"
         case 'Final Report':
           return "Hello final"
+        case 'Calendar':
+          return this.props.history.push('/')
         default:
             return "No drawer found";
         }
@@ -197,7 +200,7 @@ class ContentRoutingTest extends Component {
             </div>
             <Divider />
             <List>
-              {['Weekly Report', 'Meetings', 'Strategy Plan', 'Interim Report', 'Final Report'].map((text, index) => (
+              {['Weekly Report', 'Meetings', 'Strategy Plan', 'Interim Report', 'Final Report', 'Calendar'].map((text, index) => (
                 <ListItem 
                   selected={selectedIndex === index}
                   button key={text} 
