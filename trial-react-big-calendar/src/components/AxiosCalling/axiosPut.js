@@ -5,16 +5,17 @@ import axios from 'axios';
 export default function axiosPut(Id, task_type, task_created_date, task_due_date, projectId, studentId, tutorId, taskStatus, thingsCompleted, hoursSpent){
     axios.put(`http://127.0.0.1:8000/api/task/${Id}/`, {
         task_id: Id,
+        project_id: projectId,
+        student_id: studentId,
+        tutor_id: tutorId,
         task_type: task_type,
         task_created_date: task_created_date,
         task_due_date: task_created_date,
         submission_date: task_due_date,
-        project_id: projectId,
-        student_id: studentId,
-        tutor_id: tutorId,
-        status: taskStatus,
-        hours_spent: hoursSpent,
         content: thingsCompleted,
+        hours_spent: hoursSpent,
+        status: taskStatus,
+        desc: null,
     })
     .then(response=>{
         console.log(response);

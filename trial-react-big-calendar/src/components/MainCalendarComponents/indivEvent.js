@@ -23,6 +23,17 @@ const useStyles = makeStyles(theme => ({
       fontSize: theme.typography.pxToRem(15),
       color: theme.palette.text.secondary,
     },
+    eventTitle: {
+      fontFamily: 'Roboto',
+      fontWeight: '600',
+      fontSize: '15px',
+      display: 'inline'
+    },
+    eventTime: {
+      fontFamily: 'Roboto',
+      fontSize: '15px',
+      display: 'inline'
+    }
   }));
 
 export default function CustomEventWithPopover(props){
@@ -42,8 +53,9 @@ export default function CustomEventWithPopover(props){
   
       const onRoutingButtonClick = () => {
         const eventType = event.event.event_type;
-        const { changeDefaultState } = calendarStore;
-  
+        const { changeDefaultState, addSelectedData } = calendarStore;
+        addSelectedData({Id: event.event.Id})
+        
         switch(eventType){
           case "Weekly Report":
             changeDefaultState({state: 'Weekly Report', index: 0});
@@ -63,7 +75,7 @@ export default function CustomEventWithPopover(props){
         //we can set it properly
         var eventStart = event.event.start;
         var eventEnd = event.event.end;
-        console.log(event.title);
+        // console.log(event.title);
         var eventStartFormat = moment(eventStart).format('dddd, MMMM DD YYYY')
         switch(event.title){
           case "Meeting Notes":
@@ -118,9 +130,12 @@ export default function CustomEventWithPopover(props){
               Why? Because when we post a weekly report (a full day event), only due date is reflected/updated
               For meetings, creation date will be the start time of meeting, due date is the end time of the meeting
              */}
-             {event.title === 'Meeting Notes' ? `${moment(event.event.start).format('HH:mm')}-${moment(event.event.end).format('HH:mm')} ` : '' }
-             
-             {event.title === "Meeting Notes" ? 'Meeting' : event.title}
+             <Typography className={classes.eventTime}>
+               {event.title === 'Meeting Notes' ? `${moment(event.event.start).format('HH:mm')} - ${moment(event.event.end).format('HH:mm')} ` : '' }
+            </Typography>
+             <Typography className={classes.eventTitle}>
+              {event.title === "Meeting Notes" ? 'Meeting' : event.title}
+            </Typography>
            </div>
            <Popover
              open={open}
