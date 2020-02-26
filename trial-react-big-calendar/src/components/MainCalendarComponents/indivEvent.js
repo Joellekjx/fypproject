@@ -42,8 +42,9 @@ export default function CustomEventWithPopover(props){
   
       const onRoutingButtonClick = () => {
         const eventType = event.event.event_type;
-        const { changeDefaultState } = calendarStore;
-  
+        const { changeDefaultState, addSelectedData } = calendarStore;
+        addSelectedData({Id: event.event.Id})
+        
         switch(eventType){
           case "Weekly Report":
             changeDefaultState({state: 'Weekly Report', index: 0});

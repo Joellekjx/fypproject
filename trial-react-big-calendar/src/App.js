@@ -4,6 +4,7 @@ import CalendarStore from './mobx-store/CalendarStore';
 import MainPage from './mainPage';
 import ContentRouting from './components/contentRouting';
 import history from './history';
+import ContentRoutingTester from './components/contentRoutingTester';
 
 const calendarStore = new CalendarStore();
 class App extends Component {
@@ -16,6 +17,9 @@ class App extends Component {
           />
           <Route path="/contentrouter"
             render={(props) => (<ContentRouting {...props} calendarStore={calendarStore} />)}
+          />
+          <Route path="/contentroutertester"
+            render={(props) => (<ContentRoutingTester {...props} calendarStore={calendarStore} />)}
           />
         </Route>
       </Router>

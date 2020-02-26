@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import { withStyles } from '@material-ui/core/styles';
-import { Paper, Grid, Typography, Box, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Divider } from '@material-ui/core';
+import { Paper, Grid, Typography, Box, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Divider, Button } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MeetingNotesAttachmentPage from './meetingNotesAttachmentPage';
 import MeetingNotesSubmissionPage from './meetingNotesSubmissionPage';
+import { get } from 'mobx';
 
 const useStyles = (theme) => ({
   root: {
@@ -84,15 +85,15 @@ class MeetingsContent extends Component {
         })
         .map((text, index) => {
           return(
-              <ExpansionPanel defaultExpanded style={{overflow: 'hidden'}} className={classes.root} key={index}>
+              <ExpansionPanel id={text.Id} defaultExpanded style={{overflow: 'hidden'}} className={classes.root} key={index}>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                  <Grid container spacing={4}>
+                  <Grid container spacing={4} style={{display: 'flex'}}>
                     <Grid item xs={1} />
                     <Grid item xs={2}>
                       {/* Week nos. */}
                       {console.log(text)}
                       {/* NOTE TO SELF: Pls remove this afterwards. This is just a tester!! */}
-                      <Typography className={classes.secondaryHeading}>{text.Id}</Typography>
+                      <Typography  className={classes.secondaryHeading}>{text.Id}</Typography>
                     </Grid>
                     <Grid item xs={2}>
                       {/* Meeting Date */}
@@ -112,13 +113,13 @@ class MeetingsContent extends Component {
                     </Grid>
                     <Grid item xs={2}>
                       {/* Are there any attachments?  */}
-                      <Typography className={classes.secondaryHeading}>
+                      <Typography className={classes.secondaryHeading} style={{fontStyle: 'italic'}}>
                         No attachments
                       </Typography>
                     </Grid>
                     <Grid item xs={2}>
                       {/* Other comments */}
-                      <Typography className={classes.secondaryHeading}>No comments</Typography>
+                      <Typography className={classes.secondaryHeading} style={{fontStyle: 'italic'}}>No comments</Typography>
                     </Grid>
                   </Grid>
                 </ExpansionPanelSummary>
@@ -138,9 +139,25 @@ class MeetingsContent extends Component {
       )
   }
 
+  jumpToId = () => {
+    const { calendarStore } = this.props;
+    const { getSelectedData } = calendarStore;
+    if(getSelectedData.Id === undefined){
+      alert ('nah')
+    } else {
+      var element = document.getElementById(getSelectedData.Id) //but i need to FIND this instead of map
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'nearest'
+      });
+    }
+  }
+
   render(){
     return (
       <div style={{width: '100%'}}>
+        <Button onClick={this.jumpToId}>Jump to view</Button>
         <div>
           <Paper>
             <Paper style={{position: "sticky", top: '4.5rem', height: '50px', zIndex: '2'}}>
@@ -148,6 +165,7 @@ class MeetingsContent extends Component {
             </Paper>
             {this.renderMeetingsExpansionPanel()}
           </Paper>
+          {/* <Button onClick={this.jumpToId}>Jump to an ID of: 26</Button> */}
         </div>
         <Paper>
         </Paper>

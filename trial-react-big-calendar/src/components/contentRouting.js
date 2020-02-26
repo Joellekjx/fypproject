@@ -6,8 +6,10 @@ import clsx from 'clsx';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import WeeklyReportContent from './ContentFolder/weeklyReportContent';
 import MeetingsContent from './ContentFolder/meetingsContent';
-import { Drawer, CssBaseline, AppBar, Toolbar, List, Typography, Divider, IconButton, ListItem, ListItemText, Box } from '@material-ui/core';
+import { Drawer, CssBaseline, AppBar, Toolbar, List, Typography, Divider, IconButton, ListItem, ListItemText, Box, Collapse } from '@material-ui/core';
 import axiosGetFullData from './AxiosCalling/axiosGetFullData';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
 const drawerWidth = 240;
 
@@ -71,8 +73,12 @@ const useStyles = (theme) => ({
         width: "100%",
         float: "left",
       }
-    }
+    },
+    nested: {
+      paddingLeft: theme.spacing(4),
+    },
 })
+
 
 class ContentRoutingTest extends Component {
   constructor(props){
@@ -104,6 +110,7 @@ class ContentRoutingTest extends Component {
       this.setState({open: false})
   }
 
+
   renderSwitchCase = (param) => {
     const { calendarStore } = this.props;
     switch(param){
@@ -111,9 +118,12 @@ class ContentRoutingTest extends Component {
             return <MeetingsContent calendarStore={calendarStore} />
         case 'Weekly Report':
             return <WeeklyReportContent calendarStore={calendarStore}/>
-        case 'Other Submissions':
-            // return <FreelancerSettings />
-            return "Hello Others"
+        case 'Strategy Plan':
+            return "Hello strategy"
+        case 'Interim Report':
+          return "Hello interim"
+        case 'Final Report':
+          return "Hello final"
         default:
             return "No drawer found";
         }
@@ -134,7 +144,7 @@ class ContentRoutingTest extends Component {
 
   render(){
     const { classes } = this.props;
-    const { open, currentPageEvent, selectedIndex } = this.state;
+    const { open, openNested, currentPageEvent, selectedIndex } = this.state;
 
     return ( //Note: pls change the color of the app bar/toolbar lol
         <div className={classes.root}>
@@ -187,7 +197,7 @@ class ContentRoutingTest extends Component {
             </div>
             <Divider />
             <List>
-              {['Weekly Report', 'Meetings', 'Other Submissions'].map((text, index) => (
+              {['Weekly Report', 'Meetings', 'Strategy Plan', 'Interim Report', 'Final Report'].map((text, index) => (
                 <ListItem 
                   selected={selectedIndex === index}
                   button key={text} 

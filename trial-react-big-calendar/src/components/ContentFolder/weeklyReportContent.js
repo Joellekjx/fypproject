@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Paper, Typography, Grid, Box, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Divider } from '@material-ui/core';
+import { Paper, Typography, Button, Grid, Box, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Divider } from '@material-ui/core';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -49,7 +49,7 @@ class WeeklyReportContent extends Component {
         .map((text, index) => {
           return(
             // <div className={classes.root} key={index} style={{height: '100%'}}>
-              <ExpansionPanel defaultExpanded style={{overflow: 'hidden'}} className={classes.root} key={index}>
+              <ExpansionPanel id={text.Id} defaultExpanded style={{overflow: 'hidden'}} className={classes.root} key={index}>
                 <ExpansionPanelSummary
                   expandIcon={<ExpandMoreIcon/>}
                 >
@@ -144,6 +144,22 @@ class WeeklyReportContent extends Component {
     )
   }
 
+  jumpToId = () => {
+    const { calendarStore } = this.props;
+    const { getSelectedData } = calendarStore;
+    // var element = getData.find(el => el.Id === 26)
+    if(getSelectedData.Id === undefined){
+      alert ('nah')
+    } else {
+      var element = document.getElementById(getSelectedData.Id) //but i need to FIND this instead of map
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest'
+      });
+    }
+  }
+
   render(){
     return(
     <div style={{width: '100%'}}>
@@ -151,6 +167,7 @@ class WeeklyReportContent extends Component {
         <Typography style={{paddingBottom: '40px'}}>
           Week Count/Semester
         </Typography>
+        <Button onClick={this.jumpToId}>Jump to view</Button>
       </div>
       <div>
         <Paper>
