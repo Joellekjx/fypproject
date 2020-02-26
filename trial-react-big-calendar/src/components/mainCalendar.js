@@ -9,14 +9,14 @@ import WorkMonth from '../lib/WorkMonth';
 import { observer } from "mobx-react";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { Dialog, Paper, Popover, Button } from "@material-ui/core";
+import { Dialog, Paper, Popover, Button, Typography } from "@material-ui/core";
 import ContentRouter from './contentRouting';
 // import { HashLink as Link } from 'react-router-hash-link';
 import CustomEventWithPopover from './MainCalendarComponents/indivEvent';
+import { withStyles } from '@material-ui/core/styles';
 
 const localizer = momentLocalizer(moment);
 const DnDCalendar = withDragAndDrop(Calendar);
-
 
 /**
  * Note to self: Need to spruce up "add event" onClick in Calendar + add event button
@@ -24,11 +24,26 @@ const DnDCalendar = withDragAndDrop(Calendar);
  * Then onClick either button runs that mini component
  */
 
+
+const useStyles = (theme) => ({
+  root: {
+      flexGrow: 1,
+  },
+  dateHeaderStyle: {
+    // color: 'yellow'
+    // textAlign: 'center',
+    display: 'inline',
+    fontFamily: 'Roboto',
+    fontSize: '15px'
+  }
+});
+
+
 const Event = ({ calendarStore }) => props => {
   return <CustomEventWithPopover event={props} calendarStore={calendarStore} />;
 }
 
-class MainCalender extends Component {
+class MainCalendar extends Component {
   constructor(props){
       super(props)
       this.state = {
@@ -126,9 +141,9 @@ class MainCalender extends Component {
   }
 
   render(){
-    const { calendarStore } = this.props;
+    const { calendarStore, classes } = this.props;
     const { getData, getDataLength } = calendarStore; //why the fk is getDataLength affecting appearance??
-
+    
     return(
       <div className="MainCalendar">
           <DnDCalendar
@@ -148,10 +163,17 @@ class MainCalender extends Component {
               // onSelectEvent={(event)=>this.renderEventMoreInfo(event)}
               components={{
                 event: Event({
-                  // onRoutingButtonClick: this.renderEventMoreInfo()
                   calendarStore: calendarStore
-                })
-                // toolbar: Event({getData})
+                }),
+                month: {
+                  dateHeader: ({label}) => {
+                    return(
+                      <React.Fragment>
+                        <Typography className={classes.dateHeaderStyle}>{label}</Typography>
+                      </React.Fragment>
+                    )
+                  }
+                }
               }}
               // components={components}
               onSelectEvent={this.toggleEditModal}
@@ -190,5 +212,7 @@ class MainCalender extends Component {
   }
 }
 
-MainCalender = observer(MainCalender);
-export default withRouter(MainCalender);
+MainCalendar = observer(MainCalendar);
+// export default withRouter(MainCalendar);
+export default withRouter((withStyles(useStyles)(MainCalendar)));
+// export default withRouter(connect()(withStyles(styles)(MainCalendar)))

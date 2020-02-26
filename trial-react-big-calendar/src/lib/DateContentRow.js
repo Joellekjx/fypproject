@@ -13,6 +13,7 @@ import * as DateSlotMetrics from '../utils/DateSlotMetrics'
 
 import axios from 'axios'
 
+
 class DateContentRow extends React.Component {
   
   state = {
@@ -202,8 +203,8 @@ class DateContentRow extends React.Component {
           longPressThreshold={longPressThreshold}
         />
         {this.getSemesterStart()}
-        {range.map(this.renderSemester)}
-        <div className="rbc-row-content">
+        <div id="render-semester" style={{fontFamily: 'Roboto', float: 'left'}}>{range.map(this.renderSemester)}</div>
+        <div className="rbc-row-content" >
           {renderHeader && (
             <div className="rbc-row " ref={this.createHeadingRef}>
               {range.map(this.renderHeadingCell)}
