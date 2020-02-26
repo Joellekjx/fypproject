@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Task, Comment, Project, Semester
+from .models import Task, Comment, Project, Semester, TaskAttachDocument
 
 class TaskAdmin(admin.ModelAdmin):
     model = Task
@@ -18,4 +18,4 @@ admin.site.register(Task, TaskAdmin)
 admin.site.register(Comment)
 admin.site.register(Project)
 admin.site.register(Semester, SemesterAdmin)
-
+admin.site.register(TaskAttachDocument)

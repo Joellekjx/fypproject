@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from tasklist.models import Task, AuthUser, Project, Comment, Semester
+from tasklist.models import Task, AuthUser, Project, Comment, Semester, TaskAttachDocument
 
 class projectSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,15 +37,20 @@ class commentSerializer(serializers.ModelSerializer):
 
     #     return comment
 
+class documentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TaskAttachDocument
+        fields = ('task_attach_document_id', 'task_id', 'attach_document', 'uploaded_date')
+
 class taskSerializerNoId(serializers.ModelSerializer):
     # project_id = projectSerializer()
     # student_id = userDetailsSerializer()
     # tutor_id = userDetailsSerializer()
     comments = commentSerializer(source='comment_set', read_only=True, many=True)
-    
+    documents = documentSerializer(source='taskattachdocument_set', read_only=True, many=True)
     class Meta:
         model = Task
-        fields = ('task_id', 'project_id', 'student_id', 'tutor_id', 'task_type', 'task_created_date', 'task_due_date', 'submission_date', 'content', 'hours_spent', 'status', 'comments', 'desc')
+        fields = ('task_id', 'project_id', 'student_id', 'tutor_id', 'task_type', 'task_created_date', 'task_due_date', 'submission_date', 'content', 'hours_spent', 'status', 'documents', 'comments', 'desc')
         # read_only_fields = ('projectid',)
         # depth=1
         
