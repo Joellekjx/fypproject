@@ -4,13 +4,24 @@ import { Button, Typography, IconButton } from '@material-ui/core';
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { withStyles } from '@material-ui/core/styles';
+import cn from 'classnames';
 
 export let navigate = {
   PREVIOUS: 'PREV',
   NEXT: 'NEXT',
   TODAY: 'TODAY',
   DATE: 'DATE',
+  MONTH: 'MONTH',
+  AGENDA: 'AGENDA'
 }
+
+export const views = {
+  MONTH: 'month',
+  WEEK: 'week',
+  WORK_WEEK: 'work_week',
+  DAY: 'day',
+  AGENDA: 'agenda'
+};
 
 const useStyles = (theme) => ({
   label: {
@@ -21,10 +32,43 @@ const useStyles = (theme) => ({
   },
   buttonStyle: {
     // border: '0px solid'
+  },
+  viewStyling: {
+    color: 'red'
   }
 })
 
 class CustomToolBar extends React.Component {
+    constructor(props){
+      super(props);
+    }
+
+    view = view => {
+      this.props.onView(view);
+    };
+
+    viewNamesGroup(messages) {
+      let viewNames = this.props.views;
+      const view = this.props.view;
+      const { classes } = this.props;
+  
+      if (viewNames.length > 1) {
+        return viewNames.map(name => (
+          <Button
+            key={name}
+            className={cn({
+              active: view === name,
+              'btn-primary': view === name,
+              root: classes.viewStyling,
+            })}
+            onClick={this.view.bind(null, name)}
+          >
+            {messages[name]}
+          </Button>
+        ));
+      }
+    }
+
   render() {
     let { localizer: { messages }, label, classes } = this.props
     return(
@@ -37,7 +81,9 @@ class CustomToolBar extends React.Component {
             <span className="rbc-toolbar-label"></span>
             <span className="rbc-btn-group"> 
             {/* This will have to potentially be switching view b/w month and week */}
-                <button type="button" onClick={this.navigate.bind(null, navigate.NEXT)}>Next</button>
+              {this.viewNamesGroup(messages)}
+                {/* <button type="button" onClick={this.navigate.bind(null, navigate.MONTH)}>Month</button>
+                <button type="button" onClick={this.navigate.bind(null, navigate.AGENDA)}>AGENDA</button> */}
             </span>
         </div>
     )
