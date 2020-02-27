@@ -11,9 +11,7 @@ export default function axiosGetFullData(calendarStore){
     axios.get('http://127.0.0.1:8000/api/taskComment/')
         .then(res => {
             res.data.map(indivRes => {
-                // console.log(indivRes);
                 var starttime;
-                // if(indivRes.task_type === 'Weekly Report'){
                 switch(indivRes.task_type){
                     case "Meeting Notes":
                         starttime = new Date(indivRes.task_created_date);
