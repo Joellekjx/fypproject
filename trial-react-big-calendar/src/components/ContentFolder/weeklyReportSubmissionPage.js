@@ -36,11 +36,15 @@ class WeeklyReportSubmissionPage extends Component {
     this.state = {
       hoursSpent: "",
       thingsCompleted: "",
+      status: this.props.status,
+      content: this.props.content,
+      hours_spent: this.props.hours_spent
     }
   }
 
   renderWeeklyReportCompletedPaper = () => {
-    const { classes, content, hours_spent } = this.props;
+    const { classes } = this.props;
+    const { content, hours_spent } = this.state;
     return(
       <Paper elevation={2} className={classes.paper}>
         <div style={{display: 'flex', padding: '10px'}}>
@@ -74,6 +78,8 @@ class WeeklyReportSubmissionPage extends Component {
     } else {
       axiosPut(Id, task_type, task_created, submissionTime, project_id, student_id, tutor_id, "Completed", thingsCompleted, hoursSpent);
     }
+
+    this.setState({ status: 'Completed', content: thingsCompleted, hours_spent: hoursSpent })
     //still not v accurate cause need:
     //1. the form to clear
     //2. the form needs to change to reflect the added inputs
@@ -146,9 +152,11 @@ class WeeklyReportSubmissionPage extends Component {
     }
   }
 
+  // Need to deal with the status and updating of time!!!
 
   render(){
-    const { classes, status } = this.props;
+    const { classes } = this.props;
+    const { status } = this.state;
 
     return (
     <div style={{width: '100%'}}>
