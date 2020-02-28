@@ -46,6 +46,11 @@ class CalendarStore {
         found.hours_spent = hours_spent;
     }
 
+    deleteSelectedEvent = (id) => {
+        var filterEvent = this.newData.filter(function(el) { return el.Id !== id; });
+        this.newData = filterEvent
+    }
+
     changeDefaultState = (e) => {
         this.defaultState = e;
     }
@@ -84,6 +89,7 @@ decorate(CalendarStore, {
     addSelectedData: action,
     changeDefaultState: action,
     setTotalHoursSpent: action,
+    deleteSelectedEvent: action,
     getData: computed,
     getSelectedData: computed,
     getDataLength: computed,
