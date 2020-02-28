@@ -125,7 +125,7 @@ class MeetingsContent extends Component {
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails className={classes.details} style={{paddingBottom: '40px'}}>
                   <div className={classes.column}>
-                    <MeetingNotesSubmissionPage data={text}/>
+                    <MeetingNotesSubmissionPage data={text} calendarStore={calendarStore}/>
                   </div>
                   <div className={classes.column}>
                     <MeetingNotesAttachmentPage />

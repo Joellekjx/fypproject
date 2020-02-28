@@ -52,16 +52,19 @@ class MeetingNotesSubmissionPage extends Component {
     }
 
     onSubmitForm = (e) => {
-        e.preventDefault();
-        const { data } = this.props;
-        const { meetingNotes } = this.state;
-        var submissionTime = moment();
-
-        if(meetingNotes === "") {
-            alert("Please fill in meeting notes");
-        } else {
-            axiosPut(data.Id, data.task_type, data.task_created, submissionTime, data.project_id, data.student_id, data.tutor_id, "Completed", meetingNotes)
-        }
+      e.preventDefault();
+      const { data, calendarStore } = this.props;
+      const { Id, event_type, start } = data;
+      const { updateWeeklyReportSubmission } = calendarStore;
+      const { meetingNotes } = this.state;
+      var submissionTime = moment();
+      if(meetingNotes === "") {
+          alert("Please fill in meeting notes");
+      } else {
+          axiosPut(Id, event_type, start, submissionTime, data.project_id, data.student_id, data.tutor_id, "Completed", meetingNotes, 0)
+      }
+      //Update mobx store so that front-end view can be updated simultaneously
+      updateWeeklyReportSubmission(Id, 'Completed', meetingNotes, submissionTime, 0)
     }
 
     handleChange = event => {
@@ -97,7 +100,7 @@ class MeetingNotesSubmissionPage extends Component {
 
     renderSwitchPaper = () => {
         const { data } = this.props;
-        console.log(data.status);
+        // console.log(data.status);
         switch(data.status){
             case "Completed": 
                 return this.renderMeetingNotesCompletedPaper();
@@ -108,7 +111,7 @@ class MeetingNotesSubmissionPage extends Component {
 
     render(){
         const { classes, data } = this.props;
-        console.log(data);
+        // console.log(data);
         return(
             <div style={{width: '100%'}}>
                 <Typography className={classes.heading}>Meeting Notes:</Typography>
