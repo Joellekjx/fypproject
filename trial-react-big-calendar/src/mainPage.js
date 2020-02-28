@@ -14,12 +14,12 @@ class MainPage extends Component {
   }
 
   render() {
-    const { calendarStore } = this.props;
+    const { calendarStore, history } = this.props;
     return (
         <div className="MainPage">
           <Grid container>
             <Grid item xs={1}>
-              <LeftSideColumn calendarStore={calendarStore}/>
+              <LeftSideColumn calendarStore={calendarStore} history={history}/>
             </Grid>
             <Grid item xs={11}>
               <MainCalendar calendarStore={calendarStore} />

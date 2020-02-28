@@ -93,12 +93,17 @@ python manage.py runserver
 1. Comment box: ~~axios~~ or pull in server like express & socket.io?
 2. How to 'focus' when you click on an event? Look at alternatives to history.push else Link? Alternatively look at createRef mapped -- else you might want to remove "Hash Link" in yr dependencies
 3. ~~Top bar of weekly report table must be able to stay at the top and not disappear as you scroll~~
-4. Meetings page
+4. ~~Meetings page~~
 5. Main calendar "paper" view -- add the relevant details in the paper view and also show timing for events
-6. Updating meetings
+6. Updating meetings both API and the View
 7. Fix "event form" with the timings (select timing bar) and posting of the details -- currently choosing other dates is not possible once you've entered the event form
-8. Backend should be able to update statuses (e.g. late submission detection)
+8. Backend should be able to auto update statuses (e.g. late submission detection)
 9. Nitpicking: weekly report header try and align w the content
 10. Nitpicking: meetings header try and align w the content
 11. Nitpicking: clean up the props sent to weeklyreportsubmissionpage & weeklyreportcommentbox pls
-12. Double check if it is possible to POST/update to backend alr or not
+12. ~~Double check if it is possible to POST/update to backend alr or not~~
+13. Try to tweak yr toolbar's month/week button again pls
+14. Attachments -- once api is ok, rmb to add that in
+15. Clean up "SwipeableDrawer" file -- router might be a bit funky/error + design of the drawer  ==> plus onClick it should jump to the right drawer page
+16. The appbar design in the meetings/weekly report etc. pages need a bit of clean up ya. Make it look nicer
+17. How do I track the dates (e.g. semester x week y) inside the weekly report/meetings? hmmm -- might have to pull the semester api, compare the date then add week

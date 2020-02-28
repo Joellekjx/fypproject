@@ -65,18 +65,20 @@ class WeeklyReportSubmissionPage extends Component {
 
   onSubmitForm = (e) => {
     e.preventDefault();
-    const { Id, task_type, task_created, student_id, project_id, tutor_id } = this.props;
+    //Note to self: Can u like lol reduce the props here some how???
+    const { Id, task_type, task_created, student_id, project_id, tutor_id, calendarStore } = this.props;
     const { hoursSpent, thingsCompleted } = this.state;
+
+    const { updateWeeklyReportSubmission } = calendarStore;
     var submissionTime = moment();
-    //NOTE: TASK DUE DATE==TODAY
     if (hoursSpent === "" || thingsCompleted === ""){
       alert("Please fill in all fields");
     } else {
       axiosPut(Id, task_type, task_created, submissionTime, project_id, student_id, tutor_id, "Completed", thingsCompleted, hoursSpent);
     }
-    //still not v accurate cause need:
-    //1. the form to clear
-    //2. the form needs to change to reflect the added inputs
+
+    //Update mobx store so that front-end view can be updated simultaneously
+    updateWeeklyReportSubmission(Id, 'Completed', thingsCompleted, submissionTime, hoursSpent)
   }
 
   handleChange = event => {
@@ -101,9 +103,6 @@ class WeeklyReportSubmissionPage extends Component {
           <div style={{display: 'flex'}}>
             <Typography className={classes.secondaryHeading}>
               Hours spent: &nbsp;
-              {/* comment: reduce the height of textfield pls */}
-              {/* also! comment: add a key value pls ==> when you add hours spent and things completed
-              it needs to be pushed into the right id*/}
             </Typography>
             <TextField 
               variant="outlined" 
@@ -145,7 +144,6 @@ class WeeklyReportSubmissionPage extends Component {
         return this.renderWeeklyReportPendingPaper();
     }
   }
-
 
   render(){
     const { classes, status } = this.props;

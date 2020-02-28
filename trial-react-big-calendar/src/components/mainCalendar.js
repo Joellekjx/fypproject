@@ -9,9 +9,7 @@ import WorkMonth from '../lib/WorkMonth';
 import { observer } from "mobx-react";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { Dialog, Paper, Popover, Button, Typography } from "@material-ui/core";
-import ContentRouter from './contentRouting';
-// import { HashLink as Link } from 'react-router-hash-link';
+import { Dialog, Typography } from "@material-ui/core";
 import CustomEventWithPopover from './MainCalendarComponents/indivEvent';
 import { withStyles } from '@material-ui/core/styles';
 import CustomToolBar from './MainCalendarComponents/CustomToolBar';
@@ -20,9 +18,7 @@ const localizer = momentLocalizer(moment);
 const DnDCalendar = withDragAndDrop(Calendar);
 
 /**
- * Note to self: Need to spruce up "add event" onClick in Calendar + add event button
- * Likely have 1 pop-up form from MUI
- * Then onClick either button runs that mini component
+ * Note to self: Need to make "add event" onClick in Calendar to be bug free
  */
 
 
@@ -31,8 +27,6 @@ const useStyles = (theme) => ({
       flexGrow: 1,
   },
   dateHeaderStyle: {
-    // color: 'yellow'
-    // textAlign: 'center',
     display: 'inline',
     fontFamily: 'Roboto',
     fontSize: '15px'
@@ -214,6 +208,4 @@ class MainCalendar extends Component {
 }
 
 MainCalendar = observer(MainCalendar);
-// export default withRouter(MainCalendar);
 export default withRouter((withStyles(useStyles)(MainCalendar)));
-// export default withRouter(connect()(withStyles(styles)(MainCalendar)))

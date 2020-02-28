@@ -1,44 +1,20 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
-import moment from 'moment';
 import AddEventButton from './MainCalendarComponents/addEventButton';
+import SwipeableDrawer from './LeftSideColumnComponents/SwipeableDrawer';
 
 class LeftSideColumn extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            // semStart: "2020-01-13",
-            // semEnd: "2020-03-12"
-            semStart: moment("2020-01-13"),
-            semEnd: moment("2020-04-17"),
-        }
-    }
-
-    renderWeekCounter = () => {
-        let { semStart, semEnd } = this.state;
-        let difference = semEnd.diff(semStart, 'week');
-        return(
-            <div>
-                Week {difference}
-            </div>
-        )
-    }
-
-      consoleClick = () => {
-        //   console.log("click");
-      }
-
     render(){
-        const { calendarStore } = this.props;
+        const { calendarStore, history } = this.props;
         return(
-            <div className="LeftSideColumn">
+            <div className="LeftSideColumn" style={{paddingTop: '7px'}}>
                 <Grid container>
                     <Grid item xs={12}>
+                        <SwipeableDrawer history={history} />
+                    </Grid>
+                    <Grid item xs={12} style={{paddingTop: '5px', borderTop: '1px solid #ddd'}}>
                         <AddEventButton calendarStore={calendarStore}/>
                     </Grid>
-                    {/* <Grid item xs={6}>
-                        {this.renderWeekCounter()}
-                    </Grid> */}
                 </Grid>
                 </div>
         )
