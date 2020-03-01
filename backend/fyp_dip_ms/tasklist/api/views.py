@@ -1,8 +1,8 @@
 from rest_framework.generics import ListAPIView
 from rest_framework import viewsets
 
-from tasklist.models import Task, Comment, Project, Semester
-from .serializers import taskSerializer, commentSerializer, projectSerializer, taskSerializerNoId, semesterSerializer
+from tasklist.models import Task, Comment, Project, Semester, TaskAttachDocument
+from .serializers import taskSerializer, commentSerializer, projectSerializer, taskSerializerNoId, semesterSerializer, documentSerializer
 
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
@@ -62,3 +62,7 @@ class taskCommentViewSet(viewsets.ModelViewSet):
 class semesterStartViewSet(viewsets.ModelViewSet):
 	queryset = Semester.objects.all() 
 	serializer_class = semesterSerializer
+
+class documentViewSet(viewsets.ModelViewSet):
+	queryset = TaskAttachDocument.objects.all()
+	serializer_class = documentSerializer

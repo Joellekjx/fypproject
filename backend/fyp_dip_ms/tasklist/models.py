@@ -213,7 +213,7 @@ class Task(models.Model):
 class TaskAttachDocument(models.Model):
     task_attach_document_id = models.AutoField(db_column='task_Attach_Document_Id', primary_key=True)  # Field name made lowercase.
     task_id = models.ForeignKey(Task, models.DO_NOTHING, db_column='task_Id')  # Field name made lowercase.
-    attach_document = models.CharField(db_column='attach_Document', max_length=100)  # Field name made lowercase.
+    attach_document = models.FileField(upload_to='files', db_column='attach_Document', max_length=100)  # Field name made lowercase.
     uploaded_date = models.DateTimeField(db_column='uploaded_Date')  # Field name made lowercase.
 
     class Meta:

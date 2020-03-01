@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Typography, Paper, TextField, Button } from '@material-ui/core';
 import axiosPut from '../AxiosCalling/axiosPut';
 import moment from 'moment';
+import axios from 'axios';
 
 const useStyles = (theme) => ({
   root: {
@@ -36,6 +37,7 @@ class WeeklyReportSubmissionPage extends Component {
     this.state = {
       hoursSpent: "",
       thingsCompleted: "",
+      selectedFile: null,
     }
   }
 
@@ -63,6 +65,33 @@ class WeeklyReportSubmissionPage extends Component {
     )
   }
 
+  addAttachment = event => {
+    //something happens in this attachment side
+    // console.log(event.target.files[0])
+    this.setState({
+      selectedFile: event.target.files[0],
+      loaded: 0,
+    })
+    // console.log(this.state.selectedFile)
+  }
+
+  onClickHandler = () => {
+    const data = new FormData() 
+    data.append('task_id', this.props.Id)
+    data.append('attach_document', this.state.selectedFile)
+    var upload_date = moment(new Date()).format('YYYY-MM-DD HH:mm')
+    data.append('uploaded_date', upload_date)
+    axios.post("http://127.0.0.1:8000/api/document/", data, { // receive two parameter endpoint url ,form data 
+    })
+    .then(res => { // then print response status
+      console.log(res.statusText);
+    })
+    .catch((error) => {
+        console.log(error.response);
+        console.log(upload_date);
+    })
+  }
+
   onSubmitForm = (e) => {
     e.preventDefault();
     //Note to self: Can u like lol reduce the props here some how???
@@ -75,6 +104,7 @@ class WeeklyReportSubmissionPage extends Component {
       alert("Please fill in all fields");
     } else {
       axiosPut(Id, task_type, task_created, submissionTime, project_id, student_id, tutor_id, "Completed", thingsCompleted, hoursSpent);
+      this.onClickHandler();
     }
 
     //Update mobx store so that front-end view can be updated simultaneously
@@ -87,10 +117,6 @@ class WeeklyReportSubmissionPage extends Component {
       ...this.state,
       [event.target.name]: value
     })
-  }
-
-  addAttachment = () => {
-    //something happens in this attachment side
   }
 
   renderWeeklyReportPendingPaper = () => {
@@ -127,6 +153,8 @@ class WeeklyReportSubmissionPage extends Component {
             name="thingsCompleted"
           />
           <div style={{padding: '10px 0px 5px 0px'}}>
+            <input type="file" name="file" onChange={this.addAttachment}/>
+            <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button> 
             <Button onClick={this.addAttachment} style={{}}><strong>Add attachment</strong></Button>
             <Button type="submit" color="primary" variant="contained" style={{float: 'right'}}>Submit Report</Button>
           </div>
