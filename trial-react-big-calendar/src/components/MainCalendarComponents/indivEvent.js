@@ -4,6 +4,7 @@ import { Paper, Popover, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
 import history from '../../history';
+import axiosDelete from '../AxiosCalling/axiosDelete';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -92,9 +93,23 @@ export default function CustomEventWithPopover(props){
             )
         }
       }
+
+      const onClickDelete = () => {
+        const { deleteSelectedEvent } = calendarStore;
+        //Delete in backend
+        axiosDelete(event.event.Id);
+
+        //Delete in frontend/store
+        deleteSelectedEvent(event.event.Id)
+
+        alert("Event deleted")
+        //Once deleted, close popover
+        handleClose();
+      }
   
       // Other things you can add: Meeting's description (mainly location), status of submission, whether there's attachments
       const renderPopoverPaper = () => {
+        //NOTE: pls check how to pass the Id and wtf is Data? LOL
         return(
           <div className={classes.root}>
               <Paper style={{position: 'relative'}}>
@@ -105,8 +120,7 @@ export default function CustomEventWithPopover(props){
                     {formatDateView()}
                   </Typography>
                   <div style={{position: 'absolute', bottom: '0', float: 'right', paddingBottom: '15px'}}>
-                    <Button style={{marginRight: '5px'}}>
-                        {/* This should do an axios delete */}
+                    <Button style={{marginRight: '5px'}} onClick={onClickDelete}>
                         Delete
                     </Button>
                     <Button variant="contained" color="primary" onClick={onRoutingButtonClick}>

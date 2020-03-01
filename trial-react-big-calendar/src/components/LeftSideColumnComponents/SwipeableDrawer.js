@@ -53,21 +53,6 @@ export default function SwipeableTemporaryDrawer({history}) {
   );
 
   const onClickHandler = (text, index) => {
-      console.log('text below inside handler')
-      console.log(text);
-      console.log('inside handler');
-      console.log(index)
-    //   const newObj = { currentPageEvent: text, selectedIndex: index };
-    //   console.log(newObj);
-    //   console.log('why is it not setting???')
-    //   const val = e.target.value;
-//   setMessage(prevState => {
-//     return { ...prevState, message: val }
-//   });
-//   setMessage(newMessageObj);
-    // setState(prevState => {
-    //     return {...prevState, currentPageEvent: text, selectedIndex: index}
-    // })
     setSelectedIndex(index)
     setCurrentPageEvent(text)
   }
@@ -86,7 +71,7 @@ export default function SwipeableTemporaryDrawer({history}) {
     }
 
   return (
-    <div style={{float: 'center', textAlign: 'right', paddingBottom: '5px'}}>
+    <div style={{float: 'center', textAlign: 'center', paddingBottom: '5px'}}>
         <IconButton onClick={toggleDrawer('left', true)}><MenuIcon /></IconButton>
       <SwipeableDrawer
         open={state.left}
