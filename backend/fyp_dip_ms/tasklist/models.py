@@ -219,3 +219,6 @@ class TaskAttachDocument(models.Model):
     class Meta:
         managed = False
         db_table = 'task_attach_document'
+
+    def __str__(self):
+        return str(self.attach_document)
