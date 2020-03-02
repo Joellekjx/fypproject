@@ -266,6 +266,7 @@ function EventForm ({handleClose, start, end, calendarStore}) {
       </React.Fragment>
     )
   }
+
   const decideView = () => {
     switch(category){
       case "Weekly Report":
@@ -281,7 +282,6 @@ function EventForm ({handleClose, start, end, calendarStore}) {
             Please choose a category
           </React.Fragment>
         )
-
     }
   }
 

@@ -154,8 +154,8 @@ class WeeklyReportSubmissionPage extends Component {
           />
           <div style={{padding: '10px 0px 5px 0px'}}>
             <input type="file" name="file" onChange={this.addAttachment}/>
-            <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button> 
-            <Button onClick={this.addAttachment} style={{}}><strong>Add attachment</strong></Button>
+            <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button> 
+            {/* <Button onClick={this.addAttachment} style={{}}><strong>Add attachment</strong></Button> */}
             <Button type="submit" color="primary" variant="contained" style={{float: 'right'}}>Submit Report</Button>
           </div>
         </Paper>
