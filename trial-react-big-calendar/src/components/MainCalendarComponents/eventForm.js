@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import DateFnsUtils from '@date-io/date-fns';
 import { DatePicker, MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
-import { DialogTitle, DialogContent, makeStyles, Grid, Typography, Select, MenuItem, DialogActions, Button } from '@material-ui/core';
+import { DialogTitle, DialogContent, makeStyles, Grid, Typography, Select, MenuItem, DialogActions, Button, TextField } from '@material-ui/core';
+import axiosPost from '../AxiosCalling/axiosPost';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -27,22 +28,33 @@ function EventForm({handleClose, start, end, calendarStore}) {
         category: 'Meeting Notes',
         selectedStartDate: start,
         selectedEndDate: end,
+        repeatValue: 0,
     }
 
     const classes = useStyles();
-    const [{ category, selectedStartDate, selectedEndDate }, setState] = useState(initialState)
+    const [{ category, selectedStartDate, selectedEndDate, repeatValue }, setState] = useState(initialState)
 
     const onSubmit = (e) => {
         e.preventDefault()
-        console.log("submitted")
-        console.log("below is submitted start date")
-        console.log(selectedStartDate)
-        console.log("below is submitted end date")
-        console.log(selectedEndDate)
+
+        //Check if end date is earlier than start date
+        if(selectedEndDate < selectedStartDate){
+            return alert("Your end date is earlier than your start date. Please add a proper timing again.")
+        }
+
+        //Add new event by using calendarstore's add data
+        //No need to add everything because on refresh, the data from backend will be replaced with this
+        calendarStore.addData({title: category, start: selectedStartDate, end: selectedEndDate});
+        
+        //Add event to backend by axios.post
+        axiosPost(selectedStartDate, selectedEndDate, category, 'Pending')
+
         handleClose();
     }
 
-    const handleChange = (e) => { //handles category change
+    //Try a 'on repeat' method --> that is, potentially send onSubmit (x) times but +7 days each time
+
+    const handleCategoryChange = (e) => { //handles category change
         const value = e.target.value;
         setState(state => ({
             ...state,
@@ -161,6 +173,11 @@ function EventForm({handleClose, start, end, calendarStore}) {
         }
     }
 
+    // const changeRepeatValue = (e) => {
+    //     console.log(e.target.value)
+
+    // }
+
     return(
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <div>
@@ -174,7 +191,7 @@ function EventForm({handleClose, start, end, calendarStore}) {
                                     <Select
                                         labelId="demo-dialog-select-label"
                                         value={category}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleCategoryChange(e)}
                                         id="select-category"
                                         name="category"
                                     > 
@@ -197,6 +214,10 @@ function EventForm({handleClose, start, end, calendarStore}) {
                                     3. End Date & Time //would task_due_date be the same??
                                     4. Offer to repeat? But optional, leave if you have time
                                 */}
+                                {/* <div>
+                                    <Typography className={classes.secondaryHeading}>Repeat?</Typography>
+                                    <TextField type="number" value={repeatValue} name="repeatValue" placeholder="No. of times to repeat" onChange={e => setState({repeatValue: e.target.value})}></TextField>
+                                </div> */}
                         </Grid>
                         <DialogActions>
                             <Button onClick={handleClose} color="primary">
