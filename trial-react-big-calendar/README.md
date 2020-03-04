@@ -75,7 +75,8 @@ virtualenv env
 source env/bin/activate
 cd env
 pip install -r requirements.txt
-(for the mysqlclient, if you face issues, you run) env LDFLAGS="-I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib" pip install mysqlclient
+(for the mysqlclient, if you face issues, you run) 
+env LDFLAGS="-I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib" pip install mysqlclient
 cd ..
 cd fyp_dip_ms/
 python manage.py runserver

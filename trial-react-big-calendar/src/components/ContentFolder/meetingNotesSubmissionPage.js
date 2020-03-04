@@ -49,6 +49,8 @@ class MeetingNotesSubmissionPage extends Component {
                   {data.content}
                 </Typography>
               </div>
+              <input type="file" name="file" onChange={this.addAttachment}/>
+              <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>
             </Paper>
           )
     }
@@ -65,10 +67,13 @@ class MeetingNotesSubmissionPage extends Component {
 
     onClickHandler = () => {
       const data = new FormData() 
-      data.append('task_id', this.props.Id)
+      data.append('task_id', this.props.data.Id)
+
+
       data.append('attach_document', this.state.selectedFile)
       var upload_date = moment(new Date()).format('YYYY-MM-DD HH:mm')
       data.append('uploaded_date', upload_date)
+
       axios.post("http://127.0.0.1:8000/api/document/", data, { // receive two parameter endpoint url ,form data 
       })
       .then(res => { // then print response status
@@ -77,6 +82,11 @@ class MeetingNotesSubmissionPage extends Component {
       .catch((error) => {
           console.log(error.response);
           console.log(upload_date);
+      })
+
+      //reset the state
+      this.setState({
+        selectedFile: null,
       })
     }
     
@@ -88,13 +98,35 @@ class MeetingNotesSubmissionPage extends Component {
       const { meetingNotes } = this.state;
       var submissionTime = moment();
       if(meetingNotes === "") {
-          alert("Please fill in meeting notes");
+          return alert("Please fill in meeting notes");
       } else {
           axiosPut(Id, event_type, start, submissionTime, data.project_id, data.student_id, data.tutor_id, "Completed", meetingNotes, 0)
           this.onClickHandler();
       }
       //Update mobx store so that front-end view can be updated simultaneously
       updateWeeklyReportSubmission(Id, 'Completed', meetingNotes, submissionTime, 0)
+
+      //Submits the attachment to backend here:
+      //Note: Please refactor this -- put it into its own file
+      const formData = new FormData() 
+      console.log(this.state.selectedFile);
+      console.log('what is this selectedfile')
+      formData.append('task_id', this.props.data.Id)
+
+
+      formData.append('attach_document', this.state.selectedFile)
+      var upload_date = moment(new Date()).format('YYYY-MM-DD HH:mm')
+      formData.append('uploaded_date', upload_date)
+
+      axios.post("http://127.0.0.1:8000/api/document/", formData, { // receive two parameter endpoint url ,form data 
+      })
+      .then(res => { // then print response status
+        console.log(res.statusText);
+      })
+      .catch((error) => {
+          console.log(error.response);
+          console.log(upload_date);
+      })
     }
 
     handleChange = event => {
@@ -121,7 +153,7 @@ class MeetingNotesSubmissionPage extends Component {
                 />
                 <div style={{padding: '10px 0px 5px 0px'}}>
                   <input type="file" name="file" onChange={this.addAttachment}/>
-                  <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button> 
+                  {/* <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>  */}
                   {/* <Button onClick={this.addAttachment} style={{}}><strong>Add attachment</strong></Button> */}
                   <Button type="submit" color="primary" variant="contained" style={{float: 'right'}}>Submit Notes</Button>
                 </div>
@@ -132,7 +164,6 @@ class MeetingNotesSubmissionPage extends Component {
 
     renderSwitchPaper = () => {
         const { data } = this.props;
-        // console.log(data.status);
         switch(data.status){
             case "Completed": 
                 return this.renderMeetingNotesCompletedPaper();
@@ -142,8 +173,7 @@ class MeetingNotesSubmissionPage extends Component {
     }
 
     render(){
-        const { classes, data } = this.props;
-        // console.log(data);
+        const { classes } = this.props;
         return(
             <div style={{width: '100%'}}>
                 <Typography className={classes.heading}>Meeting Notes:</Typography>

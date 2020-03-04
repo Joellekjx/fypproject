@@ -61,6 +61,8 @@ class WeeklyReportSubmissionPage extends Component {
             {content}
           </Typography>
         </div>
+        <input type="file" name="file" onChange={this.addAttachment}/>
+        <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>
       </Paper>
     )
   }
@@ -90,6 +92,16 @@ class WeeklyReportSubmissionPage extends Component {
         console.log(error.response);
         console.log(upload_date);
     })
+    
+
+      //reset the state
+      console.log(this.state.selectedFile);
+      console.log("hello do u enter here after submitting?")
+      this.setState({
+        selectedFile: null,
+      })
+      console.log(this.state.selectedFile)
+      console.log("what about after this?")
   }
 
   onSubmitForm = (e) => {
