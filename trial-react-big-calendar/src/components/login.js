@@ -50,10 +50,14 @@ const useStyles = (theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   root: {
+    marginTop: theme.spacing(20),
     display: 'flex',
-    '& > * + *': {
-      marginLeft: theme.spacing(2),
-    },
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  errorMsg: {
+    display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
   },
 })
@@ -89,16 +93,16 @@ class Login extends Component {
     }
 
     render() {
-      let errorMessage = null;
-      if (this.props.error) {
-          errorMessage = (
-          <p>{this.props.error.message}</p>
-          );
-      }
-
       const { username, password } = this.state;
       const { classes } = this.props;
       
+      let errorMessage = null;
+      if (this.props.error) {
+          errorMessage = (
+          <p className={classes.errorMsg} >{this.props.error.message}</p>
+          );
+      }
+
       return (
         <div>
         {errorMessage}
