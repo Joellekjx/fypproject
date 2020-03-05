@@ -5,6 +5,7 @@ import MainPage from './mainPage';
 import ContentRouting from './components/contentRouting';
 import history from './history';
 import ContentRoutingTester from './components/contentRoutingTester';
+import LoginPage from './components/login';
 
 const calendarStore = new CalendarStore();
 class App extends Component {
@@ -20,6 +21,9 @@ class App extends Component {
           />
           <Route path="/contentroutertester"
             render={(props) => (<ContentRoutingTester {...props} calendarStore={calendarStore} />)}
+          />
+          <Route path="/login"
+            render={(props) => (<LoginPage {...props} calendarStore={calendarStore} />)}
           />
         </Route>
       </Router>
