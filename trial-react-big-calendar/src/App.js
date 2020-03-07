@@ -6,6 +6,7 @@ import ContentRouting from './components/contentRouting';
 import history from './history';
 import ContentRoutingTester from './components/contentRoutingTester';
 import LoginPage from './components/login';
+import ReactPDF from './components/ReactPDF';
 
 const calendarStore = new CalendarStore();
 class App extends Component {
@@ -24,6 +25,9 @@ class App extends Component {
           />
           <Route path="/login"
             render={(props) => (<LoginPage {...props} calendarStore={calendarStore} />)}
+          />
+          <Route path="/testreactpdf"
+            render={(props) => (<ReactPDF {...props} />)}
           />
         </Route>
       </Router>
