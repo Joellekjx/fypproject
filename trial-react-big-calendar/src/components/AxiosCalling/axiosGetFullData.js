@@ -6,13 +6,13 @@ import axios from 'axios';
  * But 'meetings' will take indivRes.creation_date (or the more exact one)
  */
 
-export default function axiosGetFullData(calendarStore){
+export default function axiosGetFullData(calendarStore) {
     var totalHours = 0;
     axios.get('http://127.0.0.1:8000/api/taskComment/')
         .then(res => {
             res.data.map(indivRes => {
                 var starttime;
-                switch(indivRes.task_type){
+                switch (indivRes.task_type) {
                     case "Meeting Notes":
                         starttime = new Date(indivRes.task_created_date);
                         break;
@@ -25,10 +25,10 @@ export default function axiosGetFullData(calendarStore){
                 totalHours += indivRes.hours_spent
 
                 calendarStore.addData({
-                    Id: indivRes.task_id, 
-                    title: indivRes.task_type, 
-                    start: starttime, 
-                    end: endtime, 
+                    Id: indivRes.task_id,
+                    title: indivRes.task_type,
+                    start: starttime,
+                    end: endtime,
                     event_type: indivRes.task_type,
                     status: indivRes.status,
                     content: indivRes.content,
@@ -38,9 +38,10 @@ export default function axiosGetFullData(calendarStore){
                     student_id: indivRes.student_id,
                     tutor_id: indivRes.tutor_id,
                     comments: indivRes.comments,
+                    documents: indivRes.documents
                 })
             })
-            if(calendarStore.getTotalHoursSpent === "0"){
+            if (calendarStore.getTotalHoursSpent === "0") {
                 calendarStore.setTotalHoursSpent(totalHours);
             }
         })

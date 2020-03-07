@@ -24,7 +24,7 @@ const DnDCalendar = withDragAndDrop(Calendar);
 
 const useStyles = (theme) => ({
   root: {
-      flexGrow: 1,
+    flexGrow: 1,
   },
   dateHeaderStyle: {
     display: 'inline',
@@ -39,19 +39,19 @@ const Event = ({ calendarStore }) => props => {
 }
 
 class MainCalendar extends Component {
-  constructor(props){
-      super(props)
-      this.state = {
-        dayLayoutAlgorithm: 'no-overlap',
-        isAddModalOpen: false,
-        currentEvent: '',
-      }
-  }  
+  constructor(props) {
+    super(props)
+    this.state = {
+      dayLayoutAlgorithm: 'no-overlap',
+      isAddModalOpen: false,
+      currentEvent: '',
+    }
+  }
 
   handleClose = () => {
-    this.setState({isAddModalOpen: false })
+    this.setState({ isAddModalOpen: false })
   }
-    
+
   onEventResize = ({ event, start, end }) => {
     const { events } = this.state
 
@@ -102,7 +102,7 @@ class MainCalendar extends Component {
       status: event.status,
     });
 
-    switch(eventType){
+    switch (eventType) {
       case "Weekly Report":
         changeDefaultState('Weekly Report');
         this.props.history.push('/contentrouter');
@@ -117,91 +117,91 @@ class MainCalendar extends Component {
   }
 
   toggleAddModal = (event) => {
-      this.setState({
-        currentEvent: event,
-        isAddModalOpen: !this.state.isAddModalOpen,
-      })
+    this.setState({
+      currentEvent: event,
+      isAddModalOpen: !this.state.isAddModalOpen,
+    })
   };
 
   renderDialog = () => {
     const { currentEvent } = this.state;
     const { calendarStore } = this.props;
-    return(
+    return (
       <React.Fragment>
-        <Dialog open={this.state.isAddModalOpen}  onClose={this.handleClose}>
+        <Dialog open={this.state.isAddModalOpen} onClose={this.handleClose}>
           <EventForm calendarStore={calendarStore} start={currentEvent.start} end={currentEvent.end} handleClose={() => this.handleClose()} />
         </Dialog>
       </React.Fragment>
     )
   }
 
-  render(){
+  render() {
     const { calendarStore, classes } = this.props;
     const { getData, getDataLength } = calendarStore; //why the fk is getDataLength affecting appearance??
-    
-    return(
+
+    return (
       <div className="MainCalendar">
-          <DnDCalendar
+        <DnDCalendar
           // <Calendar
-              selectable
-              startAccessor="start"
-              endAccessor="end"
-              defaultDate={new Date()}
-              defaultView="month"
-              views={{month: WorkMonth, week: true}}
-              events={getData}
-              localizer={localizer}
-              onEventResize={this.onEventResize}
-              
-              resizable
-              style={{ height: "100vh" }}
-              // onSelectEvent={(event)=>this.renderEventMoreInfo(event)}
-              components={{
-                event: Event({
-                  calendarStore: calendarStore
-                }),
-                toolbar: CustomToolBar,
-                month: {
-                  dateHeader: ({label}) => {
-                    return(
-                      <React.Fragment>
-                        <Typography className={classes.dateHeaderStyle}>{label}</Typography>
-                      </React.Fragment>
-                    )
-                  },
-                },
-              }}
-              onSelectEvent={this.toggleEditModal}
-              eventPropGetter={
-                (event) => {
-                  let newStyle = {
-                    backgroundColor: "lightgrey",
-                    color: 'black',
-                    borderRadius: "0px",
-                    border: "none"
-                  };
-                  switch(event.status){
-                    case "Completed":
-                      newStyle.backgroundColor = "lightgrey"; break;
-                    case "Pending":
-                      newStyle.backgroundColor = "lightgreen"; break;
-                    case "Late Submission":
-                      newStyle.backgroundColor = "lightyellow"; break;
-                    case "Late":
-                      newStyle.backgroundColor = "#ffcccb"; break;
-                    default:
-                      newStyle.backgroundColor = "lightgreen"; break;
-                  }
-                  return {
-                    className: "",
-                    style: newStyle
-                  };
-                }
+          selectable
+          startAccessor="start"
+          endAccessor="end"
+          defaultDate={new Date()}
+          defaultView="month"
+          views={{ month: WorkMonth, week: true }}
+          events={getData}
+          localizer={localizer}
+          onEventResize={this.onEventResize}
+
+          resizable
+          style={{ height: "100vh" }}
+          // onSelectEvent={(event)=>this.renderEventMoreInfo(event)}
+          components={{
+            event: Event({
+              calendarStore: calendarStore
+            }),
+            toolbar: CustomToolBar,
+            month: {
+              dateHeader: ({ label }) => {
+                return (
+                  <React.Fragment>
+                    <Typography className={classes.dateHeaderStyle}>{label}</Typography>
+                  </React.Fragment>
+                )
+              },
+            },
+          }}
+          onSelectEvent={this.toggleEditModal}
+          eventPropGetter={
+            (event) => {
+              let newStyle = {
+                backgroundColor: "lightgrey",
+                color: 'black',
+                borderRadius: "0px",
+                border: "none"
+              };
+              switch (event.status) {
+                case "Completed":
+                  newStyle.backgroundColor = "lightgrey"; break;
+                case "Pending":
+                  newStyle.backgroundColor = "lightgreen"; break;
+                case "Late Submission":
+                  newStyle.backgroundColor = "lightyellow"; break;
+                case "Late":
+                  newStyle.backgroundColor = "#ffcccb"; break;
+                default:
+                  newStyle.backgroundColor = "lightgreen"; break;
               }
-              onSelectSlot={this.toggleAddModal}
-              dayLayoutAlgorithm={this.state.dayLayoutAlgorithm}
-          />
-          {this.renderDialog()}
+              return {
+                className: "",
+                style: newStyle
+              };
+            }
+          }
+          onSelectSlot={this.toggleAddModal}
+          dayLayoutAlgorithm={this.state.dayLayoutAlgorithm}
+        />
+        {this.renderDialog()}
       </div>
     )
   }

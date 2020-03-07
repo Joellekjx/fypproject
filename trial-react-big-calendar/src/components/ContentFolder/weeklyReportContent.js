@@ -84,7 +84,7 @@ class WeeklyReportContent extends Component {
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails className={classes.details} style={{paddingBottom: '40px'}}>
                   <div className={classes.column}>
-                    <WeeklyReportSubmissionPage calendarStore={calendarStore} task_type={text.event_type} task_created={text.end} student_id={text.student_id} tutor_id={text.tutor_id} project_id={text.project_id} Id={text.Id} hours_spent={text.hours_spent} content={text.content} status={text.status} />
+                    <WeeklyReportSubmissionPage calendarStore={calendarStore} documents={text.documents} task_type={text.event_type} task_created={text.end} student_id={text.student_id} tutor_id={text.tutor_id} project_id={text.project_id} Id={text.Id} hours_spent={text.hours_spent} content={text.content} status={text.status} />
                   </div>
                   <div className={classes.column}>
                     <WeeklyReportCommentBox comments={text.comments} calendarStore={calendarStore} status={text.status} id={text.Id} user_id={text.student_id} />

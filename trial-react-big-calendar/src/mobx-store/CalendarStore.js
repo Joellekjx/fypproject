@@ -1,32 +1,35 @@
 import { decorate, observable, action, computed } from "mobx"
 
+/**
+ * Format of newData:
+ *  Id: indivRes.task_id, 
+    title: indivRes.task_type, 
+    start: starttime, 
+    end: endtime, 
+    event_type: indivRes.task_type,
+    status: indivRes.status,
+    content: indivRes.content,
+    hours_spent: indivRes.hours_spent,
+    submission_date: indivRes.submission_date,
+    project_id: indivRes.project_id,
+    student_id: indivRes.student_id,
+    tutor_id: indivRes.tutor_id,
+    comments: indivRes.comments,
+    documents: indivRes.documents
+ */
+
 class CalendarStore {
     newData = [];
-    /**
-     *  Id: indivRes.task_id, 
-        title: indivRes.task_type, 
-        start: starttime, 
-        end: endtime, 
-        event_type: indivRes.task_type,
-        status: indivRes.status,
-        content: indivRes.content,
-        hours_spent: indivRes.hours_spent,
-        submission_date: indivRes.submission_date,
-        project_id: indivRes.project_id,
-        student_id: indivRes.student_id,
-        tutor_id: indivRes.tutor_id,
-        comments: indivRes.comments,
-     */
     selectedData = {}; //for moving between maincalendar to say weekly report
     //this is a SPECIFIC onClick event
-    defaultState = {state: 'Meetings', index: 1} //available as: 'Weekly Report', 'Meetings', 'Other Submissions'
+    defaultState = { state: 'Meetings', index: 1 } //available as: 'Weekly Report', 'Meetings', 'Other Submissions'
     totalHoursSpent = "0";
 
     addData = (e) => {
         this.newData.push(e);
     }
 
-    addSelectedData = ({Id, title, start, end, event_type, status}) => {
+    addSelectedData = ({ Id, title, start, end, event_type, status }) => {
         this.selectedData.Id = Id;
         this.selectedData.title = title;
         this.selectedData.start = start;
@@ -39,7 +42,7 @@ class CalendarStore {
         var found = this.newData.find(function (element) {
             return element.Id === index;
         });
-        
+
         found.status = status;
         found.content = content;
         found.submission_date = submission_date;
@@ -47,7 +50,7 @@ class CalendarStore {
     }
 
     deleteSelectedEvent = (id) => {
-        var filterEvent = this.newData.filter(function(el) { return el.Id !== id; });
+        var filterEvent = this.newData.filter(function (el) { return el.Id !== id; });
         this.newData = filterEvent
     }
 
@@ -67,15 +70,15 @@ class CalendarStore {
         return this.selectedData;
     }
 
-    get getDataLength(){
+    get getDataLength() {
         return this.newData.length;
     }
 
-    get getDefaultState(){
+    get getDefaultState() {
         return this.defaultState;
     }
 
-    get getTotalHoursSpent(){
+    get getTotalHoursSpent() {
         return this.totalHoursSpent;
     }
 }

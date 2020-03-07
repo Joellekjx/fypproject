@@ -32,7 +32,7 @@ const useStyles = (theme) => ({
 })
 
 class WeeklyReportSubmissionPage extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       hoursSpent: "",
@@ -42,18 +42,18 @@ class WeeklyReportSubmissionPage extends Component {
   }
 
   renderWeeklyReportCompletedPaper = () => {
-    const { classes, content, hours_spent } = this.props;
-    return(
+    const { classes, content, hours_spent, documents } = this.props;
+    return (
       <Paper elevation={2} className={classes.paper}>
-        <div style={{display: 'flex', padding: '10px'}}>
+        <div style={{ display: 'flex', padding: '10px' }}>
           <Typography className={classes.secondaryHeading}>
-            Hours spent: &nbsp; 
+            Hours spent: &nbsp;
           </Typography>
           <Typography className={classes.bodyText}>
             {hours_spent}
           </Typography>
         </div>
-        <div style={{padding: '0 10px 10px 10px'}}>
+        <div style={{ padding: '0 10px 10px 10px' }}>
           <Typography className={classes.secondaryHeading}>
             Things completed:
           </Typography>
@@ -61,8 +61,15 @@ class WeeklyReportSubmissionPage extends Component {
             {content}
           </Typography>
         </div>
-        <input type="file" name="file" onChange={this.addAttachment}/>
+        <input type="file" name="file" onChange={this.addAttachment} />
         <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>
+        <Typography>Attachments: </Typography>
+        {documents.map((item, index) => {
+          console.log(item.attach_document)
+          return <Typography>{item.attach_document}</Typography>
+        })}
+        {console.log(documents)}
+        {console.log("documents of each id is above")}
       </Paper>
     )
   }
@@ -78,30 +85,30 @@ class WeeklyReportSubmissionPage extends Component {
   }
 
   onClickHandler = () => {
-    const data = new FormData() 
+    const data = new FormData()
     data.append('task_id', this.props.Id)
     data.append('attach_document', this.state.selectedFile)
     var upload_date = moment(new Date()).format('YYYY-MM-DD HH:mm')
     data.append('uploaded_date', upload_date)
     axios.post("http://127.0.0.1:8000/api/document/", data, { // receive two parameter endpoint url ,form data 
     })
-    .then(res => { // then print response status
-      console.log(res.statusText);
-    })
-    .catch((error) => {
+      .then(res => { // then print response status
+        console.log(res.statusText);
+      })
+      .catch((error) => {
         console.log(error.response);
         console.log(upload_date);
-    })
-    
-
-      //reset the state
-      console.log(this.state.selectedFile);
-      console.log("hello do u enter here after submitting?")
-      this.setState({
-        selectedFile: null,
       })
-      console.log(this.state.selectedFile)
-      console.log("what about after this?")
+
+
+    //reset the state
+    console.log(this.state.selectedFile);
+    console.log("hello do u enter here after submitting?")
+    this.setState({
+      selectedFile: null,
+    })
+    console.log(this.state.selectedFile)
+    console.log("what about after this?")
   }
 
   onSubmitForm = (e) => {
@@ -112,7 +119,7 @@ class WeeklyReportSubmissionPage extends Component {
 
     const { updateWeeklyReportSubmission } = calendarStore;
     var submissionTime = moment();
-    if (hoursSpent === "" || thingsCompleted === ""){
+    if (hoursSpent === "" || thingsCompleted === "") {
       alert("Please fill in all fields");
     } else {
       axiosPut(Id, task_type, task_created, submissionTime, project_id, student_id, tutor_id, "Completed", thingsCompleted, hoursSpent);
@@ -135,18 +142,18 @@ class WeeklyReportSubmissionPage extends Component {
     const { classes } = this.props;
     const { hoursSpent, thingsCompleted } = this.state;
 
-    return(
-      <form  noValidate autoComplete="off" onSubmit={this.onSubmitForm} method="POST">
+    return (
+      <form noValidate autoComplete="off" onSubmit={this.onSubmitForm} method="POST">
         <Paper elevation={2} className={classes.paper}>
-          <div style={{display: 'flex'}}>
+          <div style={{ display: 'flex' }}>
             <Typography className={classes.secondaryHeading}>
               Hours spent: &nbsp;
             </Typography>
-            <TextField 
-              variant="outlined" 
+            <TextField
+              variant="outlined"
               size="small"
               type="number"
-              style={{width: '12%'}}
+              style={{ width: '12%' }}
               value={hoursSpent}
               onChange={this.handleChange}
               name="hoursSpent"
@@ -155,20 +162,20 @@ class WeeklyReportSubmissionPage extends Component {
           <Typography className={classes.secondaryHeading}>
             Things completed:
           </Typography>
-          <TextField 
+          <TextField
             variant="outlined"
             multiline
             rows="7"
-            style={{width: '100%'}}
+            style={{ width: '100%' }}
             value={thingsCompleted}
             onChange={this.handleChange}
             name="thingsCompleted"
           />
-          <div style={{padding: '10px 0px 5px 0px'}}>
-            <input type="file" name="file" onChange={this.addAttachment}/>
-            <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button> 
+          <div style={{ padding: '10px 0px 5px 0px' }}>
+            <input type="file" name="file" onChange={this.addAttachment} />
+            <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>
             {/* <Button onClick={this.addAttachment} style={{}}><strong>Add attachment</strong></Button> */}
-            <Button type="submit" color="primary" variant="contained" style={{float: 'right'}}>Submit Report</Button>
+            <Button type="submit" color="primary" variant="contained" style={{ float: 'right' }}>Submit Report</Button>
           </div>
         </Paper>
       </form>
@@ -176,7 +183,7 @@ class WeeklyReportSubmissionPage extends Component {
   }
 
   renderSwitchPaper = (status) => {
-    switch(status){
+    switch (status) {
       case "Completed":
       case "Late Submission":
         return this.renderWeeklyReportCompletedPaper();
@@ -185,17 +192,17 @@ class WeeklyReportSubmissionPage extends Component {
     }
   }
 
-  render(){
+  render() {
     const { classes, status } = this.props;
 
     return (
-    <div style={{width: '100%'}}>
-      <Typography className={classes.heading}>Weekly Report Submission</Typography>
-      {this.renderSwitchPaper(status)}
-    </div>
+      <div style={{ width: '100%' }}>
+        <Typography className={classes.heading}>Weekly Report Submission</Typography>
+        {this.renderSwitchPaper(status)}
+      </div>
     )
   }
-} 
+}
 
 WeeklyReportSubmissionPage = observer(WeeklyReportSubmissionPage);
 export default withStyles(useStyles)(WeeklyReportSubmissionPage);
