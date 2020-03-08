@@ -24,6 +24,7 @@ class CalendarStore {
     //this is a SPECIFIC onClick event
     defaultState = { state: 'Meetings', index: 1 } //available as: 'Weekly Report', 'Meetings', 'Other Submissions'
     totalHoursSpent = "0";
+    testFileURL = "";
 
     addData = (e) => {
         this.newData.push(e);
@@ -62,6 +63,10 @@ class CalendarStore {
         this.totalHoursSpent = hours;
     }
 
+    setFileURL = (fileURL) => {
+        this.testFileURL = fileURL;
+    }
+
     get getData() {
         return this.newData;
     }
@@ -81,6 +86,10 @@ class CalendarStore {
     get getTotalHoursSpent() {
         return this.totalHoursSpent;
     }
+
+    get getFileURL(){
+        return this.testFileURL;
+    }
 }
 
 decorate(CalendarStore, {
@@ -88,16 +97,19 @@ decorate(CalendarStore, {
     selectedData: observable,
     defaultState: observable,
     totalHoursSpent: observable,
+    testFileURL: observable,
     addData: action,
     addSelectedData: action,
     changeDefaultState: action,
     setTotalHoursSpent: action,
     deleteSelectedEvent: action,
+    setFileURL: action,
     getData: computed,
     getSelectedData: computed,
     getDataLength: computed,
     getDefaultState: computed,
     getTotalHoursSpent: computed,
+    getFileURL: computed,
 })
 
 export default CalendarStore;

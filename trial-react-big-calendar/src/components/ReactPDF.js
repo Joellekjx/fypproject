@@ -1,23 +1,39 @@
 import React, { Component } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import axiosGetPDF from './AxiosCalling/axiosGetPDF';
+import anotherTestDocument from '../static/another-kind-of-test-document.pdf';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 
 export default class ReactPDF extends Component {
-    // componentDidMount() {
-    //     axiosGetPDF()
-    // }
+    componentDidMount() {
+        const { calendarStore } = this.props;
+        axiosGetPDF({calendarStore: calendarStore, id: 4})
+    }
 
-    state = { numPages: null, pageNumber: 1 };
+    constructor(props){
+        super(props);
+        this.state = {
+            numPages: null, 
+            pageNumber: 1, 
+            // fileName: '/another-kind-of-test-document.pdf',
+            fileName: anotherTestDocument
+        }
+    }
+
+    // state = { numPages: null, pageNumber: 1, fileName: '/another-kind-of-test-document.pdf' };
 
     onDocumentLoadSuccess = ({ numPages }) => {
         this.setState({ numPages });
     };
 
     openPdfById = () => {
-        axiosGetPDF(4)
+        const { calendarStore } = this.props;
+        // axiosGetPDF({calendarStore: calendarStore, id: 4})
+        console.log(calendarStore.getFileURL)
+        this.setState({ fileName: calendarStore.getFileURL })
+        // window.open(calendarStore.getFileURL);
     }
 
     goToPrevPage = () =>
@@ -26,7 +42,7 @@ export default class ReactPDF extends Component {
         this.setState(state => ({ pageNumber: state.pageNumber + 1 }));
 
     render() {
-        const { pageNumber, numPages } = this.state;
+        const { pageNumber, numPages, fileName } = this.state;
 
         return (
             <div>
@@ -37,7 +53,7 @@ export default class ReactPDF extends Component {
 
                 <div style={{ width: 600 }}>
                     <Document
-                        file="/another-kind-of-test-document.pdf"
+                        file={fileName}
                         onLoadSuccess={this.onDocumentLoadSuccess}
                     >
                         <Page pageNumber={pageNumber} width={600} />
