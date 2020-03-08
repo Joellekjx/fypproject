@@ -11,7 +11,7 @@ export default class ReactPDF extends Component {
         const { calendarStore } = this.props;
         // axiosGetPDF({calendarStore: calendarStore, id: 4}) //this tests out pdf
         //this tests out docx:
-        axiosGetPDF({ calendarStore: calendarStore, id: 5 })
+        // axiosGetPDF({ calendarStore: calendarStore, id: 5 })
         //note: a docx will not be displayed and can only be downloaded (but only through window.open)
     }
 
