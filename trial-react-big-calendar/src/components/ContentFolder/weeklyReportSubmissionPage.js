@@ -5,6 +5,7 @@ import { Typography, Paper, TextField, Button } from '@material-ui/core';
 import axiosPut from '../AxiosCalling/axiosPut';
 import moment from 'moment';
 import axios from 'axios';
+import RenderDocumentPreview from './renderDocumentPreview';
 
 const useStyles = (theme) => ({
   root: {
@@ -64,12 +65,11 @@ class WeeklyReportSubmissionPage extends Component {
         <input type="file" name="file" onChange={this.addAttachment} />
         <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>
         <Typography>Attachments: </Typography>
-        {documents.map((item, index) => {
+        {/* {documents.map((item, index) => {
           console.log(item.attach_document)
           return <Typography>{item.attach_document}</Typography>
-        })}
-        {console.log(documents)}
-        {console.log("documents of each id is above")}
+        })} */}
+        <RenderDocumentPreview documents={documents}/>
       </Paper>
     )
   }

@@ -26,9 +26,9 @@ class App extends Component {
           <Route path="/login"
             render={(props) => (<LoginPage {...props} calendarStore={calendarStore} />)}
           />
-          <Route path="/testreactpdf"
+          {/* <Route path="/testreactpdf"
             render={(props) => (<ReactPDF {...props} calendarStore={calendarStore} />)}
-          />
+          /> */}
         </Route>
       </Router>
     );

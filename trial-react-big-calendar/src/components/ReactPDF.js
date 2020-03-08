@@ -9,16 +9,20 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 export default class ReactPDF extends Component {
     componentDidMount() {
         const { calendarStore } = this.props;
-        axiosGetPDF({calendarStore: calendarStore, id: 4})
+        // axiosGetPDF({calendarStore: calendarStore, id: 4}) //this tests out pdf
+        //this tests out docx:
+        axiosGetPDF({ calendarStore: calendarStore, id: 5 })
+        //note: a docx will not be displayed and can only be downloaded (but only through window.open)
     }
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            numPages: null, 
-            pageNumber: 1, 
+            numPages: null,
+            pageNumber: 1,
             // fileName: '/another-kind-of-test-document.pdf',
-            fileName: anotherTestDocument
+            // fileName: anotherTestDocument
+            fileName: this.props.url
         }
     }
 
@@ -28,13 +32,13 @@ export default class ReactPDF extends Component {
         this.setState({ numPages });
     };
 
-    openPdfById = () => {
-        const { calendarStore } = this.props;
-        // axiosGetPDF({calendarStore: calendarStore, id: 4})
-        console.log(calendarStore.getFileURL)
-        this.setState({ fileName: calendarStore.getFileURL })
-        // window.open(calendarStore.getFileURL);
-    }
+    // openPdfById = () => {
+    //     const { calendarStore } = this.props;
+    //     // axiosGetPDF({calendarStore: calendarStore, id: 4})
+    //     console.log(calendarStore.getFileURL)
+    //     this.setState({ fileName: calendarStore.getFileURL })
+    //     // window.open(calendarStore.getFileURL);
+    // }
 
     goToPrevPage = () =>
         this.setState(state => ({ pageNumber: state.pageNumber - 1 }));
@@ -43,7 +47,7 @@ export default class ReactPDF extends Component {
 
     render() {
         const { pageNumber, numPages, fileName } = this.state;
-
+        const { calendarStore } = this.props;
         return (
             <div>
                 <nav>
@@ -63,9 +67,10 @@ export default class ReactPDF extends Component {
                 <p>
                     Page {pageNumber} of {numPages}
                 </p>
-                <button onClick={this.openPdfById}>
+                {/* <button onClick={this.openPdfById}>
                     Open PDF in Id = 4
-                </button>
+                </button> */}
+                {/* <iframe src={calendarStore.getFileURL} width='1366px' height='623px' frameborder='0'></iframe> */}
             </div>
         );
     }

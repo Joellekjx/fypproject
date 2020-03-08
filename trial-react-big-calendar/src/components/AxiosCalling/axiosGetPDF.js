@@ -32,6 +32,8 @@ import axios from 'axios';
 //             console.log(error)
 //         })
 // }
+
+//very likely will get rid of this depending on how i end up getting deets
 export default function axiosGetPDF({calendarStore, id}) {
     axios('http://127.0.0.1:8000/api/document/' + id + '/', { //try to get the document from task_attach_document_id = 4
         method: 'GET',
@@ -54,7 +56,7 @@ export default function axiosGetPDF({calendarStore, id}) {
             // console.log(fileURL)
             console.log('and what is the fileurl here?')
             calendarStore.setFileURL(response.data.attach_document)
-            // window.open(fileURL);
+            // window.open(response.data.attach_document);
         })
         .catch(error => {
             console.log(error)

@@ -87,8 +87,8 @@ class ContentRoutingTest extends Component {
     this.state = {
       open: true,
       pageEvents: ['Weekly Report', 'Meetings', 'Other Submissions'],
-      currentPageEvent: 'Meetings',
-      selectedIndex: 1,
+      currentPageEvent: 'Weekly Report',
+      selectedIndex: 0,
     }
   }
 
