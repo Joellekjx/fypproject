@@ -111,4 +111,6 @@ python manage.py runserver
 18. Will need to refactor in a better way. E.g. maybe set a common "Paper" for all the different pages.
 19. Set the document to reset once you upload it. (i.e. "No file chosen")
 20. After uploading to the backend, your frontend again needs to be able to view the uploaded item
-21. How to access the item once you pull from backend? Blob? What about the name? Privacy issue need to make sure we don't get the converted 'name'
+21. 8/3/20: ~~How to access the item once you pull from backend? Blob? What about the name? Privacy issue need to make sure we don't get the converted 'name'~~
+22. PDF View needs clean up (make dialog size a bit bigger to fit better. And have better looking buttons in the pdf viewer + change position of close button to top right corner)
+23. Need to incorporate docx viewer and finally img viewer
