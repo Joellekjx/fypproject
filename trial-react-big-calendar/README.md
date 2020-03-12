@@ -104,7 +104,7 @@ python manage.py runserver
 11. Nitpicking: clean up the props sent to weeklyreportsubmissionpage & weeklyreportcommentbox pls
 12. ~~Double check if it is possible to POST/update to backend alr or not~~
 13. Try to tweak yr toolbar's month/week button again pls
-14. 4/3/20 Working On It (see point 21) ~~Attachments -- once api is ok, rmb to add that in~~
+14. 4/3/20  ~~Working On It (see point 21)Attachments -- once api is ok, rmb to add that in~~
 15. Clean up "SwipeableDrawer" file -- router might be a bit funky/error + design of the drawer  ==> plus onClick it should jump to the right drawer page
 16. The appbar design in the meetings/weekly report etc. pages need a bit of clean up ya. Make it look nicer
 17. How do I track the dates (e.g. semester x week y) inside the weekly report/meetings? hmmm -- might have to pull the semester api, compare the date then add week
@@ -113,4 +113,5 @@ python manage.py runserver
 20. After uploading to the backend, your frontend again needs to be able to view the uploaded item
 21. 8/3/20: ~~How to access the item once you pull from backend? Blob? What about the name? Privacy issue need to make sure we don't get the converted 'name'~~
 22. PDF View needs clean up (make dialog size a bit bigger to fit better. And have better looking buttons in the pdf viewer + change position of close button to top right corner)
-23. Need to incorporate docx viewer and finally img viewer
+23. 12/3/20: ~~Need to incorporate docx viewer~~
+24. Need to incorporate img viewer

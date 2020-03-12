@@ -65,11 +65,9 @@ class WeeklyReportSubmissionPage extends Component {
         <input type="file" name="file" onChange={this.addAttachment} />
         <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>
         <Typography>Attachments: </Typography>
-        {/* {documents.map((item, index) => {
-          console.log(item.attach_document)
-          return <Typography>{item.attach_document}</Typography>
-        })} */}
-        <RenderDocumentPreview documents={documents}/>
+        {documents.map((item, index) => {
+          return <RenderDocumentPreview document={item} key={index}/>
+        })}
       </Paper>
     )
   }

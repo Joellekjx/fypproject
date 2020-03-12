@@ -5,7 +5,7 @@ import anotherTestDocument from '../static/another-kind-of-test-document.pdf';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-
+// This helps to format and display all PDFs:
 export default class ReactPDF extends Component {
     componentDidMount() {
         const { calendarStore } = this.props;
