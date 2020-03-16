@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from tasklist.models import Task, AuthUser, Project, Comment, Semester, TaskAttachDocument
+from rest_framework.authtoken.models import Token
 
 class projectSerializer(serializers.ModelSerializer):
     class Meta:
@@ -72,3 +73,18 @@ class semesterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Semester
         fields = ('semester_id', 'semester', 'start_date')
+
+
+# class LoginSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = AuthUser
+#         fields = ('username', 'first_name', 'last_name', 'email', 'is_staff', 'is_active', 'date_joined') 
+        
+class TokenSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Token model.
+    """
+    user = userDetailsSerializer(many=False, read_only=True) 
+    class Meta:
+        model = Token
+        fields = ('key', 'user') 
