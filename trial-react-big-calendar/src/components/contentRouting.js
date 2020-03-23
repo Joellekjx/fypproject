@@ -4,8 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import WeeklyReportContent from './ContentFolder/weeklyReportContent';
-import MeetingsContent from './ContentFolder/meetingsContent';
+import WeeklyReportContent from './ContentRouterComponents/weeklyReportContent';
+import MeetingsContent from './ContentRouterComponents/meetingsContent';
 import {
     Drawer,
     CssBaseline,
