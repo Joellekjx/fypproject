@@ -98,6 +98,7 @@ class ContentRoutingTest extends Component {
             pageEvents: ['Weekly Report', 'Meetings', 'Other Submissions'],
             currentPageEvent: 'Weekly Report',
             selectedIndex: 0,
+            selectedNestedIndex: '',
             openNested: false,
         }
     }
@@ -141,18 +142,29 @@ class ContentRoutingTest extends Component {
                 return "Hello interim"
             case 'Final Report':
                 return "Hello final"
-            case 'Calendar':
-                return this.props.history.push('/')
             default:
                 return "No drawer found";
         }
     }
 
     onClickHandler = (text, index) => {
-        this.setState({
-            currentPageEvent: text,
-            selectedIndex: index,
-        })
+        switch (text) {
+            case 'Meetings':
+            case 'Weekly Report':
+                this.setState({
+                    currentPageEvent: text,
+                    selectedIndex: index,
+                    selectedNestedIndex: ''
+                })
+                break;
+            default:
+                this.setState({
+                    currentPageEvent: text,
+                    selectedIndex: '',
+                    selectedNestedIndex: index
+                })
+                return null;
+        }
     }
 
     determineTotalHourView = () => {
@@ -163,7 +175,7 @@ class ContentRoutingTest extends Component {
 
     render() {
         const { classes } = this.props;
-        const { open, openNested, currentPageEvent, selectedIndex } = this.state;
+        const { open, openNested, currentPageEvent, selectedIndex, selectedNestedIndex } = this.state;
 
         return ( //Note: pls change the color of the app bar/toolbar lol
             <div className={classes.root}>
@@ -244,10 +256,14 @@ class ContentRoutingTest extends Component {
                             <List component="div" disablePadding>
                                 {['Strategy Plan', 'Interim Report', 'Final Report'].map((text, index) => (
                                     <ListItem
+                                        selected={selectedNestedIndex === index}
                                         button
                                         key={text}
                                         className={classes.nested}
                                         onClick={() => this.onClickHandler(text, index)}
+                                        classes={{
+                                            selected: classes.selected
+                                        }}
                                     >
                                         <ListItemText primary={text} />
                                     </ListItem>
