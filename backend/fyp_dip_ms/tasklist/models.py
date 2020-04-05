@@ -7,6 +7,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.contrib.auth.models import AbstractUser
 
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
@@ -36,8 +37,10 @@ class AuthPermission(models.Model):
         db_table = 'auth_permission'
         unique_together = (('content_type', 'codename'),)
 
-
-class AuthUser(models.Model):
+# Extending AuthUser 
+# https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#abstractuser
+class AuthUser(AbstractUser):
+    id = models.AutoField(primary_key=True)
     password = models.CharField(max_length=128)
     last_login = models.DateTimeField(blank=True, null=True)
     is_superuser = models.IntegerField()
@@ -48,6 +51,7 @@ class AuthUser(models.Model):
     is_staff = models.IntegerField()
     is_active = models.IntegerField()
     date_joined = models.DateTimeField()
+    project_id = models.ForeignKey('Project', models.DO_NOTHING, db_column='project_Id')
 
     class Meta:
         managed = False
@@ -135,9 +139,10 @@ class DjangoSession(models.Model):
 
 class Project(models.Model):
     project_id = models.AutoField(db_column='project_Id', primary_key=True)  # Field name made lowercase.
+    tutor_id = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='tutor_Id')
     project_name = models.CharField(db_column='project_Name', max_length=100)  # Field name made lowercase.
     project_description = models.CharField(db_column='project_Description', max_length=3000, blank=True, null=True)  # Field name made lowercase.
-
+    
     class Meta:
         managed = False
         db_table = 'project'

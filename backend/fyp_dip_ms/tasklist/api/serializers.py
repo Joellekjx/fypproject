@@ -1,21 +1,23 @@
 from rest_framework import serializers
 from tasklist.models import Task, AuthUser, Project, Comment, Semester, TaskAttachDocument
+# , Token
 from rest_framework.authtoken.models import Token
-
-class projectSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project
-        fields = ('project_id', 'project_name', 'project_description')
-
-class userDetailsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AuthUser
-        fields = ('username', 'first_name', 'last_name', 'email', 'is_staff', 'is_active', 'date_joined') 
 
 class userNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = AuthUser
         fields = ('first_name', 'last_name')
+
+class projectSerializer(serializers.ModelSerializer):
+    students = userNameSerializer(source='authuser_set', read_only=True, many=True)
+    class Meta:
+        model = Project
+        fields = ('project_id', 'tutor_id', 'project_name', 'project_description', 'students')
+
+class userDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AuthUser
+        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'is_staff', 'is_active', 'date_joined') 
 
 class taskSerializer(serializers.ModelSerializer):
     class Meta:
@@ -75,16 +77,17 @@ class semesterSerializer(serializers.ModelSerializer):
         fields = ('semester_id', 'semester', 'start_date')
 
 
-# class LoginSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = AuthUser
-#         fields = ('username', 'first_name', 'last_name', 'email', 'is_staff', 'is_active', 'date_joined') 
-        
+class userAndProjectsSerializer(serializers.ModelSerializer):
+    projects = projectSerializer(source='project_set', read_only=True, many=True)
+    class Meta:
+        model = AuthUser
+        fields = ('id', 'username', 'is_staff', 'projects', 'project_id') 
+
 class TokenSerializer(serializers.ModelSerializer):
-    """
-    Serializer for Token model.
-    """
-    user = userDetailsSerializer(many=False, read_only=True) 
+    user = userAndProjectsSerializer(many=False, read_only=True) 
     class Meta:
         model = Token
-        fields = ('key', 'user') 
+        fields = ('key', 'user')
+
+# class MyOwnTokenAuthentication(TokenAuthentication):
+#     model = MyOwnToken

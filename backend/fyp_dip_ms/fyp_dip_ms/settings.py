@@ -135,8 +135,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Change serializers
+# https://django-rest-auth.readthedocs.io/en/latest/configuration.html
 REST_AUTH_SERIALIZERS = {
-    'TOKEN_SERIALIZER': 'tasklist.api.serializers.TokenSerializer',
+    'TOKEN_SERIALIZER': 'tasklist.api.serializers.TokenSerializer'
 }
 
 # Static files (CSS, JavaScript, Images)
@@ -153,7 +155,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
         'rest_framework.permissions.AllowAny'
-    ]
+    ],
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -161,3 +163,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_REQUIRED = False
+
+# Extending AuthUser 
+# https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#abstractuser
+AUTH_USER_MODEL = 'tasklist.AuthUser'
