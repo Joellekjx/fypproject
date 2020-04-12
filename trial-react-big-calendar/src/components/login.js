@@ -63,25 +63,29 @@ const useStyles = (theme) => ({
 })
 
 class Login extends Component {
+
     constructor(props){
       super(props);
       this.state = {
         username: "",
         password: "",
+        isAuthenticated: false,
       }
     }  
         
     handleLogin = (e) => {
         e.preventDefault();
         const { username, password } = this.state;
-        console.log(username);
-        console.log(password);
         if (username === "" || password === "" ) {
           alert("Please fill in your username/password");
         } else {
           this.props.onAuth(username, password);
         }
-        
+    }
+
+    handleLogout = (e) => {
+      e.preventDefault();
+      this.props.logout();
     }
 
     handleChange = (e) => {
@@ -95,7 +99,7 @@ class Login extends Component {
     render() {
       const { username, password } = this.state;
       const { classes } = this.props;
-      
+
       let errorMessage = null;
       if (this.props.error) {
           errorMessage = (
@@ -151,10 +155,10 @@ class Login extends Component {
                   value= {password}
                   onChange={this.handleChange}
               />
-              <FormControlLabel
+              {/* <FormControlLabel
                   control={<Checkbox value="remember" color="primary" />}
                   label="Remember me"
-              />
+              /> */}
               <Button
                   type="submit"
                   fullWidth
@@ -164,7 +168,8 @@ class Login extends Component {
               >
                   Sign In
               </Button>
-              {/* <Grid container>
+              {/* 
+              <Grid container>
                   <Grid item xs>
                   <Link href="#" variant="body2">
                       Forgot password?
@@ -175,8 +180,21 @@ class Login extends Component {
                       {"Don't have an account? Sign Up"}
                   </Link>
                   </Grid>
-              </Grid> */}
+              </Grid> 
+              */}
               </form>
+            <form className={classes.form} noValidate onSubmit={this.handleLogout} method="POST">
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Logout
+              </Button>
+            </form>
           </div>
           <Box mt={8}>
               <Copyright />
@@ -192,13 +210,17 @@ class Login extends Component {
 const mapStateToProps = (state) => {
   return {
       loading: state.loading,
-      error: state.error
+      error: state.error,
+      token: state.token,
+      user: state.user,
+      projects: state.projects
   }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (username, password) => dispatch(actions.authLogin(username, password))
+        onAuth: (username, password) => dispatch(actions.authLogin(username, password)),
+        logout: () => dispatch(actions.logout())
     }
 }
 

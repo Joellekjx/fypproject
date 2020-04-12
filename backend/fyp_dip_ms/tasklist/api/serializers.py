@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 class userNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = AuthUser
-        fields = ('first_name', 'last_name')
+        fields = ('id', 'first_name', 'last_name')
 
 class projectSerializer(serializers.ModelSerializer):
     students = userNameSerializer(source='authuser_set', read_only=True, many=True)

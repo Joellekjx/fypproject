@@ -4,13 +4,19 @@ import { updateObject } from '../utility';
 const initialState = {
     token: null,
     error: null,
-    loading: false
+    loading: false,
+    user: null,
+    projects: null,
+    is_Staff: null
 }
 
 const authStart = (state, action) => {
     return updateObject(state, {
         error: null,
-        loading: true
+        loading: true, 
+        user: {},
+        projects: [],
+        is_Staff: null
     })
 }
 
@@ -18,20 +24,29 @@ const authSuccess = (state, action) => {
     return updateObject(state, {
         token: action.token,
         error: null,
-        loading: false
+        loading: false,
+        user: action.user,
+        projects: action.projects,
+        is_Staff: action.is_Staff
     })
 }
 
 const authFail = (state, action) => {
     return updateObject(state, {
         error: action.error,
-        loading: false
+        loading: false,
+        user: null,
+        projects: null,
+        is_Staff: null
     })
 }
 
 const authLogout = (state, action) => {
     return updateObject(state, {
-        token: null
+        token: null,
+        user: null,
+        projects: null,
+        is_Staff: null
     })
 }
 

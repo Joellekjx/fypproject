@@ -65,8 +65,32 @@ class projectViewSet(viewsets.ModelViewSet):
 
 
 class taskCommentViewSet(viewsets.ModelViewSet):
-	queryset = Task.objects.all() 
+	# queryset = Task.objects.all() 
 	serializer_class = taskSerializerNoId
+	def get_queryset(self):
+		queryset = Task.objects.all()
+
+		project_id = self.request.query_params.get('project_id', None)
+		if project_id is not None:
+			queryset = queryset.filter(project_id__project_id=project_id)
+		
+		student_id = self.request.query_params.get('student_id', None)
+		if student_id is not None:
+			queryset = queryset.filter(student_id__id=student_id)
+
+		tutor_id = self.request.query_params.get('tutor_id', None)
+		if tutor_id is not None:
+			queryset = queryset.filter(tutor_id__id=tutor_id)
+
+		task_type = self.request.query_params.get('task_type', None)
+		if task_type is not None:
+			queryset = queryset.filter(task_type=task_type)
+
+		status = self.request.query_params.get('status', None)
+		if status is not None:
+			queryset = queryset.filter(status=status)
+
+		return queryset
 
 class semesterStartViewSet(viewsets.ModelViewSet):
 	queryset = Semester.objects.all() 
