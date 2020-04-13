@@ -6,7 +6,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import * as actions from '../../login-store/actions/auth';
+import { connect } from 'react-redux';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles({
   list: {
@@ -17,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SwipeableTemporaryDrawer({history}) {
+function SwipeableTemporaryDrawer({ history, logout }) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false,
@@ -27,10 +30,19 @@ export default function SwipeableTemporaryDrawer({history}) {
   const [currentPageEvent, setCurrentPageEvent] = React.useState('')
   const [selectedIndex, setSelectedIndex] = React.useState(0)
 
-//   let history = useHistory()
+    // let history = useHistory()
 
   const toggleDrawer = (side, open) => (event) => {
-      setState({...state, [side]: open})
+    setState({ ...state, [side]: open })
+  }
+
+  const handleLogout = (e) => {
+    logout()
+  }
+
+  const seeProjectListings = () => {
+    //note: need to double check and make sure only admin sees this!!
+    history.push('/projectListing')
   }
 
   const sideList = side => (
@@ -41,13 +53,23 @@ export default function SwipeableTemporaryDrawer({history}) {
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
+        <ListItem button key="projectlistings" onClick={() => seeProjectListings()} >
+          <ListItemText>Project Listings</ListItemText>
+        </ListItem>
+      </List>
+      <Divider />
+      <List>
         {['Weekly Report', 'Meetings', 'Strategy Plan', 'Interim Report', 'Final Report'].map((text, index) => (
           <ListItem button key={text} onClick={() => onClickHandler(text, index)}>
-              {/* {console.log(text)} */}
-            {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
             <ListItemText primary={text} />
           </ListItem>
         ))}
+      </List>
+      <Divider />
+      <List>
+        <ListItem button key="Logout" onClick={() => handleLogout()}>
+          <ListItemText>Logout</ListItemText>
+        </ListItem>
       </List>
     </div>
   );
@@ -57,22 +79,22 @@ export default function SwipeableTemporaryDrawer({history}) {
     setCurrentPageEvent(text)
   }
 
-    const renderSwitchCase = () => {
-        switch(currentPageEvent){
-            case 'Meetings':
-            case 'Weekly Report':
-            case 'Strategy Plan':
-            case 'Interim Report':
-            case 'Final Report':
-                return history.push('/contentrouter')
-            default:
-                return "";
-        }
+  const renderSwitchCase = () => {
+    switch (currentPageEvent) {
+      case 'Meetings':
+      case 'Weekly Report':
+      case 'Strategy Plan':
+      case 'Interim Report':
+      case 'Final Report':
+        return history.push('/contentrouter')
+      default:
+        return "";
     }
+  }
 
   return (
-    <div style={{float: 'center', textAlign: 'center', paddingBottom: '5px'}}>
-        <IconButton onClick={toggleDrawer('left', true)}><MenuIcon /></IconButton>
+    <div style={{ float: 'center', textAlign: 'center', paddingBottom: '5px' }}>
+      <IconButton onClick={toggleDrawer('left', true)}><MenuIcon /></IconButton>
       <SwipeableDrawer
         open={state.left}
         onClose={toggleDrawer('left', false)}
@@ -84,3 +106,23 @@ export default function SwipeableTemporaryDrawer({history}) {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    loading: state.loading,
+    error: state.error,
+    token: state.token,
+    user: state.user,
+    projects: state.projects,
+    paramQuery: state.paramQuery
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setParam: (student_id, project_id) => dispatch(actions.addTasklistParams(student_id, project_id)),
+    logout: () => dispatch(actions.logout())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SwipeableTemporaryDrawer)

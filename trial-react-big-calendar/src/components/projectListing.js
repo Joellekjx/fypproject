@@ -30,105 +30,115 @@ const useStyles = (theme) => ({
 })
 
 class ProjectListing extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-    }  
-
-    handleLogout = (e) => {
-    //   e.preventDefault();
-      this.props.logout();
     }
 
-    
-    
+    handleLogout = (e) => {
+        //   e.preventDefault();
+        this.props.logout();
+    }
+
+    handleClickUser = (e, index) => {
+        const value = index;
+        console.log(value);
+        e.preventDefault();
+        this.props.setParam(value, null);
+        this.props.history.push('/');
+    }
+
+    renderProjectPanels = () => {
+        // const handleClick = (e, index) => {
+            
+        // };
+        const { classes } = this.props;
+        return (
+            <div className={classes.root}>
+
+                {this.props.projects.map((item, key) =>
+                    <ExpansionPanel key={item.project_id} >
+                        <ExpansionPanelSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography className={classes.heading}>{item.project_name}</Typography>
+                        </ExpansionPanelSummary>
+                        <ExpansionPanelDetails>
+                            {/* {item.student} */}
+                            <List
+                                component="nav"
+                                aria-labelledby="nested-list-subheader"
+                                // subheader={
+                                //     <ListSubheader component="div" id="nested-list-subheader">
+                                //     Nested List Items
+                                //     </ListSubheader>
+                                // }
+                                className={classes.root}
+                            >
+                                {item.students.map((item, key) =>
+                                    <ListItem button key={item.id}
+                                        onClick={(event) => this.handleClickUser(event, item.id)}>
+                                        <ListItemText primary={item.first_name + item.last_name} />
+                                    </ListItem>
+                                )}
+                            </List>
+                        </ExpansionPanelDetails>
+                    </ExpansionPanel>
+                )}
+                <form className={classes.form} noValidate onSubmit={this.handleLogout} method="POST">
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                    >
+                        Logout
+                    </Button>
+                </form>
+            </div>
+        )
+    }
+
+    renderNoProjectAvailable = () => {
+        const { classes } = this.props;
+        return (
+            <div>
+                No projects available
+                <form className={classes.form} noValidate onSubmit={this.handleLogout} method="POST">
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                    >
+                        Logout
+                        </Button>
+                </form>
+            </div>
+        )
+    }
+
 
     render() {
         const { classes } = this.props;
-        
-        const handleClick = (e, index) => {
-            const value = index;
-            console.log(value);
-            e.preventDefault();
-            this.props.setParam(value, null);
-            this.props.history.push('/');
-        };
-        
+
         if (this.props.token != null) {
             console.log('**********');
             console.log(this.props.user);
             console.log(this.props.projects);
             console.log(this.props.paramQuery);
             console.log('**********');
-            
             return (
-                <div className={classes.root}>
-                
-                    {this.props.projects.map((item, key) =>
-                        <ExpansionPanel key={item.project_id} >
-                            <ExpansionPanelSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                            >
-                                <Typography className={classes.heading}>{item.project_name}</Typography>
-                            </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
-                                {/* {item.student} */}
-                                <List
-                                    component="nav"
-                                    aria-labelledby="nested-list-subheader"
-                                    // subheader={
-                                    //     <ListSubheader component="div" id="nested-list-subheader">
-                                    //     Nested List Items
-                                    //     </ListSubheader>
-                                    // }
-                                    className={classes.root}
-                                >
-                                {item.students.map((item, key) =>
-                                    <ListItem button key={item.id}
-                                        onClick={(event) => handleClick(event, item.id)}>
-                                        <ListItemText primary={item.first_name + item.last_name} />
-                                    </ListItem>
-                                )}
-                                </List>
-                             </ExpansionPanelDetails>
-                        </ExpansionPanel>
-                    )}
-                    <form className={classes.form} noValidate onSubmit={this.handleLogout} method="POST">
-                        <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        >
-                        Logout
-                        </Button>
-                    </form>
-                </div>
+                this.renderProjectPanels()
             );
         } else {
 
-            return (
-                <div>
-                    No projects available
-                    <form className={classes.form} noValidate onSubmit={this.handleLogout} method="POST">
-                        <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        >
-                        Logout
-                        </Button>
-                    </form>
-                </div>
-                
-                
-            );
+            return (this.renderNoProjectAvailable());
         }
-        
+
     }
 
 }
