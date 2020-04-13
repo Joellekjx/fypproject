@@ -1,6 +1,5 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
-// import store from '../../index';
 
 export const authStart = () => {
     return {
@@ -8,13 +7,14 @@ export const authStart = () => {
     }
 }
 
-export const authSuccess = (token, user, projects, is_Staff) => {
+export const authSuccess = (token, user, projects, is_Staff, paramQuery) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         token: token,
         user: user,
         projects: projects,
-        is_Staff: is_Staff
+        is_Staff: is_Staff,
+        paramQuery: paramQuery
     }
 }
 
@@ -31,6 +31,7 @@ export const logout = () => {
     localStorage.removeItem('is_Staff');
     localStorage.removeItem('token');
     localStorage.removeItem('expirationDate');
+    localStorage.removeItem('paramQuery');
     return {
         type: actionTypes.AUTH_LOGOUT
     }
@@ -45,10 +46,6 @@ export const checkAuthTimeout = expirationTime => {
 }
 
 export const authLogin = (username, password) => {
-    // const state = store.getState();
-
-    // const authToken = state.user;
-    
     return dispatch => {
         dispatch(authStart());
         axios.post('http://127.0.0.1:8000/rest-auth/login/', {
@@ -87,7 +84,7 @@ export const authLogin = (username, password) => {
             var myProjecsJSON = JSON.stringify(projects)
             localStorage.setItem('projects', myProjecsJSON);
 
-            dispatch(authSuccess(token, user, projects, is_Staff));
+            dispatch(authSuccess(token, user, projects, is_Staff, null));
         })
         .catch(err => {
             dispatch(authFail(err))
@@ -124,6 +121,7 @@ export const authCheckState = () => {
         const user = JSON.parse(localStorage.getItem('user'));
         const is_Staff = localStorage.getItem('is_Staff');
         const projects = JSON.parse(localStorage.getItem('projects'));
+        const paramQuery = localStorage.getItem('paramQuery');
         if (token === undefined) {
             dispatch(logout());
         } else {
@@ -131,11 +129,34 @@ export const authCheckState = () => {
             if ( expirationDate <= new Date() ) {
                 dispatch(logout());
             } else {
-                dispatch(authSuccess(token, user, projects, is_Staff));
+                dispatch(authSuccess(token, user, projects, is_Staff, paramQuery));
                 dispatch(checkAuthTimeout( 
                     (expirationDate.getTime() - new Date().getTime()) / 1000)
                 )
             }
         }
+    }
+}
+
+export const tasklistParam = (paramQuery) => {
+    return {
+        type: actionTypes.TASK_PARAMS,
+        paramQuery: paramQuery
+    }
+}
+
+export const addTasklistParams = (student_id, project_id) => {
+    return dispatch => {
+        var paramQuery = ''
+        if (student_id != null) {
+            paramQuery = 'params: \{ student_id:' + student_id + ' \}';
+        } else if (project_id != null) {
+            paramQuery = 'params: \{ project_id:' + project_id + ' \}';
+        } else {
+            paramQuery = null;
+        }
+        console.log(paramQuery);
+        localStorage.setItem('paramQuery', paramQuery);
+        dispatch(tasklistParam(paramQuery));
     }
 }

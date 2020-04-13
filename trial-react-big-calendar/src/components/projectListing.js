@@ -40,18 +40,23 @@ class ProjectListing extends Component {
     }
 
     
-    handleClick = (e) => {
-        const value = e.target.value;
-        
-    }
+    
 
     render() {
         const { classes } = this.props;
-
+        
+        const handleClick = (e, index) => {
+            const value = index;
+            console.log(value);
+            e.preventDefault();
+            this.props.setParam(value, null);
+        };
+        
         if (this.props.token != null) {
             console.log('**********');
             console.log(this.props.user);
             console.log(this.props.projects);
+            console.log(this.props.paramQuery);
             console.log('**********');
             
             return (
@@ -79,7 +84,8 @@ class ProjectListing extends Component {
                                     className={classes.root}
                                 >
                                 {item.students.map((item, key) =>
-                                    <ListItem button key={item.id} onClick={this.handleClick()} value={item.id}>
+                                    <ListItem button key={item.id}
+                                        onClick={(event) => handleClick(event, item.id)}>
                                         <ListItemText primary={item.first_name + item.last_name} />
                                     </ListItem>
                                 )}
@@ -132,13 +138,14 @@ const mapStateToProps = (state) => {
         error: state.error,
         token: state.token,
         user: state.user,
-        projects: state.projects
+        projects: state.projects,
+        paramQuery: state.paramQuery
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (username, password) => dispatch(actions.authLogin(username, password)),
+        setParam: (student_id, project_id) => dispatch(actions.addTasklistParams(student_id, project_id)),
         logout: () => dispatch(actions.logout())
     }
 }

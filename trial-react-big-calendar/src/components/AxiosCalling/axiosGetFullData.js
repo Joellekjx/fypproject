@@ -6,9 +6,11 @@ import axios from 'axios';
  * But 'meetings' will take indivRes.creation_date (or the more exact one)
  */
 
-export default function axiosGetFullData(calendarStore) {
+export default function axiosGetFullData(calendarStore, paramQuery) {
     var totalHours = 0;
-    axios.get('http://127.0.0.1:8000/api/taskComment/')
+    axios.get('http://127.0.0.1:8000/api/taskComment/',  {
+            paramQuery
+        })
         .then(res => {
             res.data.map(indivRes => {
                 var starttime;

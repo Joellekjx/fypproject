@@ -5,11 +5,16 @@ import { Grid } from '@material-ui/core';
 import { observer } from "mobx-react";
 import axiosGetFullData from "./components/AxiosCalling/axiosGetFullData";
 
+import { connect } from 'react-redux';
+import * as actions from './login-store/actions/auth';
+
 class MainPage extends Component {
+  
    componentDidMount(){
-    const { calendarStore } = this.props;
+    const { calendarStore, paramQuery } = this.props;
     if(calendarStore.getData.length === 0){
-      axiosGetFullData(calendarStore);
+      console.log(paramQuery);
+      axiosGetFullData(calendarStore, paramQuery);
     }
   }
 
@@ -17,6 +22,7 @@ class MainPage extends Component {
     const { calendarStore, history } = this.props;
     return (
         <div className="MainPage">
+          {console.log(this.props.paramQuery)}
           <Grid container>
             <Grid item xs={1}>
               <LeftSideColumn calendarStore={calendarStore} history={history}/>
@@ -30,5 +36,18 @@ class MainPage extends Component {
   }
 }
 
+
+const mapStateToProps = (state) => {
+  return {
+    paramQuery: state.paramQuery
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+      logout: () => dispatch(actions.logout())
+  }
+}
+
 MainPage = observer(MainPage);
-export default MainPage;
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
