@@ -85,7 +85,7 @@ class DateContentRow extends React.Component {
           this.setState({
               semesterStartDates: res.data
           })
-        console.log(res.data);
+        // console.log(res.data);
       })  
       this.loadedSemesterStart = true
     }

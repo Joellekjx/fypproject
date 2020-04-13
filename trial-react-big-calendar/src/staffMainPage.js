@@ -1,5 +1,6 @@
+//Staff upon login will be automatically sent here
 import React, { Component } from "react";
-import MainCalendar from './components/mainCalendar';
+import StaffMainCalendar from './components/staffMainCalendar';
 import LeftSideColumn from './components/leftSideColumn';
 import { Grid } from '@material-ui/core';
 import { observer } from "mobx-react";
@@ -8,7 +9,7 @@ import axiosGetFullData from "./components/AxiosCalling/axiosGetFullData";
 import { connect } from 'react-redux';
 import * as actions from './login-store/actions/auth';
 
-class MainPage extends Component {
+class StaffMainPage extends Component {
   
    componentDidMount(){
     const { calendarStore, paramQuery } = this.props;
@@ -28,14 +29,13 @@ class MainPage extends Component {
               <LeftSideColumn calendarStore={calendarStore} history={history}/>
             </Grid>
             <Grid item xs={11}>
-              <MainCalendar calendarStore={calendarStore} />
+              <StaffMainCalendar calendarStore={calendarStore} />
             </Grid>
           </Grid>
         </div>
     );
   }
 }
-
 
 const mapStateToProps = (state) => {
   return {
@@ -49,5 +49,5 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-MainPage = observer(MainPage);
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+StaffMainPage = observer(StaffMainPage);
+export default connect(mapStateToProps, mapDispatchToProps)(StaffMainPage);

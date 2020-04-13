@@ -46,12 +46,12 @@ class ProjectListing extends Component {
         super(props);
     }
 
-    handleLogout = (e) => {
-        //   e.preventDefault();
+    handleLogout = () => {
         this.props.logout();
     }
 
     handleClickUser = (e, index) => {
+        //Can be used to route to staff's main calendar, then it filters itself
         const value = index;
         console.log(value);
         e.preventDefault();
@@ -65,18 +65,11 @@ class ProjectListing extends Component {
             <div className={classes.appbarroot}>
                 <AppBar position="static">
                     <Toolbar>
-                        {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                            <MenuIcon />
-                        </IconButton> */}
                         <Typography variant="h6" className={classes.title}>
                             Hi, {this.props.user.username}
                   </Typography>
                         <Button
                             type="submit"
-                            // fullWidth
-                            // variant="contained"
-                            // color="primary"
-                            // className={classes.submit}
                             style={{ color: 'white' }}
                             onClick={() => this.handleLogout()}
                         >
@@ -127,17 +120,6 @@ class ProjectListing extends Component {
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                 )}
-                {/* <form className={classes.form} noValidate onSubmit={this.handleLogout} method="POST">
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Logout
-                    </Button>
-                </form> */}
             </div>
         )
     }
@@ -147,17 +129,6 @@ class ProjectListing extends Component {
         return (
             <div>
                 No projects available
-                {/* <form className={classes.form} noValidate onSubmit={this.handleLogout} method="POST">
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Logout
-                        </Button>
-                </form> */}
             </div>
         )
     }

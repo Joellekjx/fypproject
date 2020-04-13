@@ -38,7 +38,7 @@ const Event = ({ calendarStore }) => props => {
   return <CustomEventWithPopover event={props} calendarStore={calendarStore} />;
 }
 
-class MainCalendar extends Component {
+class StaffMainCalendar extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -65,28 +65,6 @@ class MainCalendar extends Component {
       events: nextEvents,
     })
   }
-
-  // moveEvent({ event, start, end, isAllDay: droppedOnAllDaySlot }) { //a lil buggy
-  //   const { events } = this.state
-
-  //   const idx = events.indexOf(event)
-  //   let allDay = event.allDay
-
-  //   if (!event.allDay && droppedOnAllDaySlot) {
-  //     allDay = true
-  //   } else if (event.allDay && !droppedOnAllDaySlot) {
-  //     allDay = false
-  //   }
-
-  //   const updatedEvent = { ...event, start, end, allDay }
-
-  //   const nextEvents = [...events]
-  //   nextEvents.splice(idx, 1, updatedEvent)
-
-  //   this.setState({
-  //     events: nextEvents,
-  //   })
-  // }
 
   renderEventMoreInfo = (event) => {
     const eventType = event.event_type;
@@ -207,5 +185,5 @@ class MainCalendar extends Component {
   }
 }
 
-MainCalendar = observer(MainCalendar);
-export default withRouter((withStyles(useStyles)(MainCalendar)));
+StaffMainCalendar = observer(StaffMainCalendar);
+export default withRouter((withStyles(useStyles)(StaffMainCalendar)));
