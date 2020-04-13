@@ -13,8 +13,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemText from '@material-ui/core/ListItemText';
-
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = (theme) => ({
     root: {
@@ -26,6 +29,15 @@ const useStyles = (theme) => ({
     },
     nested: {
         paddingLeft: theme.spacing(4),
+    },
+    appbarroot: {
+        flexGrow: 1,
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
     },
 })
 
@@ -47,9 +59,38 @@ class ProjectListing extends Component {
         this.props.history.push('/');
     }
 
+    renderAppBar = () => {
+        const { classes } = this.props;
+        return (
+            <div className={classes.appbarroot}>
+                <AppBar position="static">
+                    <Toolbar>
+                        {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                            <MenuIcon />
+                        </IconButton> */}
+                        <Typography variant="h6" className={classes.title}>
+                            Hi, {this.props.user.username}
+                  </Typography>
+                        <Button
+                            type="submit"
+                            // fullWidth
+                            // variant="contained"
+                            // color="primary"
+                            // className={classes.submit}
+                            style={{ color: 'white' }}
+                            onClick={() => this.handleLogout()}
+                        >
+                            Logout
+                        </Button>
+                    </Toolbar>
+                </AppBar>
+            </div>
+        );
+    }
+
     renderProjectPanels = () => {
         // const handleClick = (e, index) => {
-            
+
         // };
         const { classes } = this.props;
         return (
@@ -86,7 +127,7 @@ class ProjectListing extends Component {
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                 )}
-                <form className={classes.form} noValidate onSubmit={this.handleLogout} method="POST">
+                {/* <form className={classes.form} noValidate onSubmit={this.handleLogout} method="POST">
                     <Button
                         type="submit"
                         fullWidth
@@ -96,7 +137,7 @@ class ProjectListing extends Component {
                     >
                         Logout
                     </Button>
-                </form>
+                </form> */}
             </div>
         )
     }
@@ -106,7 +147,7 @@ class ProjectListing extends Component {
         return (
             <div>
                 No projects available
-                <form className={classes.form} noValidate onSubmit={this.handleLogout} method="POST">
+                {/* <form className={classes.form} noValidate onSubmit={this.handleLogout} method="POST">
                     <Button
                         type="submit"
                         fullWidth
@@ -116,7 +157,7 @@ class ProjectListing extends Component {
                     >
                         Logout
                         </Button>
-                </form>
+                </form> */}
             </div>
         )
     }
@@ -132,15 +173,20 @@ class ProjectListing extends Component {
             console.log(this.props.paramQuery);
             console.log('**********');
             return (
-                this.renderProjectPanels()
+                <div>
+                    {this.renderAppBar()}
+                    {this.renderProjectPanels()}
+                </div>
             );
         } else {
-
-            return (this.renderNoProjectAvailable());
+            return (
+                <div>
+                    {this.renderAppBar()}
+                    {this.renderNoProjectAvailable()}
+                </div>
+            )
         }
-
     }
-
 }
 
 const mapStateToProps = (state) => {
