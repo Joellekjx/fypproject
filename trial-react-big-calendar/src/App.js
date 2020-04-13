@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Router, Route, Link, Redirect } from 'react-router-dom';
 import CalendarStore from './mobx-store/CalendarStore';
-import StudentMainPage from './studentMainPage';
+import StudentMainPage from './components/studentComponents/studentMainPage';
 import ContentRouting from './components/contentRouting';
 import history from './history';
 import LoginPage from './components/login';
-import StaffMainPage from './staffMainPage';
+import StaffMainPage from './components/staffComponents/staffMainPage';
 import projectListPage from './components/projectListing';
 
 import { connect } from 'react-redux';

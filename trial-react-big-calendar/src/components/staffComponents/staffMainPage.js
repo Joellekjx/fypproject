@@ -1,13 +1,13 @@
 //Staff upon login will be automatically sent here
 import React, { Component } from "react";
-import StaffMainCalendar from './components/staffMainCalendar';
-import LeftSideColumn from './components/leftSideColumn';
+import StaffMainCalendar from './staffMainCalendar';
+import LeftSideColumn from '../leftSideColumn';
 import { Grid } from '@material-ui/core';
 import { observer } from "mobx-react";
-import axiosGetFullData from "./components/AxiosCalling/axiosGetFullData";
+import axiosGetFullData from "../AxiosCalling/axiosGetFullData";
 
 import { connect } from 'react-redux';
-import * as actions from './login-store/actions/auth';
+import * as actions from '../../login-store/actions/auth';
 
 class StaffMainPage extends Component {
   
@@ -26,7 +26,7 @@ class StaffMainPage extends Component {
           {console.log(this.props.paramQuery)}
           <Grid container>
             <Grid item xs={1}>
-              <LeftSideColumn calendarStore={calendarStore} history={history}/>
+              <LeftSideColumn calendarStore={calendarStore} history={history} type="Staff"/>
             </Grid>
             <Grid item xs={11}>
               <StaffMainCalendar calendarStore={calendarStore} />

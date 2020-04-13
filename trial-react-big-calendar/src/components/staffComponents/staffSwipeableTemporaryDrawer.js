@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-function SwipeableTemporaryDrawer({ history, logout }) {
+function StaffSwipeableTemporaryDrawer({ history, logout }) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false,
@@ -125,4 +125,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SwipeableTemporaryDrawer)
+export default connect(mapStateToProps, mapDispatchToProps)(StaffSwipeableTemporaryDrawer)
