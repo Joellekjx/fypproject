@@ -12,7 +12,7 @@ class projectSerializer(serializers.ModelSerializer):
     students = userNameSerializer(source='authuser_set', read_only=True, many=True)
     class Meta:
         model = Project
-        fields = ('project_id', 'tutor_id', 'project_name', 'project_description', 'students')
+        fields = ('project_id', 'tutor_id', 'project_name', 'is_FYP_Project', 'project_description', 'students')
 
 class userDetailsSerializer(serializers.ModelSerializer):
     class Meta:

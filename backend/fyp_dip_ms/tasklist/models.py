@@ -142,7 +142,8 @@ class Project(models.Model):
     tutor_id = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='tutor_Id')
     project_name = models.CharField(db_column='project_Name', max_length=100)  # Field name made lowercase.
     project_description = models.CharField(db_column='project_Description', max_length=3000, blank=True, null=True)  # Field name made lowercase.
-    
+    is_FYP_Project = models.IntegerField(db_column='is_FYP_Project')
+
     class Meta:
         managed = False
         db_table = 'project'
