@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Router, Route, Link, Redirect } from 'react-router-dom';
 import CalendarStore from './mobx-store/CalendarStore';
-import MainPage from './mainPage';
+import StudentMainPage from './components/studentComponents/studentMainPage';
 import ContentRouting from './components/contentRouting';
 import history from './history';
 import LoginPage from './components/login';
+import StaffMainPage from './components/staffComponents/staffMainPage';
 import projectListPage from './components/projectListing';
 
 import { connect } from 'react-redux';
@@ -12,63 +13,84 @@ import * as actions from './login-store/actions/auth';
 
 const calendarStore = new CalendarStore();
 
-const PrivateRoute = ({component: Component, ...rest}) => (
+const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
     rest.auth === false
-        ? 
-        <Redirect to='/login'/>
-        : 
-        <Component {...props} calendarStore={calendarStore}/> 
-  )}/>
-) 
-
-const CheckRoute = ({component: Component, ...rest}) => (
-  <Route {...rest} render={(props) => (
-    rest.auth === false
-        ? 
-        <Component {...props}/> 
-        : 
-        rest.staff === true
-          ? 
-          <Redirect to='/projectListing'/>
-          : 
-          <Redirect to='/'/>
-  )}/>
-) 
-
-const CheckProjects = ({component: Component, ...rest}) => (
-  <Route {...rest} render={(props) => (
-    rest.auth === false 
       ?
-      <Redirect to='/login'/>
+      <Redirect to='/login' />
       :
-      rest.staff === false
-          ? 
-          <Redirect to='/'/>
-          : 
-          <Component {...props} calendarStore={calendarStore}/> 
-  )}/>
-) 
+      <Component {...props} calendarStore={calendarStore} />
+  )} />
+)
+
+//Checking if the user is staff or not
+//If it is staff, go to /:userID/staffcalendar
+//Else, go to /:userID/calendar
+const CheckRoute = ({ component: Component, ...rest }) => {
+  var userID = rest.userInfo ? rest.userInfo.id : ''
+  var staffCalendarURL = `/${userID}/staffcalendar`
+  var studentCalendarURL = `/${userID}/calendar`
+  return (
+    <Route {...rest} render={(props) => (
+      rest.auth === false
+        ?
+        <Component {...props} />
+        :
+        rest.staff === true
+          ?
+          <Redirect to={staffCalendarURL} />
+          :
+          <Redirect to={studentCalendarURL} />
+    )} />
+  )
+}
+
+const CheckProjects = ({ component: Component, ...rest }) => {
+  var userID = rest.userInfo ? rest.userInfo.id : ''
+  var studentCalendarURL = `/${userID}/calendar`
+  return (
+    <Route {...rest} render={(props) => (
+      rest.auth === false
+        ?
+        <Redirect to='/login' />
+        :
+        rest.staff === false
+          // So since this is a student, if rest.staff===false, we redirect to their calendar instead
+          ?
+          <Redirect to={studentCalendarURL} />
+          :
+          <Component {...props} calendarStore={calendarStore} />
+    )} />
+  )
+}
 
 
 class App extends Component {
-
   componentDidMount() {
     this.props.onTryAutoSignup();
   }
-  
+
   render() {
     return (
       <Router history={history} >
         <Route>
           {console.log(this.props.isAuthenticated)}
-          <PrivateRoute exact path="/" component={MainPage} auth={this.props.isAuthenticated}
+          {/* Calendar Path for student: */}
+          <PrivateRoute exact path="/:userID/calendar" component={StudentMainPage} auth={this.props.isAuthenticated} userInfo={this.props.userInfo}
           />
-          <PrivateRoute path="/contentrouter"  component={ContentRouting} auth={this.props.isAuthenticated}
+          <PrivateRoute path="/:userID/content" component={ContentRouting} auth={this.props.isAuthenticated} userInfo={this.props.userInfo}
           />
-          <CheckRoute path="/login" component={LoginPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff}
+
+          {/* Calendar Path for staff: */}
+          <PrivateRoute exact path="/:userID/staffcalendar" component={StaffMainPage} auth={this.props.isAuthenticated} userInfo={this.props.userInfo}
           />
-          <CheckProjects path="/projectListing" component={projectListPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff}/>
+
+
+          <CheckRoute path="/" component={LoginPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff} userInfo={this.props.userInfo}
+          />
+          <CheckRoute path="/login" component={LoginPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff} userInfo={this.props.userInfo}
+          />
+          <CheckProjects path="/projectListing" component={projectListPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff} userInfo={this.props.userInfo} />
 
           {/* <Route exact path="/"
             render={(props) => (<MainPage {...props} calendarStore={calendarStore}/>)}
@@ -89,8 +111,9 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-      isAuthenticated: state.token !== null,
-      is_Staff: state.is_Staff
+    isAuthenticated: state.token !== null,
+    is_Staff: state.is_Staff,
+    userInfo: state.user
   }
 }
 

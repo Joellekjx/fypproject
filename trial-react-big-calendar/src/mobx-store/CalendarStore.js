@@ -18,6 +18,9 @@ import { decorate, observable, action, computed } from "mobx"
     documents: indivRes.documents
  */
 
+ //If you are a staff, your calendarStore's data will include ALL your student's data
+ //If you are a student, your calendarStore ONLY includes YOUR OWN data
+ 
 class CalendarStore {
     newData = [];
     selectedData = {}; //for moving between maincalendar to say weekly report

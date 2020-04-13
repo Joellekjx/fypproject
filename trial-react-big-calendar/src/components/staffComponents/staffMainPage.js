@@ -1,14 +1,15 @@
+//Staff upon login will be automatically sent here
 import React, { Component } from "react";
-import MainCalendar from './components/mainCalendar';
-import LeftSideColumn from './components/leftSideColumn';
+import StaffMainCalendar from './staffMainCalendar';
+import LeftSideColumn from '../leftSideColumn';
 import { Grid } from '@material-ui/core';
 import { observer } from "mobx-react";
-import axiosGetFullData from "./components/AxiosCalling/axiosGetFullData";
+import axiosGetFullData from "../AxiosCalling/axiosGetFullData";
 
 import { connect } from 'react-redux';
-import * as actions from './login-store/actions/auth';
+import * as actions from '../../login-store/actions/auth';
 
-class MainPage extends Component {
+class StaffMainPage extends Component {
   
    componentDidMount(){
     const { calendarStore, paramQuery } = this.props;
@@ -25,17 +26,16 @@ class MainPage extends Component {
           {console.log(this.props.paramQuery)}
           <Grid container>
             <Grid item xs={1}>
-              <LeftSideColumn calendarStore={calendarStore} history={history}/>
+              <LeftSideColumn calendarStore={calendarStore} history={history} type="Staff"/>
             </Grid>
             <Grid item xs={11}>
-              <MainCalendar calendarStore={calendarStore} />
+              <StaffMainCalendar calendarStore={calendarStore} />
             </Grid>
           </Grid>
         </div>
     );
   }
 }
-
 
 const mapStateToProps = (state) => {
   return {
@@ -49,5 +49,5 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-MainPage = observer(MainPage);
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+StaffMainPage = observer(StaffMainPage);
+export default connect(mapStateToProps, mapDispatchToProps)(StaffMainPage);

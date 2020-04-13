@@ -1,18 +1,18 @@
 import React, { Component } from "react";
-import EventForm from './MainCalendarComponents/eventForm';
+import EventForm from '../MainCalendarComponents/eventForm';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from "moment";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { withRouter } from "react-router-dom";
-import './styles.scss';
-import WorkMonth from '../lib/WorkMonth';
+import '../styles.scss';
+import WorkMonth from '../../lib/WorkMonth';
 import { observer } from "mobx-react";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Dialog, Typography } from "@material-ui/core";
-import CustomEventWithPopover from './MainCalendarComponents/indivEvent';
+import CustomEventWithPopover from '../MainCalendarComponents/indivEvent';
 import { withStyles } from '@material-ui/core/styles';
-import CustomToolBar from './MainCalendarComponents/CustomToolBar';
+import CustomToolBar from '../MainCalendarComponents/CustomToolBar';
 
 const localizer = momentLocalizer(moment);
 const DnDCalendar = withDragAndDrop(Calendar);
@@ -35,10 +35,12 @@ const useStyles = (theme) => ({
 
 
 const Event = ({ calendarStore }) => props => {
+  console.log(props)
+  console.log("props hello?")
   return <CustomEventWithPopover event={props} calendarStore={calendarStore} />;
 }
 
-class MainCalendar extends Component {
+class StaffMainCalendar extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -65,28 +67,6 @@ class MainCalendar extends Component {
       events: nextEvents,
     })
   }
-
-  // moveEvent({ event, start, end, isAllDay: droppedOnAllDaySlot }) { //a lil buggy
-  //   const { events } = this.state
-
-  //   const idx = events.indexOf(event)
-  //   let allDay = event.allDay
-
-  //   if (!event.allDay && droppedOnAllDaySlot) {
-  //     allDay = true
-  //   } else if (event.allDay && !droppedOnAllDaySlot) {
-  //     allDay = false
-  //   }
-
-  //   const updatedEvent = { ...event, start, end, allDay }
-
-  //   const nextEvents = [...events]
-  //   nextEvents.splice(idx, 1, updatedEvent)
-
-  //   this.setState({
-  //     events: nextEvents,
-  //   })
-  // }
 
   renderEventMoreInfo = (event) => {
     const eventType = event.event_type;
@@ -158,7 +138,7 @@ class MainCalendar extends Component {
           // onSelectEvent={(event)=>this.renderEventMoreInfo(event)}
           components={{
             event: Event({
-              calendarStore: calendarStore
+              calendarStore: calendarStore,
             }),
             toolbar: CustomToolBar,
             month: {
@@ -175,23 +155,11 @@ class MainCalendar extends Component {
           eventPropGetter={
             (event) => {
               let newStyle = {
-                backgroundColor: "lightgrey",
+                backgroundColor: "#F4F4F4",
                 color: 'black',
                 borderRadius: "0px",
                 border: "none"
               };
-              switch (event.status) {
-                case "Completed":
-                  newStyle.backgroundColor = "lightgrey"; break;
-                case "Pending":
-                  newStyle.backgroundColor = "lightgreen"; break;
-                case "Late Submission":
-                  newStyle.backgroundColor = "lightyellow"; break;
-                case "Late":
-                  newStyle.backgroundColor = "#ffcccb"; break;
-                default:
-                  newStyle.backgroundColor = "lightgreen"; break;
-              }
               return {
                 className: "",
                 style: newStyle
@@ -207,5 +175,5 @@ class MainCalendar extends Component {
   }
 }
 
-MainCalendar = observer(MainCalendar);
-export default withRouter((withStyles(useStyles)(MainCalendar)));
+StaffMainCalendar = observer(StaffMainCalendar);
+export default withRouter((withStyles(useStyles)(StaffMainCalendar)));
