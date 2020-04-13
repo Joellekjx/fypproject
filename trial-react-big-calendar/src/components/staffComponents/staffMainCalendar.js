@@ -35,6 +35,8 @@ const useStyles = (theme) => ({
 
 
 const Event = ({ calendarStore }) => props => {
+  console.log(props)
+  console.log("props hello?")
   return <CustomEventWithPopover event={props} calendarStore={calendarStore} />;
 }
 
@@ -136,7 +138,7 @@ class StaffMainCalendar extends Component {
           // onSelectEvent={(event)=>this.renderEventMoreInfo(event)}
           components={{
             event: Event({
-              calendarStore: calendarStore
+              calendarStore: calendarStore,
             }),
             toolbar: CustomToolBar,
             month: {
@@ -153,23 +155,11 @@ class StaffMainCalendar extends Component {
           eventPropGetter={
             (event) => {
               let newStyle = {
-                backgroundColor: "lightgrey",
+                backgroundColor: "#F4F4F4",
                 color: 'black',
                 borderRadius: "0px",
                 border: "none"
               };
-              switch (event.status) {
-                case "Completed":
-                  newStyle.backgroundColor = "lightgrey"; break;
-                case "Pending":
-                  newStyle.backgroundColor = "lightgreen"; break;
-                case "Late Submission":
-                  newStyle.backgroundColor = "lightyellow"; break;
-                case "Late":
-                  newStyle.backgroundColor = "#ffcccb"; break;
-                default:
-                  newStyle.backgroundColor = "lightgreen"; break;
-              }
               return {
                 className: "",
                 style: newStyle
