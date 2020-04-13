@@ -62,18 +62,15 @@ class App extends Component {
       <Router history={history} >
         <Route>
           {console.log(this.props.isAuthenticated)}
-          {/* <PrivateRoute exact path="/" component={MainPage} auth={this.props.isAuthenticated}
-            // render={(props) => (<MainPage {...props} calendarStore={calendarStore}/>)}
+          <PrivateRoute exact path="/" component={MainPage} auth={this.props.isAuthenticated}
           />
           <PrivateRoute path="/contentrouter"  component={ContentRouting} auth={this.props.isAuthenticated}
-            // render={(props) => (<ContentRouting {...props} calendarStore={calendarStore} />)}
           />
           <CheckRoute path="/login" component={LoginPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff}
-            // render={(props) => (<LoginPage {...props} />)}
           />
-          <CheckProjects path="/projectListing" component={projectListPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff}/> */}
+          <CheckProjects path="/projectListing" component={projectListPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff}/>
 
-          <Route exact path="/"
+          {/* <Route exact path="/"
             render={(props) => (<MainPage {...props} calendarStore={calendarStore}/>)}
           />
           <Route path="/contentrouter" 
@@ -82,7 +79,7 @@ class App extends Component {
           <Route path="/login" 
             render={(props) => (<LoginPage {...props} />)}
           />
-          <Route path="/projectListing" component={projectListPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff}/>
+          <Route path="/projectListing" component={projectListPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff}/> */}
 
         </Route>
       </Router>

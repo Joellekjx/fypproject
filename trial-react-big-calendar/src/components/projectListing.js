@@ -50,6 +50,7 @@ class ProjectListing extends Component {
             console.log(value);
             e.preventDefault();
             this.props.setParam(value, null);
+            this.props.history.push('/');
         };
         
         if (this.props.token != null) {
