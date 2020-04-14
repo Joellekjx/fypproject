@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
+import history from '../../history'
 
 export const authStart = () => {
     return {
@@ -7,16 +8,25 @@ export const authStart = () => {
     }
 }
 
-export const authSuccess = (token, user, projects, is_Staff, paramQuery) => {
-    return {
-        type: actionTypes.AUTH_SUCCESS,
-        token: token,
-        user: user,
-        projects: projects,
-        is_Staff: is_Staff,
-        paramQuery: paramQuery
-    }
-}
+// export const authSuccess = (token, user, projects, is_Staff, paramQuery) => {
+//     return {
+//         type: actionTypes.AUTH_SUCCESS,
+//         token: token,
+//         user: user,
+//         projects: projects,
+//         is_Staff: is_Staff,
+//         paramQuery: paramQuery
+//     }
+// }
+
+const authSuccess = (token, user, projects, is_Staff, paramQuery) => ({
+    type: actionTypes.AUTH_SUCCESS,
+    token: token,
+    user: user,
+    projects: projects,
+    is_Staff: is_Staff,
+    paramQuery: paramQuery
+})
 
 export const authFail = error => {
     return {
@@ -32,9 +42,10 @@ export const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('expirationDate');
     localStorage.removeItem('paramQuery');
-    return {
+    return (
+        history.push("/login"), {
         type: actionTypes.AUTH_LOGOUT
-    }
+    })
 }
 
 export const checkAuthTimeout = expirationTime => {
@@ -86,8 +97,12 @@ export const authLogin = (username, password) => {
 
             dispatch(authSuccess(token, user, projects, is_Staff, null));
         })
+        .then(res => {
+            history.push("/determiner")
+        })
         .catch(err => {
             dispatch(authFail(err))
+            history.push("/login")
         })    
     }
 }
@@ -115,28 +130,28 @@ export const authSignup = (username, email, password1, password2) => {
     }
 }
 
-export const authCheckState = () => {
-    return dispatch => {
-        const token = localStorage.getItem('token');
-        const user = JSON.parse(localStorage.getItem('user'));
-        const is_Staff = localStorage.getItem('is_Staff');
-        const projects = JSON.parse(localStorage.getItem('projects'));
-        const paramQuery = localStorage.getItem('paramQuery');
-        if (token === undefined) {
-            dispatch(logout());
-        } else {
-            const expirationDate = new Date(localStorage.getItem('expirationDate'));
-            if ( expirationDate <= new Date() ) {
-                dispatch(logout());
-            } else {
-                dispatch(authSuccess(token, user, projects, is_Staff, paramQuery));
-                dispatch(checkAuthTimeout( 
-                    (expirationDate.getTime() - new Date().getTime()) / 1000)
-                )
-            }
-        }
-    }
-}
+// export const authCheckState = () => {
+//     return dispatch => {
+//         const token = localStorage.getItem('token');
+//         const user = JSON.parse(localStorage.getItem('user'));
+//         const is_Staff = localStorage.getItem('is_Staff');
+//         const projects = JSON.parse(localStorage.getItem('projects'));
+//         const paramQuery = localStorage.getItem('paramQuery');
+//         if (token === undefined) {
+//             dispatch(logout());
+//         } else {
+//             const expirationDate = new Date(localStorage.getItem('expirationDate'));
+//             if ( expirationDate <= new Date() ) {
+//                 dispatch(logout());
+//             } else {
+//                 dispatch(authSuccess(token, user, projects, is_Staff, paramQuery));
+//                 dispatch(checkAuthTimeout( 
+//                     (expirationDate.getTime() - new Date().getTime()) / 1000)
+//                 )
+//             }
+//         }
+//     }
+// }
 
 export const tasklistParam = (paramQuery) => {
     return {

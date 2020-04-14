@@ -83,10 +83,10 @@ class Login extends Component {
         }
     }
 
-    handleLogout = (e) => {
-      e.preventDefault();
-      this.props.logout();
-    }
+    // handleLogout = (e) => {
+    //   e.preventDefault();
+    //   this.props.logout();
+    // }
 
     handleChange = (e) => {
       const value = e.target.value;
@@ -182,7 +182,7 @@ class Login extends Component {
               </Grid> 
               */}
               </form>
-            <form className={classes.form} noValidate onSubmit={this.handleLogout} method="POST">
+            {/* <form className={classes.form} noValidate onSubmit={this.handleLogout} method="POST">
 
               <Button
                 type="submit"
@@ -193,7 +193,7 @@ class Login extends Component {
               >
                 Logout
               </Button>
-            </form>
+            </form> */}
           </div>
           <Box mt={8}>
               <Copyright />
@@ -210,18 +210,24 @@ const mapStateToProps = (state) => {
   return {
       loading: state.loading,
       error: state.error,
-      token: state.token,
-      user: state.user,
-      projects: state.projects
+      // token: state.token,
+      // user: state.user,
+      // projects: state.projects
   }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (username, password) => dispatch(actions.authLogin(username, password)),
-        logout: () => dispatch(actions.logout()),
+        // logout: () => dispatch(actions.logout()),
     }
 }
+
+// function mapDispatchToProps(dispatch){
+//   return {
+//     authLogin: (username, password) => dispatch(actions.authLogin(userInfo))
+//   }
+// }
 
 const LoginForm = withStyles(useStyles)(Login);
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
