@@ -3,7 +3,7 @@ import StudentMainCalendar from './studentMainCalendar';
 import LeftSideColumn from '../leftSideColumn';
 import { Grid } from '@material-ui/core';
 import { observer } from "mobx-react";
-import axiosGetFullData from "../AxiosCalling/axiosGetFullData";
+import axiosGetStudentData from "../AxiosCalling/axiosGetStudentData";
 
 import { connect } from 'react-redux';
 import * as actions from '../../login-store/actions/auth';
@@ -15,7 +15,9 @@ class StudentMainPage extends Component {
     if(calendarStore.getData.length === 0){
       console.log(paramQuery);
       console.log('what is this')
-      axiosGetFullData(calendarStore, paramQuery);
+      console.log(calendarStore.getUserData.id)
+      var student_id = calendarStore.getUserData.id
+      axiosGetStudentData(calendarStore, student_id);
     }
   }
 

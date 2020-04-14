@@ -30,6 +30,7 @@ const CheckRoute = ({ component: Component, ...rest }) => {
   var userID = rest.userInfo ? rest.userInfo.id : ''
   var staffCalendarURL = `/${userID}/staffcalendar`
   var studentCalendarURL = `/${userID}/calendar`
+  rest.calendarStore.setUserData(rest.userInfo)
   return (
     <Route {...rest} render={(props) => (
       rest.auth === false
@@ -59,7 +60,7 @@ const CheckProjects = ({ component: Component, ...rest }) => {
           ?
           <Redirect to={studentCalendarURL} />
           :
-          <Component {...props} calendarStore={calendarStore} />
+          <Component {...props} />
     )} />
   )
 }
@@ -70,10 +71,12 @@ class App extends Component {
     this.props.onTryAutoSignup();
   }
 
+  
+
   render() {
     return (
       <Router history={history} >
-        <Route>
+        {/* <Route> */}
           {console.log(this.props.isAuthenticated)}
           {/* Calendar Path for student: */}
           <PrivateRoute exact path="/:userID/calendar" component={StudentMainPage} auth={this.props.isAuthenticated} userInfo={this.props.userInfo}
@@ -86,11 +89,11 @@ class App extends Component {
           />
 
 
-          <CheckRoute path="/" component={LoginPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff} userInfo={this.props.userInfo}
+          <CheckRoute path="/" component={LoginPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff} userInfo={this.props.userInfo} calendarStore={calendarStore}
           />
-          <CheckRoute path="/login" component={LoginPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff} userInfo={this.props.userInfo}
+          <CheckRoute path="/login" component={LoginPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff} userInfo={this.props.userInfo} calendarStore={calendarStore}
           />
-          <CheckProjects path="/projectListing" component={projectListPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff} userInfo={this.props.userInfo} />
+          <CheckProjects path="/projectListing" component={projectListPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff} userInfo={this.props.userInfo}  calendarStore={calendarStore}/>
 
           {/* <Route exact path="/"
             render={(props) => (<MainPage {...props} calendarStore={calendarStore}/>)}
@@ -103,7 +106,7 @@ class App extends Component {
           />
           <Route path="/projectListing" component={projectListPage} auth={this.props.isAuthenticated} staff={this.props.is_Staff}/> */}
 
-        </Route>
+        {/* </Route> */}
       </Router>
     );
   }

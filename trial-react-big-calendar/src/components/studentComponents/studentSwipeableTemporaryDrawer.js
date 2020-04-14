@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-function StaffSwipeableTemporaryDrawer({ history, logout }) {
+function StaffSwipeableTemporaryDrawer({ calendarStore, history, logout }) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false,
@@ -80,13 +80,16 @@ function StaffSwipeableTemporaryDrawer({ history, logout }) {
   }
 
   const renderSwitchCase = () => {
+    console.log(calendarStore)
+    console.log('is calendar store here?')
+    var user_id = calendarStore.getUserData.id
     switch (currentPageEvent) {
       case 'Meetings':
       case 'Weekly Report':
       case 'Strategy Plan':
       case 'Interim Report':
       case 'Final Report':
-        return history.push('/contentrouter')
+        return history.push({ path: `/${user_id}/content` })
       default:
         return "";
     }

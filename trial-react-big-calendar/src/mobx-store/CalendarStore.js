@@ -28,6 +28,7 @@ class CalendarStore {
     defaultState = { state: 'Weekly Report', index: 0 } //available as: 'Weekly Report', 'Meetings', 'Other Submissions'
     totalHoursSpent = "0";
     testFileURL = "";
+    userData = '';
 
     addData = (e) => {
         this.newData.push(e);
@@ -70,6 +71,12 @@ class CalendarStore {
         this.testFileURL = fileURL;
     }
 
+    setUserData = (userData) => {
+        console.log(userData)
+        console.log("can i receive this in the store??")
+        this.userData = userData;
+    }
+
     get getData() {
         return this.newData;
     }
@@ -93,6 +100,10 @@ class CalendarStore {
     get getFileURL(){
         return this.testFileURL;
     }
+
+    get getUserData(){
+        return this.userData;
+    }
 }
 
 decorate(CalendarStore, {
@@ -101,18 +112,21 @@ decorate(CalendarStore, {
     defaultState: observable,
     totalHoursSpent: observable,
     testFileURL: observable,
+    userData: observable,
     addData: action,
     addSelectedData: action,
     changeDefaultState: action,
     setTotalHoursSpent: action,
     deleteSelectedEvent: action,
     setFileURL: action,
+    setUserData: action,
     getData: computed,
     getSelectedData: computed,
     getDataLength: computed,
     getDefaultState: computed,
     getTotalHoursSpent: computed,
     getFileURL: computed,
+    getUserData: computed
 })
 
 export default CalendarStore;

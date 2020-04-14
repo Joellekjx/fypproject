@@ -99,7 +99,6 @@ class Login extends Component {
     render() {
       const { username, password } = this.state;
       const { classes } = this.props;
-
       let errorMessage = null;
       if (this.props.error) {
           errorMessage = (
@@ -220,10 +219,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (username, password) => dispatch(actions.authLogin(username, password)),
-        logout: () => dispatch(actions.logout())
+        logout: () => dispatch(actions.logout()),
     }
 }
 
 const LoginForm = withStyles(useStyles)(Login);
-
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

@@ -12,8 +12,8 @@ class LeftSideColumn extends Component {
                 <Grid container>
                     <Grid item xs={12}>
                         {type === 'Student' ?
-                        <StudentSwipeableTemporaryDrawer history={history} /> :
-                        <StaffSwipeableTemporaryDrawer history={history}/>
+                        <StudentSwipeableTemporaryDrawer history={history} calendarStore={calendarStore} /> :
+                        <StaffSwipeableTemporaryDrawer history={history} calendarStore={calendarStore}/>
                         }
                     </Grid>
                     <Grid item xs={12} style={{paddingTop: '5px', borderTop: '1px solid #ddd'}}>
