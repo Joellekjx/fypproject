@@ -3,10 +3,15 @@ import DateFnsUtils from '@date-io/date-fns';
 import { DatePicker, MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
 import { DialogTitle, DialogContent, makeStyles, Grid, Typography, Select, MenuItem, DialogActions, Button, TextField } from '@material-ui/core';
 import axiosPost from '../AxiosCalling/axiosPost';
+import EventIcon from '@material-ui/icons/Event';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import ClassIcon from '@material-ui/icons/Class';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
+        width: 'auto'
     },
     formControl: {
         minWidth: 120,
@@ -92,9 +97,12 @@ function EventForm({ handleClose, start, end, calendarStore }) {
     const renderOthersFormView = () => {
         return (
             <React.Fragment>
-                <Grid item xs={12} spacing={1}>
+                <Grid item xs={1}>
+                    <CalendarTodayIcon fontSize="small" style={{float: 'right'}}/>
+                </Grid>
+                <Grid item xs={11} spacing={1}>
                     <div style={{ display: 'flex' }}>
-                        <Typography className={classes.secondaryHeading}>Submission Date:</Typography>
+                        {/* <Typography className={classes.secondaryHeading}>Submission Date:</Typography> */}
                         <DatePicker
                             value={selectedStartDate}
                             name="selectedStartDate"
@@ -104,9 +112,13 @@ function EventForm({ handleClose, start, end, calendarStore }) {
                         </DatePicker>
                     </div>
                 </Grid>
-                <Grid item xs={12} spacing={1}>
+
+                <Grid item xs={1}>
+                    <ScheduleIcon fontSize="small" style={{float: 'right'}}/>
+                </Grid>
+                <Grid item xs={11} spacing={1}>
                     <div style={{ display: 'flex' }}>
-                        <Typography className={classes.secondaryHeading}>Submission Time:</Typography>
+                        {/* <Typography className={classes.secondaryHeading}>Submission Time:</Typography> */}
                         <KeyboardTimePicker
                             value={selectedStartDate}
                             onChange={(e) => { handleStartDateChange(e) }}
@@ -124,15 +136,27 @@ function EventForm({ handleClose, start, end, calendarStore }) {
     const renderMeetingFormView = () => {
         return (
             <React.Fragment>
-                <Grid item xs={12} spacing={1}>
+                <Grid item xs={1} md={1}>
+                    <EventIcon fontSize="small" style={{float: 'right'}}/>
+                </Grid>
+                <Grid item xs={11} md={11}>
                     <div style={{ display: 'flex' }}>
-                        <Typography className={classes.secondaryHeading}>Meeting Date: </Typography>
-                        <DatePicker value={selectedStartDate} name="selectedStartDate" onChange={(e) => handleStartDateChange(e)}>Choose Submission Date:</DatePicker>
+                        {/* <Typography className={classes.secondaryHeading}>Meeting Date: </Typography> */}
+                        <DatePicker 
+                        value={selectedStartDate} 
+                        name="selectedStartDate" 
+                        onChange={(e) => handleStartDateChange(e)}
+                        style={{width: '30%'}}
+                        >Choose Submission Date:</DatePicker>
                     </div>
                 </Grid>
-                <Grid item xs={12} spacing={1}>
+                
+                <Grid item xs={1}>
+                    <ScheduleIcon fontSize="small" style={{float: 'right'}} />
+                </Grid>
+                <Grid item xs={11}>
                     <div style={{ display: 'flex' }}>
-                        <Typography className={classes.secondaryHeading}>Timing: </Typography>
+                        {/* <Typography className={classes.secondaryHeading}>Timing: </Typography> */}
                         <KeyboardTimePicker
                             value={selectedStartDate}
                             name="selectedStartDate"
@@ -141,6 +165,7 @@ function EventForm({ handleClose, start, end, calendarStore }) {
                                 'aria-label': 'change time',
                             }}
                             mask="__:__ _M"
+                            style={{width: '30%'}}
                         />
                         <Typography className={classes.secondaryHeading}>-</Typography>
                         <KeyboardTimePicker
@@ -150,6 +175,7 @@ function EventForm({ handleClose, start, end, calendarStore }) {
                             KeyboardButtonProps={{
                                 'aria-label': 'change time',
                             }}
+                            style={{width: '30%'}}
                             mask="__:__ _M"
                         />
                     </div>
@@ -171,7 +197,7 @@ function EventForm({ handleClose, start, end, calendarStore }) {
                 return (
                     <React.Fragment>
                         Please choose a category
-              </React.Fragment>
+                    </React.Fragment>
                 )
         }
     }
@@ -188,9 +214,10 @@ function EventForm({ handleClose, start, end, calendarStore }) {
                 <DialogContent>
                     <form onSubmit={onSubmit} method="POST">
                         <Grid container className={classes.root} spacing={1}>
-                            <Grid item xs={12}>
-                                <div style={{ display: 'flex' }}>
-                                    <Typography className={classes.secondaryHeading}>Category: </Typography>
+                            <Grid item xs={1}><ClassIcon fontSize="small" style={{float: 'right'}}/></Grid>
+                            <Grid item xs={11}>
+                                {/* <div style={{ display: 'flex' }}> */}
+                                    {/* <Typography className={classes.secondaryHeading}>Category: </Typography> */}
                                     <Select
                                         labelId="demo-dialog-select-label"
                                         value={category}
@@ -204,9 +231,10 @@ function EventForm({ handleClose, start, end, calendarStore }) {
                                         <MenuItem value="Interim Report">Interim Report Submission</MenuItem>
                                         <MenuItem value="Final Report">Final Report Submission</MenuItem>
                                     </Select>
-                                </div>
+                                {/* </div> */}
                             </Grid>
-                            <Grid item xs={12}>
+
+                            <Grid item container xs={12} md={12} spacing={1}>
                                 {decideView()}
                             </Grid>
                             {/* 3rd: Option to repeat until? */}

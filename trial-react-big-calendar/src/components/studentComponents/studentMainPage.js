@@ -29,10 +29,10 @@ class StudentMainPage extends Component {
         <div className="MainPage">
           {console.log(this.props.paramQuery)}
           <Grid container>
-            <Grid item xs={1} md={2}>
+            <Grid item xs={1} md={1}>
               <LeftSideColumn calendarStore={calendarStore} history={history} type="Student"/>
             </Grid>
-            <Grid item xs={11} md={10}>
+            <Grid item xs={11} md={11}>
               <StudentMainCalendar calendarStore={calendarStore} />
             </Grid>
           </Grid>
