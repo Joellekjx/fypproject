@@ -83,7 +83,7 @@ class LeftSideColumn extends Component {
                         }
                     </Grid>
                     <Grid item xs={12} style={{ paddingTop: '5px', borderTop: '1px solid #ddd' }}>
-                        <AddEventButton calendarStore={calendarStore} />
+                        <AddEventButton calendarStore={calendarStore} type={type}/>
                     </Grid>
                     <Grid item xs={12} style={{ paddingTop: '5px' }}>
                         {type === 'Student' ?

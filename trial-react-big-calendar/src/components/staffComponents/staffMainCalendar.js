@@ -13,6 +13,7 @@ import { Dialog, Typography } from "@material-ui/core";
 import CustomEventWithPopover from '../MainCalendarComponents/indivEvent';
 import { withStyles } from '@material-ui/core/styles';
 import CustomToolBar from '../MainCalendarComponents/CustomToolBar';
+import StaffEventForm from './staffEventForm';
 
 const localizer = momentLocalizer(moment);
 const DnDCalendar = withDragAndDrop(Calendar);
@@ -118,7 +119,9 @@ class StaffMainCalendar extends Component {
     return (
       <React.Fragment>
         <Dialog open={this.state.isAddModalOpen} onClose={this.handleClose}>
-          <EventForm calendarStore={calendarStore} start={currentEvent.start} end={currentEvent.end} handleClose={() => this.handleClose()} />
+          {/* Reroute eventform to staffeventform */}
+          <StaffEventForm calendarStore={calendarStore} start={currentEvent.start} end={currentEvent.end} handleClose={() => this.handleClose()} />
+          {/* <EventForm calendarStore={calendarStore} start={currentEvent.start} end={currentEvent.end} handleClose={() => this.handleClose()} /> */}
         </Dialog>
       </React.Fragment>
     )
