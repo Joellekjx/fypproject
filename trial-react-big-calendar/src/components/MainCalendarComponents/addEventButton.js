@@ -38,7 +38,7 @@ export default class AddEventButton extends Component {
     end.setHours(0, 0, 0, 0);
     // console.log(start);
     return(
-      <div style={{margin: '10px 0 0 10px'}}>
+      <div style={{margin: '10px 0 10px 0', textAlign: 'center'}}>
          <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
            Add Event
          </Button>

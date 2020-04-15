@@ -1,4 +1,5 @@
 import { decorate, observable, action, computed } from "mobx"
+import { isThisSecond } from "date-fns";
 
 /**
  * Format of newData:
@@ -31,6 +32,7 @@ class CalendarStore {
     userData = '';
     staffStudentData = []; //original bucket
     staffStudentFilteredData = []; //filtered bucket ==> is the bucket that'll display on calendar page for staff
+    checkboxes = [];
 
     addData = (e) => {
         this.newData.push(e);
@@ -86,7 +88,24 @@ class CalendarStore {
     }
 
     filterStaffStudentData = (removedOption) => { //think about what to do in here lol
+        this.staffStudentFilteredData.filter(item => {
+            return item.project_id !== removedOption
+        } )
+        // this.getStaffStudentFilteredData()
+        // removePeople(e) {
+        //     var array = [...this.state.people]; // make a separate copy of the array
+        //     var index = array.indexOf(e.target.value)
+        //     if (index !== -1) {
+        //       array.splice(index, 1);
+        //       this.setState({people: array});
+        //     }
+        //   },
         //likely will take an option and remove it??
+    }
+
+    setCheckboxes = (obj) => {
+        //Obj = { name, key, label }
+        this.checkboxes.push(obj)
     }
 
     get getData() {
@@ -122,11 +141,17 @@ class CalendarStore {
     }
 
     get getStaffStudentFilteredData(){
+        console.log(this.staffStudentFilteredData)
+        console.log("hello does this reflect tho???")
         return this.staffStudentFilteredData;
     }
 
     get getStaffStudentFilteredDataLength(){
         return this.staffStudentFilteredData.length;
+    }
+    
+    get getCheckboxes(){
+        return this.checkboxes;
     }
 }
 
@@ -139,6 +164,7 @@ decorate(CalendarStore, {
     userData: observable,
     staffStudentData: observable,
     staffStudentFilteredData: observable,
+    checkboxes: observable,
     addData: action,
     addSelectedData: action,
     changeDefaultState: action,
@@ -148,6 +174,7 @@ decorate(CalendarStore, {
     setUserData: action,
     addStaffStudentData: action,
     filterStaffStudentData: action,
+    setCheckboxes: action,
     getData: computed,
     getSelectedData: computed,
     getDataLength: computed,
@@ -158,6 +185,7 @@ decorate(CalendarStore, {
     getStaffStudentData: computed,
     getStaffStudentFilteredData: computed,
     getStaffStudentFilteredDataLength: computed,
+    getCheckboxes: computed,
 })
 
 export default CalendarStore;

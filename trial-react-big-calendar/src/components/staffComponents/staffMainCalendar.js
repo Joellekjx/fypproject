@@ -47,7 +47,16 @@ class StaffMainCalendar extends Component {
       dayLayoutAlgorithm: 'no-overlap',
       isAddModalOpen: false,
       currentEvent: '',
+      eventList: []
     }
+  }
+
+  componentDidMount(){
+    const { calendarStore } = this.props;
+    const { getStaffStudentFilteredData } = calendarStore;
+    this.setState({
+      eventList: getStaffStudentFilteredData
+    })
   }
 
   handleClose = () => {
@@ -119,6 +128,7 @@ class StaffMainCalendar extends Component {
     const { calendarStore, classes } = this.props;
     // const { getData, getDataLength } = calendarStore; //why the fk is getDataLength affecting appearance??
     const { getStaffStudentFilteredData, getStaffStudentFilteredDataLength } = calendarStore;
+    // console.log(getStaffStudentFilteredData)
     return (
       <div className="MainCalendar">
         <DnDCalendar
@@ -129,7 +139,7 @@ class StaffMainCalendar extends Component {
           defaultDate={new Date()}
           defaultView="month"
           views={{ month: WorkMonth, week: true }}
-          events={getStaffStudentFilteredData}
+          events={this.state.eventList}
           localizer={localizer}
           onEventResize={this.onEventResize}
 

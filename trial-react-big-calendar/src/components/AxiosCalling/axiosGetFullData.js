@@ -16,6 +16,30 @@ export default function axiosGetFullData(calendarStore, paramQuery) {
             })
         }).then(res => {
             res.projects.map((item, index) => {
+                //Set checkboxes: item, key, name:
+                var color; //this is NOT GOOD PRACTICE, but i'm gg to hardcode the colors in
+                switch(item.project_id){
+                    case 1:
+                        color = 'purple';
+                        break;
+                    case 2:
+                        color = 'blue';
+                        break;
+                    case 3:
+                        color = 'red';
+                        break;
+                    default:
+                        color = '#F4F4F4';
+                        break;
+                }
+
+                calendarStore.setCheckboxes({
+                    label: item.project_name,
+                    key: item.project_id,
+                    name: item.project_name,
+                    color: color,
+                })
+
                 // console.log(item.project_id)
                 var project_id = item.project_id
                 axios.get(`${BASEURL}/api/taskComment/?project_id=${project_id}`, {
@@ -49,8 +73,12 @@ export default function axiosGetFullData(calendarStore, paramQuery) {
                                 student_id: indivRes.student_id,
                                 tutor_id: indivRes.tutor_id,
                                 comments: indivRes.comments,
-                                documents: indivRes.documents
+                                documents: indivRes.documents,
+                                project_name: item.project_name,
+                                color: color
                             })
+
+                            
                         })
                         if (calendarStore.getTotalHoursSpent === "0") {
                             calendarStore.setTotalHoursSpent(totalHours);
