@@ -10,7 +10,10 @@ import { connect } from 'react-redux';
 import * as actions from '../../login-store/actions/auth';
 
 class StaffMainPage extends Component {
-  
+  constructor(props){
+    super(props)
+  }
+
    componentDidMount(){
     const { calendarStore, paramQuery } = this.props;
     if(calendarStore.getData.length === 0){

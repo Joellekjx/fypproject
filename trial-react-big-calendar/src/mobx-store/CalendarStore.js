@@ -1,4 +1,4 @@
-import { decorate, observable, action, computed } from "mobx"
+import { decorate, observable, action, computed, remove } from "mobx"
 import { isThisSecond } from "date-fns";
 
 /**
@@ -19,9 +19,9 @@ import { isThisSecond } from "date-fns";
     documents: indivRes.documents
  */
 
- //If you are a staff, your calendarStore's data will include ALL your student's data
- //If you are a student, your calendarStore ONLY includes YOUR OWN data
- 
+//If you are a staff, your calendarStore's data will include ALL your student's data
+//If you are a student, your calendarStore ONLY includes YOUR OWN data
+
 class CalendarStore {
     newData = [];
     selectedData = {}; //for moving between maincalendar to say weekly report
@@ -88,19 +88,14 @@ class CalendarStore {
     }
 
     filterStaffStudentData = (removedOption) => { //think about what to do in here lol
+        removedOption = parseInt(removedOption)
         this.staffStudentFilteredData.filter(item => {
-            return item.project_id !== removedOption
-        } )
-        // this.getStaffStudentFilteredData()
-        // removePeople(e) {
-        //     var array = [...this.state.people]; // make a separate copy of the array
-        //     var index = array.indexOf(e.target.value)
-        //     if (index !== -1) {
-        //       array.splice(index, 1);
-        //       this.setState({people: array});
-        //     }
-        //   },
-        //likely will take an option and remove it??
+            if (item.project_id !== removedOption) {
+                console.log(item)
+                console.log("is this even correct lol")
+                return item
+            }
+        })
     }
 
     setCheckboxes = (obj) => {
@@ -128,29 +123,27 @@ class CalendarStore {
         return this.totalHoursSpent;
     }
 
-    get getFileURL(){
+    get getFileURL() {
         return this.testFileURL;
     }
 
-    get getUserData(){
+    get getUserData() {
         return this.userData;
     }
 
-    get getStaffStudentData(){
+    get getStaffStudentData() {
         return this.staffStudentData;
     }
 
-    get getStaffStudentFilteredData(){
-        console.log(this.staffStudentFilteredData)
-        console.log("hello does this reflect tho???")
+    get getStaffStudentFilteredData() {
         return this.staffStudentFilteredData;
     }
 
-    get getStaffStudentFilteredDataLength(){
+    get getStaffStudentFilteredDataLength() {
         return this.staffStudentFilteredData.length;
     }
-    
-    get getCheckboxes(){
+
+    get getCheckboxes() {
         return this.checkboxes;
     }
 }

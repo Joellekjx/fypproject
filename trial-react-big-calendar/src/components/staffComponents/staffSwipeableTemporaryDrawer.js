@@ -42,7 +42,7 @@ function StaffSwipeableTemporaryDrawer({ history, logout }) {
 
   const seeProjectListings = () => {
     //note: need to double check and make sure only admin sees this!!
-    history.push('/projectListing')
+    history.push('/staff/projectlistings')
   }
 
   const sideList = side => (
@@ -58,14 +58,14 @@ function StaffSwipeableTemporaryDrawer({ history, logout }) {
         </ListItem>
       </List>
       <Divider />
-      <List>
+      {/* <List>
         {['Weekly Report', 'Meetings', 'Strategy Plan', 'Interim Report', 'Final Report'].map((text, index) => (
           <ListItem button key={text} onClick={() => onClickHandler(text, index)}>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
-      <Divider />
+      <Divider /> */}
       <List>
         <ListItem button key="Logout" onClick={() => handleLogout()}>
           <ListItemText>Logout</ListItemText>

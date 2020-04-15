@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { Paper, Popover, Button, Typography } from '@material-ui/core';
+import { Paper, Popover, Button, Typography, Divider, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
 import history from '../../history';
 import axiosDelete from '../AxiosCalling/axiosDelete';
+import EventIcon from '@material-ui/icons/Event';
+import NotesIcon from '@material-ui/icons/Notes';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -12,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     flexWrap: 'wrap',
     '& > *': {
       minWidth: '300px',
-      height: theme.spacing(16),
+      // height: theme.spacing(16),
       padding: theme.spacing(3),
     },
   },
@@ -23,6 +25,10 @@ const useStyles = makeStyles(theme => ({
   secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary,
+  },
+  bodyText: {
+    fontSize: theme.typography.pxToRem(15),
+    color: 'black',
   },
   eventTitle: {
     fontFamily: 'Roboto',
@@ -132,20 +138,47 @@ export default function CustomEventWithPopover(props) {
     return (
       <div className={classes.root}>
         <Paper style={{ position: 'relative' }}>
-          <Typography className={classes.heading}>{event.title}</Typography>
-          {/* {event.title} */}
-          {/* <Typography className={classes.secondaryHeading}>{event.event.content}</Typography> */}
-          <Typography className={classes.secondaryHeading}>
-            {formatDateView()}
-          </Typography>
-          <div style={{ position: 'absolute', bottom: '0', float: 'right', paddingBottom: '15px' }}>
-            <Button style={{ marginRight: '5px' }} onClick={onClickDelete}>
-              Delete
-                    </Button>
-            <Button variant="contained" color="primary" onClick={onRoutingButtonClick}>
-              More Info
-                    </Button>
-          </div>
+          <Grid container style={{ width: '320px', height: 'auto' }} spacing={1}>
+            <Grid item xs={1}>
+              <div style={{ marginTop: '5px', width: '15px', height: '15px', float: 'center', backgroundColor: event.event.color }}></div>
+            </Grid>
+            <Grid item xs={11}>
+              <Typography className={classes.heading}>{event.title}</Typography>
+            </Grid>
+
+            <Grid item xs={1}>
+              <EventIcon fontSize="small" />
+            </Grid>
+            <Grid item xs={11}>
+              <Typography className={classes.secondaryHeading}>
+                {formatDateView()}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={1}>
+              <NotesIcon fontSize="small" />
+            </Grid>
+            <Grid item xs={11}>
+              <Typography className={classes.bodyText}>
+                {event.event.project_name}
+              </Typography>
+              <Typography className={classes.bodyText}>
+                  Status: {event.event.status}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Divider />
+              <div style={{ textAlign: 'right', paddingTop: '10px'}}>
+                <Button style={{ marginRight: '5px'}} onClick={onClickDelete}>
+                  Delete
+            </Button>
+                <Button variant="contained" color="primary" onClick={onRoutingButtonClick}>
+                  More Info
+            </Button>
+              </div>
+            </Grid>
+          </Grid>
         </Paper>
       </div>
     )
