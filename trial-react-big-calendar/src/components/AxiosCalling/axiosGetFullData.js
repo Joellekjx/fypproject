@@ -16,7 +16,6 @@ export default function axiosGetFullData(calendarStore, paramQuery) {
             })
         }).then(res => {
             res.projects.map((item, index) => {
-                //Set checkboxes: item, key, name:
                 var color; //this is NOT GOOD PRACTICE, but i'm gg to hardcode the colors in
                 switch(item.project_id){
                     case 1:
@@ -33,7 +32,13 @@ export default function axiosGetFullData(calendarStore, paramQuery) {
                         break;
                 }
 
+                console.log(item)
+                console.log("what is inside here lol")
+                //Set checkboxes: item, key, name:
                 calendarStore.setCheckboxes({
+                    project_id: item.project_id,
+                    tutor_id: item.tutor_id,
+                    students: item.students,
                     label: item.project_name,
                     key: item.project_id,
                     name: item.project_name,

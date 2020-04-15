@@ -98,8 +98,9 @@ class CalendarStore {
         })
     }
 
+    //Actually, checkboxes might be changed to contain everything inside /api/usersAndProjects instead heh
     setCheckboxes = (obj) => {
-        //Obj = { name, key, label }
+        //Obj = { name - project_name, key - project_id, label - project_name, color }
         this.checkboxes.push(obj)
     }
 

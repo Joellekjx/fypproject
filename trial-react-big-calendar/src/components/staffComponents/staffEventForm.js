@@ -33,22 +33,22 @@ const useStyles = makeStyles(theme => ({
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
     },
-  },
 };
 
 function getStyles(name, projectName, theme) {
     return {
-      fontWeight:
-      projectName.indexOf(name) === -1
-          ? theme.typography.fontWeightRegular
-          : theme.typography.fontWeightMedium,
+        fontWeight:
+            projectName.indexOf(name) === -1
+                ? theme.typography.fontWeightRegular
+                : theme.typography.fontWeightMedium,
     };
-  }
+}
 
 function StaffEventForm({ handleClose, start, end, calendarStore }) {
     const theme = useTheme();
@@ -60,26 +60,32 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
     }
 
     const [projectName, setProjectName] = React.useState([]);
+    // const [projectID, setProjectID] = React.useState([]);
 
     const classes = useStyles();
-    const [{ category, selectedStartDate, selectedEndDate, repeatValue }, setState] = useState(initialState)
+    const [{ category, selectedStartDate, selectedEndDate }, setState] = useState(initialState)
 
     const onSubmit = (e) => {
         e.preventDefault()
+        let stringOfSelectedProjects = e.target[1].value.toString()
+        let arrayOfSelectedProjects = stringOfSelectedProjects.split(",");
+        const { getCheckboxes } = calendarStore;
 
-        //Check if end date is earlier than start date
-        if (selectedEndDate < selectedStartDate) {
-            return alert("Your end date is earlier than your start date. Please add a proper timing again.")
-        }
+        arrayOfSelectedProjects.map((project_name) => {
+            getCheckboxes.find((item) => {
+                if (project_name === item.label) { //from there, we axios post each time to the corresponding project_id and student_id
+                    var project_id = item.project_id;
+                    var student_id = item.students[0].id //unfortunately if a project has no students, it cannot be added to backend
+                    //Check if end date is earlier than start date
+                    if (selectedEndDate < selectedStartDate) {
+                        return alert("Your end date is earlier than your start date. Please add a proper timing again.")
+                    }
 
-        //Add new event by using calendarstore's add data
-        //No need to add everything because on refresh, the data from backend will be replaced with this
-        calendarStore.addData({ title: category, start: selectedStartDate, end: selectedEndDate });
-        //Add event to backend by axios.post
-        var project_id = calendarStore.getUserData.project_id
-        var student_id = calendarStore.getUserData.id
-        axiosPost(project_id, student_id, selectedStartDate, selectedEndDate, category, 'Pending')
-
+                    calendarStore.addData({ project_id: project_id, title: category, start: selectedStartDate, end: selectedEndDate });
+                    axiosPost(project_id, student_id, selectedStartDate, selectedEndDate, category, 'Pending')
+                }
+            })
+        })
         handleClose();
     }
 
@@ -227,7 +233,7 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
 
     const handleChange = (event) => {
         setProjectName(event.target.value);
-      };
+    };
 
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -270,11 +276,10 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
                                     displayEmpty
                                     renderValue={(selected) => {
                                         if (selected.length === 0) {
-                                          return <em>Select Projects Involved</em>;
+                                            return <em>Select Projects Involved</em>;
                                         }
                                         return selected.join(', ');
-                                      }}
-                                    // placeholder="Select Projects Involved"
+                                    }}
                                 >
                                     <MenuItem value="" disabled>
                                         Select Projects Involved
