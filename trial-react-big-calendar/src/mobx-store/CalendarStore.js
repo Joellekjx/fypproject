@@ -29,9 +29,12 @@ class CalendarStore {
     totalHoursSpent = "0";
     testFileURL = "";
     userData = '';
+    staffStudentData = []; //original bucket
+    staffStudentFilteredData = []; //filtered bucket ==> is the bucket that'll display on calendar page for staff
 
     addData = (e) => {
         this.newData.push(e);
+        this.staffStudentFilteredData.push(e)
     }
 
     addSelectedData = ({ Id, title, start, end, event_type, status }) => {
@@ -77,6 +80,15 @@ class CalendarStore {
         this.userData = userData;
     }
 
+    addStaffStudentData = (data) => {
+        this.staffStudentData.push(data)
+        this.staffStudentFilteredData.push(data) //fill the filtered array with the same events as original upon calling for axios
+    }
+
+    filterStaffStudentData = (removedOption) => { //think about what to do in here lol
+        //likely will take an option and remove it??
+    }
+
     get getData() {
         return this.newData;
     }
@@ -104,6 +116,18 @@ class CalendarStore {
     get getUserData(){
         return this.userData;
     }
+
+    get getStaffStudentData(){
+        return this.staffStudentData;
+    }
+
+    get getStaffStudentFilteredData(){
+        return this.staffStudentFilteredData;
+    }
+
+    get getStaffStudentFilteredDataLength(){
+        return this.staffStudentFilteredData.length;
+    }
 }
 
 decorate(CalendarStore, {
@@ -113,6 +137,8 @@ decorate(CalendarStore, {
     totalHoursSpent: observable,
     testFileURL: observable,
     userData: observable,
+    staffStudentData: observable,
+    staffStudentFilteredData: observable,
     addData: action,
     addSelectedData: action,
     changeDefaultState: action,
@@ -120,13 +146,18 @@ decorate(CalendarStore, {
     deleteSelectedEvent: action,
     setFileURL: action,
     setUserData: action,
+    addStaffStudentData: action,
+    filterStaffStudentData: action,
     getData: computed,
     getSelectedData: computed,
     getDataLength: computed,
     getDefaultState: computed,
     getTotalHoursSpent: computed,
     getFileURL: computed,
-    getUserData: computed
+    getUserData: computed,
+    getStaffStudentData: computed,
+    getStaffStudentFilteredData: computed,
+    getStaffStudentFilteredDataLength: computed,
 })
 
 export default CalendarStore;

@@ -9,6 +9,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
             const token = localStorage.getItem("token")
             const expiry = localStorage.getItem("expirationDate")
             const currentTime = new Date().getTime();
+            rest.calendarStore.setUserData(JSON.parse(localStorage.getItem("user")))
             if (currentTime > expiry) {
                 return <Redirect
                     to={{
@@ -46,6 +47,7 @@ export const LoginRoute = ({ component: Component, ...rest }) => (
                 return <Component {...props} />
             }
             if (token) {
+                rest.calendarStore.setUserData(JSON.parse(localStorage.getItem("user")))
                 if (store.getState().is_Staff) { //if is staff
                     return <Redirect
                         to={{
@@ -77,6 +79,7 @@ export const StudentOnlyRoute = ({ component: Component, ...rest }) => (
             const token = localStorage.getItem("token")
             const expiry = localStorage.getItem("expirationDate")
             const currentTime = new Date().getTime();
+            rest.calendarStore.setUserData(JSON.parse(localStorage.getItem("user")))
             if (currentTime > expiry) {
                 return <Redirect
                     to={{
@@ -122,6 +125,7 @@ export const StaffOnlyRoute = ({ component: Component, ...rest }) => (
             const token = localStorage.getItem("token")
             const expiry = localStorage.getItem("expirationDate")
             const currentTime = new Date().getTime();
+            rest.calendarStore.setUserData(JSON.parse(localStorage.getItem("user")))
             if (currentTime > expiry) {
                 return <Redirect
                     to={{
@@ -168,7 +172,7 @@ export const CheckSwitchRoute = ({ component: Component, ...rest }) => (
             const token = localStorage.getItem("token")
             const expiry = localStorage.getItem("expirationDate")
             const currentTime = new Date().getTime();
-            console.log("## inside checkswitch route ###")
+            rest.calendarStore.setUserData(JSON.parse(localStorage.getItem("user")))
             if (currentTime > expiry) {
                 return <Redirect
                     to={{

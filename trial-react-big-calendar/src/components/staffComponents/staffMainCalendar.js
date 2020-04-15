@@ -35,8 +35,8 @@ const useStyles = (theme) => ({
 
 
 const Event = ({ calendarStore }) => props => {
-  console.log(props)
-  console.log("props hello?")
+  // console.log(props)
+  // console.log("props hello?")
   return <CustomEventWithPopover event={props} calendarStore={calendarStore} />;
 }
 
@@ -117,8 +117,8 @@ class StaffMainCalendar extends Component {
 
   render() {
     const { calendarStore, classes } = this.props;
-    const { getData, getDataLength } = calendarStore; //why the fk is getDataLength affecting appearance??
-
+    // const { getData, getDataLength } = calendarStore; //why the fk is getDataLength affecting appearance??
+    const { getStaffStudentFilteredData, getStaffStudentFilteredDataLength } = calendarStore;
     return (
       <div className="MainCalendar">
         <DnDCalendar
@@ -129,7 +129,7 @@ class StaffMainCalendar extends Component {
           defaultDate={new Date()}
           defaultView="month"
           views={{ month: WorkMonth, week: true }}
-          events={getData}
+          events={getStaffStudentFilteredData}
           localizer={localizer}
           onEventResize={this.onEventResize}
 
@@ -160,6 +160,16 @@ class StaffMainCalendar extends Component {
                 borderRadius: "0px",
                 border: "none"
               };
+              switch (event.project_id) { //I know this is a stupid way to sort la lol but we will find a better way... next time
+                case 1:
+                  newStyle.borderLeft = "5px solid purple"; break;
+                case 2:
+                  newStyle.borderLeft = "5px solid blue"; break;
+                case 3:
+                  newStyle.borderLeft = "5px solid yellow"; break;
+                default:
+                  newStyle.borderLeft = "5px solid #F4F4F4"; break;
+              }
               return {
                 className: "",
                 style: newStyle

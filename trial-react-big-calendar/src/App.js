@@ -76,10 +76,10 @@ function App() {
         // auth={this.props.isAuthenticated} userInfo={this.props.userInfo}
         />
         <CheckSwitchRoute path='/determiner' 
-        // calendarStore={calendarStore}
+        calendarStore={calendarStore}
         />
         <Route path='/' component={Home} 
-        // calendarStore={calendarStore}
+        calendarStore={calendarStore}
         />
       </Switch>
     </div>
