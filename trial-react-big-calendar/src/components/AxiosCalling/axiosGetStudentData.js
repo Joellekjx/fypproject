@@ -6,7 +6,7 @@ import axios from 'axios';
  * But 'meetings' will take indivRes.creation_date (or the more exact one)
  */
 
-export default function axiosGetFullData(calendarStore, student_id) {
+export default function axiosGetStudentData(calendarStore, student_id) {
     var totalHours = 0;
     axios.get('http://127.0.0.1:8000/api/taskComment/?student_id=' + student_id
     )

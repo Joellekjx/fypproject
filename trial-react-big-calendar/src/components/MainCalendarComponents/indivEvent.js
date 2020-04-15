@@ -77,19 +77,40 @@ export default function CustomEventWithPopover(props) {
 
   const open = Boolean(anchorEl);
 
-  const onRoutingButtonClick = () => {
+  //Because staff should not have their own route, we need to find the student's id instead
+  const onRoutingStaffButtonClick = () => {
     const eventType = event.event.event_type;
+    var student_id = event.event.student_id;
     const { changeDefaultState, addSelectedData } = calendarStore;
     addSelectedData({ Id: event.event.Id })
 
     switch (eventType) {
       case "Weekly Report":
         changeDefaultState({ state: 'Weekly Report', index: 0 });
-        history.push('/contentrouter');
+        history.push(`/${student_id}/content`);
         break;
       case "Meeting Notes":
         changeDefaultState({ state: 'Meetings', index: 1 });
-        history.push('/contentrouter');
+        history.push(`/${student_id}/content`);
+        break;
+      default:
+        return "Nothing";
+    }
+  }
+
+  const onRoutingStudentButtonClick = () => {
+    const eventType = event.event.event_type;
+    const { changeDefaultState, addSelectedData, getUserData } = calendarStore;
+    var student_id = getUserData.id
+    addSelectedData({ Id: event.event.Id })
+    switch (eventType) {
+      case "Weekly Report":
+        changeDefaultState({ state: 'Weekly Report', index: 0 });
+        history.push(`/${student_id}/content`);
+        break;
+      case "Meeting Notes":
+        changeDefaultState({ state: 'Meetings', index: 1 });
+        history.push(`/${student_id}/content`);
         break;
       default:
         return "Nothing";
@@ -101,7 +122,6 @@ export default function CustomEventWithPopover(props) {
     //we can set it properly
     var eventStart = event.event.start;
     var eventEnd = event.event.end;
-    // console.log(event.title);
     var eventStartFormat = moment(eventStart).format('dddd, MMMM DD YYYY')
     switch (event.title) {
       case "Meeting Notes":
@@ -163,19 +183,28 @@ export default function CustomEventWithPopover(props) {
                 {event.event.project_name}
               </Typography>
               <Typography className={classes.bodyText}>
-                  Status: {event.event.status}
+                Status: {event.event.status}
               </Typography>
             </Grid>
 
             <Grid item xs={12}>
               <Divider />
-              <div style={{ textAlign: 'right', paddingTop: '10px'}}>
-                <Button style={{ marginRight: '5px'}} onClick={onClickDelete}>
+              <div style={{ textAlign: 'right', paddingTop: '10px' }}>
+                <Button style={{ marginRight: '5px' }} onClick={onClickDelete}>
                   Delete
-            </Button>
-                <Button variant="contained" color="primary" onClick={onRoutingButtonClick}>
+                </Button>
+                {calendarStore.getUserData.is_staff === 0 ?
+                  <Button variant="contained" color="primary" onClick={onRoutingStudentButtonClick}>
+                    More Info
+                  </Button>
+                  :
+                  <Button variant="contained" color="primary" onClick={onRoutingStaffButtonClick}>
+                    More Info
+                  </Button>
+                }
+                {/* <Button variant="contained" color="primary" onClick={onRoutingButtonClick}>
                   More Info
-            </Button>
+                </Button> */}
               </div>
             </Grid>
           </Grid>

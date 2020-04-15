@@ -1,5 +1,4 @@
-import { decorate, observable, action, computed, remove } from "mobx"
-import { isThisSecond } from "date-fns";
+import { decorate, observable, action, computed } from "mobx"
 
 /**
  * Format of newData:
@@ -36,7 +35,15 @@ class CalendarStore {
 
     addData = (e) => {
         this.newData.push(e);
-        this.staffStudentFilteredData.push(e)
+    }
+
+    clearNewData = () => {
+        this.newData.splice(0, this.newData.length)
+    }
+
+    addStaffStudentData = (e) => {
+        this.staffStudentData.push(e);
+        this.staffStudentFilteredData.push(e);
     }
 
     addSelectedData = ({ Id, title, start, end, event_type, status }) => {
@@ -49,7 +56,7 @@ class CalendarStore {
     }
 
     updateWeeklyReportSubmission = (index, status, content, submission_date, hours_spent) => {
-        var found = this.newData.find(function (element) {
+        var found = this.newData.find((element) => {
             return element.Id === index;
         });
 
@@ -60,7 +67,7 @@ class CalendarStore {
     }
 
     deleteSelectedEvent = (id) => {
-        var filterEvent = this.newData.filter(function (el) { return el.Id !== id; });
+        var filterEvent = this.newData.filter((el) => { return el.Id !== id; });
         this.newData = filterEvent
     }
 
@@ -77,8 +84,6 @@ class CalendarStore {
     }
 
     setUserData = (userData) => {
-        console.log(userData)
-        console.log("can i receive this in the store??")
         this.userData = userData;
     }
 
@@ -91,8 +96,6 @@ class CalendarStore {
         removedOption = parseInt(removedOption)
         this.staffStudentFilteredData.filter(item => {
             if (item.project_id !== removedOption) {
-                console.log(item)
-                console.log("is this even correct lol")
                 return item
             }
         })
@@ -169,6 +172,8 @@ decorate(CalendarStore, {
     addStaffStudentData: action,
     filterStaffStudentData: action,
     setCheckboxes: action,
+    addStaffStudentData: action,
+    clearNewData: action,
     getData: computed,
     getSelectedData: computed,
     getDataLength: computed,

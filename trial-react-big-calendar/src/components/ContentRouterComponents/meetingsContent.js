@@ -91,9 +91,8 @@ class MeetingsContent extends Component {
                     <Grid item xs={1} />
                     <Grid item xs={2}>
                       {/* Week nos. */}
-                      {console.log(text)}
                       {/* NOTE TO SELF: Pls remove this afterwards. This is just a tester!! */}
-                      <Typography  className={classes.secondaryHeading}>{text.Id}</Typography>
+                      <Typography  className={classes.secondaryHeading}>{text.student_id}</Typography>
                     </Grid>
                     <Grid item xs={2}>
                       {/* Meeting Date */}
@@ -139,25 +138,25 @@ class MeetingsContent extends Component {
       )
   }
 
-  jumpToId = () => {
-    const { calendarStore } = this.props;
-    const { getSelectedData } = calendarStore;
-    if(getSelectedData.Id === undefined){
-      alert ('nah')
-    } else {
-      var element = document.getElementById(getSelectedData.Id) //but i need to FIND this instead of map
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'nearest'
-      });
-    }
-  }
+  // jumpToId = () => {
+  //   const { calendarStore } = this.props;
+  //   const { getSelectedData } = calendarStore;
+  //   if(getSelectedData.Id === undefined){
+  //     alert ('nah')
+  //   } else {
+  //     var element = document.getElementById(getSelectedData.Id) //but i need to FIND this instead of map
+  //     element.scrollIntoView({
+  //       behavior: 'smooth',
+  //       block: 'nearest',
+  //       inline: 'nearest'
+  //     });
+  //   }
+  // }
 
   render(){
     return (
       <div style={{width: '100%'}}>
-        <Button onClick={this.jumpToId}>Jump to view</Button>
+        {/* <Button onClick={this.jumpToId}>Jump to view</Button> */}
         <div>
           <Paper>
             <Paper style={{position: "sticky", top: '4.5rem', height: '50px', zIndex: '2'}}>

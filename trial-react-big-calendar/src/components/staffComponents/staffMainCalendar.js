@@ -131,8 +131,6 @@ class StaffMainCalendar extends Component {
     const { calendarStore, classes } = this.props;
     // const { getData, getDataLength } = calendarStore; //why the fk is getDataLength affecting appearance??
     const { getStaffStudentFilteredData, getStaffStudentFilteredDataLength } = calendarStore;
-    // console.log(getStaffStudentFilteredData)
-    // console.log("do u even rerender???")
     return (
       <div className="MainCalendar">
         <DnDCalendar

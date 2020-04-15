@@ -26,31 +26,20 @@ const useStyles = (theme) => ({
 class LeftSideColumn extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            // checkedItems: new Map(),
-        }
-        // this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange = (e) => {
-        console.log('inside handlechange')
-        const item = e.target.name;
-        const isChecked = e.target.checked;
         const key = e.target.value;
-        // console.log(item)
-        // console.log(isChecked)
-        console.log(key)
         const { calendarStore } = this.props;
         const { filterStaffStudentData } = calendarStore;
         filterStaffStudentData(key)
-        // this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
     }
 
     renderOptionsButtonForStaff = () => {
         const { classes } = this.props;
         return (
             <div>
-                <Typography>Filter by projects:</Typography>
+                <Typography style={{fontWeight: 'bold'}}>Filter by projects:</Typography>
                 {this.props.calendarStore.getCheckboxes.map(item => (
                     <React.Fragment
                         key={item.key}>

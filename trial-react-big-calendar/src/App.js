@@ -28,8 +28,6 @@ function App() {
   }
 
   const staffOnlyRoute = ({ match }) => {
-    console.log(match)
-    console.log("is there match in here??")
     return (
       <React.Fragment>
         <Router>

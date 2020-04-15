@@ -18,6 +18,9 @@ import {
 import axiosGetFullData from './AxiosCalling/axiosGetFullData';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import axiosGetStudentData from './AxiosCalling/axiosGetStudentData';
+import { connect } from 'react-redux';
+import * as actions from '../login-store/actions/auth';
 
 const drawerWidth = 240;
 
@@ -111,8 +114,10 @@ class ContentRoutingTest extends Component {
 
     componentDidMount() {
         const { calendarStore } = this.props;
+        var student_id = this.props.match.params.userID
         if (calendarStore.getData.length === 0) {
-            axiosGetFullData(calendarStore);
+            // axiosGetFullData(calendarStore);
+            axiosGetStudentData(calendarStore, student_id)
         }
         this.setState({
             currentPageEvent: calendarStore.getDefaultState.state,
@@ -173,8 +178,20 @@ class ContentRoutingTest extends Component {
         return currentPageEvent === "Weekly Report" ? "Total no. of hours: " + calendarStore.getTotalHoursSpent : "";
     }
 
+    handleLogout = () => {
+        this.props.logout()
+    }
+
+    staffClearData = () => {
+        //for staff users, we clear data of 'getData' so that we don't end up pushing events into it that are not necessary
+        this.props.calendarStore.clearNewData()
+
+        //then we push back to main calendar
+        this.props.history.push('/staff/calendar')
+    }
+
     render() {
-        const { classes } = this.props;
+        const { classes, calendarStore } = this.props;
         const { open, openNested, currentPageEvent, selectedIndex, selectedNestedIndex } = this.state;
 
         return ( //Note: pls change the color of the app bar/toolbar lol
@@ -214,7 +231,12 @@ class ContentRoutingTest extends Component {
 
                             <div style={{ float: 'right', width: '50%' }}>
                                 <div style={{ float: 'right' }}>
-                                    <Button onClick={() => this.props.history.push('/')} style={{ color: 'white' }}>Return to main calendar</Button>
+                                    {calendarStore.userData.is_staff === 0 ?
+                                        <Button onClick={() => this.props.history.push('/student/calendar')} style={{ color: 'white' }}>Return to main calendar</Button>
+                                        :
+                                        <Button onClick={() => this.staffClearData()} style={{ color: 'white' }}>Return to main calendar</Button>
+                                    }
+                                    {/* <Button onClick={() => this.props.history.push('/student/calendar')} style={{ color: 'white' }}>Return to main calendar</Button> */}
                                 </div>
                             </div>
                         </div>
@@ -271,6 +293,12 @@ class ContentRoutingTest extends Component {
                             </List>
                         </Collapse>
                     </List>
+                    <Divider />
+                    <List>
+                        <ListItem button key="Logout" onClick={() => this.handleLogout()}>
+                            <ListItemText>Logout</ListItemText>
+                        </ListItem>
+                    </List>
                 </Drawer>
                 <main
                     className={clsx(classes.content, {
@@ -285,5 +313,11 @@ class ContentRoutingTest extends Component {
     }
 }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        logout: () => dispatch(actions.logout())
+    }
+}
+
 ContentRoutingTest = observer(ContentRoutingTest);
-export default withStyles(useStyles)(ContentRoutingTest);
+export default connect(null, mapDispatchToProps)(withStyles(useStyles)(ContentRoutingTest));

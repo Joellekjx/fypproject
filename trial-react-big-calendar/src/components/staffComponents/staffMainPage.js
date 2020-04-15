@@ -16,7 +16,7 @@ class StaffMainPage extends Component {
 
    componentDidMount(){
     const { calendarStore, paramQuery } = this.props;
-    if(calendarStore.getData.length === 0){
+    if(calendarStore.getStaffStudentData.length === 0){
       console.log(paramQuery);
       axiosGetFullData(calendarStore, paramQuery);
     }

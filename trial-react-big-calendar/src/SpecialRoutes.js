@@ -20,7 +20,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
             }
             if (token) { //as long as authenticated, able to access the privateroute
                 return <Component {...props}
-                    // calendarStore={calendarStore}
+                    calendarStore={rest.calendarStore}
                 />
             } else {
                 return <Redirect to={{

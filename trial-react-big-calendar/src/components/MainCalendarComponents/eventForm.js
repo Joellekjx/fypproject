@@ -50,8 +50,6 @@ function EventForm({ handleClose, start, end, calendarStore }) {
         //Add new event by using calendarstore's add data
         //No need to add everything because on refresh, the data from backend will be replaced with this
         calendarStore.addData({ title: category, start: selectedStartDate, end: selectedEndDate });
-        // console.log(calendarStore)
-        // console.log("can i get the userdata, projectid from the store in eventform??")
         //Add event to backend by axios.post
         var project_id = calendarStore.getUserData.project_id
         var student_id = calendarStore.getUserData.id
@@ -201,12 +199,7 @@ function EventForm({ handleClose, start, end, calendarStore }) {
                 )
         }
     }
-
-    // const changeRepeatValue = (e) => {
-    //     console.log(e.target.value)
-
-    // }
-
+    
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <div>

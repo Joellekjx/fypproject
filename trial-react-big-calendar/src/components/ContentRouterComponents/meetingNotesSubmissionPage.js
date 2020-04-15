@@ -109,8 +109,8 @@ class MeetingNotesSubmissionPage extends Component {
       //Submits the attachment to backend here:
       //Note: Please refactor this -- put it into its own file
       const formData = new FormData() 
-      console.log(this.state.selectedFile);
-      console.log('what is this selectedfile')
+      // console.log(this.state.selectedFile);
+      // console.log('what is this selectedfile')
       formData.append('task_id', this.props.data.Id)
 
 

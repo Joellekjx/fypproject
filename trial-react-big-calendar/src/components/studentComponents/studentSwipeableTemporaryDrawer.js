@@ -80,8 +80,6 @@ function StaffSwipeableTemporaryDrawer({ calendarStore, history, logout }) {
   }
 
   const renderSwitchCase = () => {
-    console.log(calendarStore)
-    console.log('is calendar store here?')
     var user_id = calendarStore.getUserData.id
     switch (currentPageEvent) {
       case 'Meetings':

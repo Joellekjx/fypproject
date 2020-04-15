@@ -32,8 +32,6 @@ export default function axiosGetFullData(calendarStore, paramQuery) {
                         break;
                 }
 
-                console.log(item)
-                console.log("what is inside here lol")
                 //Set checkboxes: item, key, name:
                 calendarStore.setCheckboxes({
                     project_id: item.project_id,
@@ -62,7 +60,7 @@ export default function axiosGetFullData(calendarStore, paramQuery) {
                             }
                             var endtime = new Date(indivRes.task_due_date);
                             totalHours += indivRes.hours_spent
-                            calendarStore.addData({
+                            calendarStore.addStaffStudentData({
                                 Id: indivRes.task_id,
                                 title: indivRes.task_type,
                                 start: starttime,

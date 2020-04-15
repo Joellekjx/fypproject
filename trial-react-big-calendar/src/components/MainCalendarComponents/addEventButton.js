@@ -8,21 +8,17 @@ export default class AddEventButton extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      // const [open, setOpen] = React.useState(false);
       open: false,
-      // start: new Date(),
     }
   }
 
   handleClickOpen = () => {
-    // setOpen(true);
     this.setState({
       open: true
     })
   };
 
   handleClose = () => {
-    // setOpen(false);
     this.setState({
       open: false
     })
@@ -31,15 +27,11 @@ export default class AddEventButton extends Component {
 
   render() {
     const { calendarStore, type } = this.props;
-    console.log(type)
-    console.log("is this accessible??")
     const { open } = this.state;
-    // console.log(start.setHours(0, 0, 0, 0))
     var start = new Date();
     start.setHours(0, 0, 0, 0);
     var end = new Date();
     end.setHours(0, 0, 0, 0);
-    // console.log(start);
     return (
       <div style={{ margin: '10px 0 10px 0', textAlign: 'center' }}>
         <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>

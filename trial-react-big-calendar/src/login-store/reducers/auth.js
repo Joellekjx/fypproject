@@ -46,10 +46,6 @@ const authStart = (state, action) => {
 // }
 
 const authSuccess = (state, action) => {
-    console.log("inside authsuccess")
-    console.log(state)
-    console.log(action)
-    console.log("###################")
     return {
         ...state,
         token: action.token,
@@ -120,8 +116,6 @@ const tasklistParam = (state, action) => {
 }
 
 const reducer = (state = initialState, action) => {
-    console.log(action.type)
-    console.log("why is actionTypes used here? Can we forgo it??")
     switch (action.type) {
         case 'AUTH_START': return authStart(state, action);
         case 'AUTH_SUCCESS': return authSuccess(state, action);

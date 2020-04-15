@@ -39,7 +39,6 @@ class WeeklyReportContent extends Component {
   renderWeeklyReportExpansionPanel = () => {
     const { calendarStore, classes } = this.props;
     const { getData } = calendarStore;
-
     return(
       getData
         .filter(indivData => indivData.event_type === "Weekly Report")
@@ -48,7 +47,6 @@ class WeeklyReportContent extends Component {
         })
         .map((text, index) => {
           return(
-            // <div className={classes.root} key={index} style={{height: '100%'}}>
               <ExpansionPanel id={text.Id} defaultExpanded style={{overflow: 'hidden'}} className={classes.root} key={index}>
                 <ExpansionPanelSummary
                   expandIcon={<ExpandMoreIcon/>}
@@ -59,7 +57,7 @@ class WeeklyReportContent extends Component {
                       {/* Week nos. */}
                       {/* {console.log(index)} */}
                       {/* NOTE TO SELF: Pls remove this afterwards. This is just a tester!! */}
-                      <Typography className={classes.secondaryHeading}>{text.Id}</Typography>
+                      <Typography className={classes.secondaryHeading}>{text.student_id}</Typography>
                     </Grid>
                     <Grid item xs={2}>
                       {/* Status */}
@@ -144,30 +142,14 @@ class WeeklyReportContent extends Component {
     )
   }
 
-  jumpToId = () => {
-    const { calendarStore } = this.props;
-    const { getSelectedData } = calendarStore;
-    // var element = getData.find(el => el.Id === 26)
-    if(getSelectedData.Id === undefined){
-      alert ('nah')
-    } else {
-      var element = document.getElementById(getSelectedData.Id) //but i need to FIND this instead of map
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-        inline: 'nearest'
-      });
-    }
-  }
-
   render(){
     return(
     <div style={{width: '100%'}}>
       <div>
         <Typography style={{paddingBottom: '40px'}}>
-          Week Count/Semester
+          {/* {calendarStore.} */}
         </Typography>
-        <Button onClick={this.jumpToId}>Jump to view</Button>
+        {/* <Button onClick={this.jumpToId}>Jump to view</Button> */}
       </div>
       <div>
         <Paper>
