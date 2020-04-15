@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import DateFnsUtils from '@date-io/date-fns';
 import { DatePicker, MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
-import { DialogTitle, DialogContent, makeStyles, Grid, Typography, Select, MenuItem, DialogActions, Button, TextField } from '@material-ui/core';
+import { DialogTitle, DialogContent, makeStyles, Grid, Typography, Select, MenuItem, DialogActions, Button, TextField, Input, InputLabel } from '@material-ui/core';
 import axiosPost from '../AxiosCalling/axiosPost';
 import EventIcon from '@material-ui/icons/Event';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import ClassIcon from '@material-ui/icons/Class';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import PeopleIcon from '@material-ui/icons/People';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -28,13 +30,36 @@ const useStyles = makeStyles(theme => ({
     // }
 }));
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(name, projectName, theme) {
+    return {
+      fontWeight:
+      projectName.indexOf(name) === -1
+          ? theme.typography.fontWeightRegular
+          : theme.typography.fontWeightMedium,
+    };
+  }
+
 function StaffEventForm({ handleClose, start, end, calendarStore }) {
+    const theme = useTheme();
     const initialState = {
         category: 'Meeting Notes',
         selectedStartDate: start,
         selectedEndDate: end,
         repeatValue: 0,
     }
+
+    const [projectName, setProjectName] = React.useState([]);
 
     const classes = useStyles();
     const [{ category, selectedStartDate, selectedEndDate, repeatValue }, setState] = useState(initialState)
@@ -50,8 +75,6 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
         //Add new event by using calendarstore's add data
         //No need to add everything because on refresh, the data from backend will be replaced with this
         calendarStore.addData({ title: category, start: selectedStartDate, end: selectedEndDate });
-        // console.log(calendarStore)
-        // console.log("can i get the userdata, projectid from the store in eventform??")
         //Add event to backend by axios.post
         var project_id = calendarStore.getUserData.project_id
         var student_id = calendarStore.getUserData.id
@@ -98,7 +121,7 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
         return (
             <React.Fragment>
                 <Grid item xs={1}>
-                    <CalendarTodayIcon fontSize="small" style={{float: 'right'}}/>
+                    <CalendarTodayIcon fontSize="small" style={{ float: 'right' }} />
                 </Grid>
                 <Grid item xs={11} spacing={1}>
                     <div style={{ display: 'flex' }}>
@@ -114,7 +137,7 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
                 </Grid>
 
                 <Grid item xs={1}>
-                    <ScheduleIcon fontSize="small" style={{float: 'right'}}/>
+                    <ScheduleIcon fontSize="small" style={{ float: 'right' }} />
                 </Grid>
                 <Grid item xs={11} spacing={1}>
                     <div style={{ display: 'flex' }}>
@@ -137,22 +160,22 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
         return (
             <React.Fragment>
                 <Grid item xs={1} md={1}>
-                    <EventIcon fontSize="small" style={{float: 'right'}}/>
+                    <EventIcon fontSize="small" style={{ float: 'right' }} />
                 </Grid>
                 <Grid item xs={11} md={11}>
                     <div style={{ display: 'flex' }}>
                         {/* <Typography className={classes.secondaryHeading}>Meeting Date: </Typography> */}
-                        <DatePicker 
-                        value={selectedStartDate} 
-                        name="selectedStartDate" 
-                        onChange={(e) => handleStartDateChange(e)}
-                        style={{width: '30%'}}
+                        <DatePicker
+                            value={selectedStartDate}
+                            name="selectedStartDate"
+                            onChange={(e) => handleStartDateChange(e)}
+                            style={{ width: '30%' }}
                         >Choose Submission Date:</DatePicker>
                     </div>
                 </Grid>
-                
+
                 <Grid item xs={1}>
-                    <ScheduleIcon fontSize="small" style={{float: 'right'}} />
+                    <ScheduleIcon fontSize="small" style={{ float: 'right' }} />
                 </Grid>
                 <Grid item xs={11}>
                     <div style={{ display: 'flex' }}>
@@ -165,7 +188,7 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
                                 'aria-label': 'change time',
                             }}
                             mask="__:__ _M"
-                            style={{width: '30%'}}
+                            style={{ width: '30%' }}
                         />
                         <Typography className={classes.secondaryHeading}>-</Typography>
                         <KeyboardTimePicker
@@ -175,7 +198,7 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
                             KeyboardButtonProps={{
                                 'aria-label': 'change time',
                             }}
-                            style={{width: '30%'}}
+                            style={{ width: '30%' }}
                             mask="__:__ _M"
                         />
                     </div>
@@ -202,10 +225,9 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
         }
     }
 
-    // const changeRepeatValue = (e) => {
-    //     console.log(e.target.value)
-
-    // }
+    const handleChange = (event) => {
+        setProjectName(event.target.value);
+      };
 
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -214,25 +236,57 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
                 <DialogContent>
                     <form onSubmit={onSubmit} method="POST">
                         <Grid container className={classes.root} spacing={1}>
-                            <Grid item xs={1}><ClassIcon fontSize="small" style={{float: 'right'}}/></Grid>
+                            <Grid item xs={1}><ClassIcon fontSize="small" style={{ float: 'right' }} /></Grid>
                             <Grid item xs={11}>
-                                {/* <div style={{ display: 'flex' }}> */}
-                                    {/* <Typography className={classes.secondaryHeading}>Category: </Typography> */}
-                                    <Select
-                                        labelId="demo-dialog-select-label"
-                                        value={category}
-                                        onChange={(e) => handleCategoryChange(e)}
-                                        id="select-category"
-                                        name="category"
-                                    >
-                                        <MenuItem value="Weekly Report">Weekly Report</MenuItem>
-                                        <MenuItem value="Meeting Notes" label="Meeting">Meeting</MenuItem>
-                                        <MenuItem value="FYP Plan Strategy">FYP Plan Submission</MenuItem>
-                                        <MenuItem value="Interim Report">Interim Report Submission</MenuItem>
-                                        <MenuItem value="Final Report">Final Report Submission</MenuItem>
-                                    </Select>
+                                <Select
+                                    labelId="demo-dialog-select-label"
+                                    value={category}
+                                    onChange={(e) => handleCategoryChange(e)}
+                                    id="select-category"
+                                    name="category"
+                                >
+                                    <MenuItem value="Weekly Report">Weekly Report</MenuItem>
+                                    <MenuItem value="Meeting Notes" label="Meeting">Meeting</MenuItem>
+                                    <MenuItem value="FYP Plan Strategy">FYP Plan Submission</MenuItem>
+                                    <MenuItem value="Interim Report">Interim Report Submission</MenuItem>
+                                    <MenuItem value="Final Report">Final Report Submission</MenuItem>
+                                </Select>
                                 {/* </div> */}
                             </Grid>
+
+                            <Grid item xs={1}>
+                                <PeopleIcon fontSize="small" style={{ float: 'right' }} />
+                            </Grid>
+                            <Grid item xs={11}>
+                                {/* List of projects staff has */}
+                                <Select
+                                    labelId="mutiple-project-label"
+                                    id="mutiple-project"
+                                    multiple
+                                    value={projectName}
+                                    onChange={handleChange}
+                                    input={<Input />}
+                                    MenuProps={MenuProps}
+                                    displayEmpty
+                                    renderValue={(selected) => {
+                                        if (selected.length === 0) {
+                                          return <em>Select Projects Involved</em>;
+                                        }
+                                        return selected.join(', ');
+                                      }}
+                                    // placeholder="Select Projects Involved"
+                                >
+                                    <MenuItem value="" disabled>
+                                        Select Projects Involved
+                                    </MenuItem>
+                                    {calendarStore.getCheckboxes.map((name) => (
+                                        <MenuItem key={name.key} value={name.label} style={getStyles(name.label, projectName, theme)}>
+                                            {name.label}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </Grid>
+
 
                             <Grid item container xs={12} md={12} spacing={1}>
                                 {decideView()}

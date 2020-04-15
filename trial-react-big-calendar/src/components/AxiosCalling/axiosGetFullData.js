@@ -39,8 +39,6 @@ export default function axiosGetFullData(calendarStore, paramQuery) {
                     name: item.project_name,
                     color: color,
                 })
-
-                // console.log(item.project_id)
                 var project_id = item.project_id
                 axios.get(`${BASEURL}/api/taskComment/?project_id=${project_id}`, {
                     paramQuery
