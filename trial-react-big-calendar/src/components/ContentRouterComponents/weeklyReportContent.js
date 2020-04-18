@@ -45,36 +45,34 @@ class WeeklyReportContent extends Component {
     const BASEURL = 'http://127.0.0.1:8000'
     axios.get(`${BASEURL}/api/semesterStart/`)
       .then(res => {
-        // console.log(res)
-        this.setState({
-          semesterStartDates: res.data
-        })
-        // this.setState({ semesterOneStart: res.data[0].start_date, semesterTwoStart: res.data[1].start_date })
+        this.setState({ semesterOneStart: res.data[0].start_date, semesterTwoStart: res.data[1].start_date })
       })
   }
 
   calculateWeekNo = (date) => {
-    for (let i = 0; i < this.state.semesterStartDates.length; i++) {
-      let sem_start_date = new Date(this.state.semesterStartDates[i].start_date)
-      // console.log('sem_start_date: ' + sem_start_date)
-      if (date >= sem_start_date) {
-        let week_no = dates.diff(date, sem_start_date, 'day') / 7 + 1
-
-        console.log(week_no)
-        console.log('inside if statement')
-        if (week_no <= 14) {
-          let semester = this.state.semesterStartDates[i].semester
-          if (date >= sem_start_date && dates.diff(date, sem_start_date) % 7 === 0) {
-            if (week_no === 8) {
-              return 'Recess Week'
-            } else if (week_no > 8) {
-              week_no -= 1
-            }
-            return semester + ' Week ' + week_no
-          }
+    //If we just focus on sem 2 and disregard anything in sem1...
+    const { semesterTwoStart } = this.state;
+    var date = moment(date)
+    var formattedSemesterTwoStart = moment(semesterTwoStart)
+    let week_no = dates.diff(date, formattedSemesterTwoStart, 'day') / 7 + 1
+    if (date >= formattedSemesterTwoStart) {
+      if (week_no <= 14) {
+        switch (week_no) {
+          case 8: week_no = 'Recess Week'
+            break;
+          case 9:
+          case 10:
+          case 11:
+          case 12:
+          case 13:
+          case 14: week_no -= 1
+            break;
+          default: break;
         }
+        return week_no
       }
     }
+    return week_no
   }
 
   renderWeeklyReportExpansionPanel = () => {
@@ -88,13 +86,6 @@ class WeeklyReportContent extends Component {
           return new Date(a.start).getTime() - new Date(b.end).getTime()
         })
         .map((text, index) => {
-          console.log(this.calculateWeekNo(Date(text.end)))
-          console.log("is this not returned properly lol")
-          // var deadline = moment(text.end)
-          // var semtwostart = moment(this.state.semesterTwoStart)
-          // var difference = deadline.diff(semtwostart, 'week')
-          // console.log(difference)
-          // console.log("number of week difference")
           return (
             <ExpansionPanel id={text.Id} defaultExpanded style={{ overflow: 'hidden' }} className={classes.root} key={index}>
               <ExpansionPanelSummary
@@ -104,9 +95,6 @@ class WeeklyReportContent extends Component {
                   <Grid item xs={1} />
                   <Grid item xs={2}>
                     {/* Week nos. */}
-                    {/* {console.log(index)} */}
-                    {/* NOTE TO SELF: Pls remove this afterwards. This is just a tester!! */}
-                    <Typography className={classes.secondaryHeading}>{text.student_id}</Typography>
                     <Typography className={classes.secondaryHeading}>{this.calculateWeekNo(text.end)}</Typography>
                   </Grid>
                   <Grid item xs={2}>
