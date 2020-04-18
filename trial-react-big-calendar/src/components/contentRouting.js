@@ -21,6 +21,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import axiosGetStudentData from './AxiosCalling/axiosGetStudentData';
 import { connect } from 'react-redux';
 import * as actions from '../login-store/actions/auth';
+import axiosGetIdsAndUsernames from './AxiosCalling/axiosGetIdsAndUsernames';
 
 const drawerWidth = 240;
 
@@ -118,6 +119,7 @@ class ContentRoutingTest extends Component {
         if (calendarStore.getData.length === 0) {
             // axiosGetFullData(calendarStore);
             axiosGetStudentData(calendarStore, student_id)
+            axiosGetIdsAndUsernames(calendarStore)
         }
         this.setState({
             currentPageEvent: calendarStore.getDefaultState.state,

@@ -4,7 +4,7 @@ import LeftSideColumn from '../leftSideColumn';
 import { Grid } from '@material-ui/core';
 import { observer } from "mobx-react";
 import axiosGetStudentData from "../AxiosCalling/axiosGetStudentData";
-
+import axiosGetIdsAndUsernames from '../AxiosCalling/axiosGetIdsAndUsernames';
 import { connect } from 'react-redux';
 import * as actions from '../../login-store/actions/auth';
 
@@ -13,21 +13,17 @@ class StudentMainPage extends Component {
    componentDidMount(){
     const { calendarStore, paramQuery } = this.props;
     if(calendarStore.getData.length === 0){
-      console.log(paramQuery);
-      console.log('what is this')
-      console.log(calendarStore.getUserData.id)
       var student_id = calendarStore.getUserData.id
       axiosGetStudentData(calendarStore, student_id);
+      axiosGetIdsAndUsernames(calendarStore)
     }
   }
 
   render() {
     const { calendarStore, history } = this.props;
     var paramQuery = paramQuery ? paramQuery : ''
-    console.log(paramQuery)
     return (
         <div className="MainPage">
-          {console.log(this.props.paramQuery)}
           <Grid container>
             <Grid item xs={1} md={1}>
               <LeftSideColumn calendarStore={calendarStore} history={history} type="Student"/>

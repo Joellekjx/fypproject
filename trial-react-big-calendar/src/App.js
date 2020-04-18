@@ -52,6 +52,7 @@ function App() {
       <React.Fragment>
         <Router>
           <Switch>
+          <Redirect exact from={`${match.url}`} to={`${match.url}login`} />
             <LoginRoute path={`${match.url}login`} exact component={LoginPage} calendarStore={calendarStore}
             />
           </Switch>

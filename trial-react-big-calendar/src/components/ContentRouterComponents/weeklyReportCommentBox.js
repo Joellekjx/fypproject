@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Typography, Button, TextField, Paper } from '@material-ui/core';
 import axiosPostComment from '../AxiosCalling/axiosPostComment';
 import moment from 'moment';
+import axios from 'axios';
 
 const useStyles = (theme) => ({
   root: {
@@ -29,7 +30,7 @@ const useStyles = (theme) => ({
 })
 
 class WeeklyReportCommentBox extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       comment: "",
@@ -40,7 +41,7 @@ class WeeklyReportCommentBox extends Component {
 
   updateCalendarStore = () => {
     const { dataArray, comment } = this.state;
-    const { calendarStore, id } = this.props;
+    const { calendarStore, id, user_id } = this.props;
     const { getData } = calendarStore;
     /**
      * Thoughts on how to update:
@@ -50,26 +51,22 @@ class WeeklyReportCommentBox extends Component {
      * 4. Pray that it reflects
      */
     // this.setState({ dataArray: getData }); //copy over first? then mutate data then send to calendarstore?
-    console.log(dataArray)
-    console.log("data array up here")
     const index = this.state.dataArray.findIndex(datum => datum.Id === id)
-    console.log(index);
-    console.log('index above in updatestore');
-    dataArray[index].comments.push({task_id: id, user_id: 1, creation_date: moment(new Date()),content: comment})
-    this.setState({dataArray});
+    dataArray[index].comments.push({ task_id: id, user_id: user_id, creation_date: moment(new Date()), content: comment })
+    this.setState({ dataArray });
   }
 
   clearCommentBox = () => {
-    this.setState({comment: ""})
+    this.setState({ comment: "" })
   }
-  
+
   onSubmitComment = (e) => {
     e.preventDefault();
     const { comment, buttonLabelState } = this.state;
     const { id, user_id } = this.props;
     var creation_date = moment()
     //bruh: u need to be able to determine if the user is student or tutor -- next time when logging in is available
-    if(comment==="") {
+    if (comment === "") {
       alert("Please fill in a comment before submitting");
     } else {
       axiosPostComment(id, user_id, comment, creation_date);
@@ -93,11 +90,11 @@ class WeeklyReportCommentBox extends Component {
   addAComment = (buttonLabel) => {
     const { comment } = this.state;
     const { classes } = this.props;
-    return(
+    return (
       <form noValidate autoComplete="off" onSubmit={this.onSubmitComment} method="POST">
         <div>
-          <Paper elevation={2} style={{width: '70%'}} className={classes.paper}>
-            <TextField 
+          <Paper elevation={2} style={{ width: '70%' }} className={classes.paper}>
+            <TextField
               multiline
               rows="5"
               style={{
@@ -107,11 +104,9 @@ class WeeklyReportCommentBox extends Component {
               onChange={this.handleChange}
               name="comment"
               placeholder="Type in your comments"
-              // value={value}
-              // onChange={handleChange}
             ></TextField>
-            <br/><br/>
-            <Button type="submit" color="primary" variant="contained" style={{padding: '10px', float: 'right'}}>{buttonLabel}</Button>
+            <br /><br />
+            <Button type="submit" color="primary" variant="contained" style={{ padding: '10px', float: 'right' }}>{buttonLabel}</Button>
           </Paper>
         </div>
       </form>
@@ -119,9 +114,9 @@ class WeeklyReportCommentBox extends Component {
   }
 
   renderNoCommentsView = () => {
-    return(
+    return (
       <div>
-        No comments yet. <br/>
+        No comments yet. <br />
         {this.addAComment("Add a new comment")}
       </div>
     )
@@ -129,38 +124,49 @@ class WeeklyReportCommentBox extends Component {
 
   renderCommentsView = () => {
     const { comments, classes } = this.props;
-    return(
+    const getListOfAllIdsAndUsernames = this.props.calendarStore.getListOfAllIdsAndUsernames
+    //Logic: Depending on user_id of comment, we reflect username
+    return (
       <div>
         {comments.map((data, index) => {
-          return(
-            <div key={index} style={{padding: '7px'}}>
-              <div style={{display: 'flex'}}>
+          var username = getListOfAllIdsAndUsernames.find(item => {
+            if (item.id === data.user_id) {
+              return item.username
+            }
+          })
+          return (
+            <div key={index} style={{ padding: '7px' }}>
+              <div style={{ display: 'flex' }}>
                 {/* Note to self: Please do not force the user_id to have a name. Once a username can be introduced, pls change the codes */}
-                <Typography className={classes.secondaryHeading}>{data.user_id === 1 ? "Student" : "Professor"}&nbsp;</Typography>
+                <Typography className={classes.secondaryHeading}>
+                  {
+                    username ? username.username : ""
+                  }&nbsp;</Typography>
                 <Typography className={classes.bodyText}>commented on {moment(data.creation_date).format('LLL')}</Typography>
               </div>
-              <div style={{padding: '5px 0px 0px 5px', height: '100%', display: 'flex'}}>
-                <div style={{borderLeft: '2px solid lightgrey', minHeight: '100%', marginRight: '10px'}}></div>
+              <div style={{ padding: '5px 0px 0px 5px', height: '100%', display: 'flex' }}>
+                <div style={{ borderLeft: '2px solid lightgrey', minHeight: '100%', marginRight: '10px' }}></div>
                 <Typography className={classes.bodyText}>{data.content}</Typography>
               </div>
             </div>
           )
-        })}
+        })
+        }
         {this.addAComment("Reply")}
       </div>
     )
   }
-  
-  render(){
+
+  render() {
     const { classes, comments } = this.props;
-    return(
-    <div style={{width: '100%'}}>
-      <Typography className={classes.heading}>Comments:</Typography>
-      {comments.length === 0 ? this.renderNoCommentsView() : this.renderCommentsView()}
-    </div>
+    return (
+      <div style={{ width: '100%' }}>
+        <Typography className={classes.heading}>Comments:</Typography>
+        {comments.length === 0 ? this.renderNoCommentsView() : this.renderCommentsView()}
+      </div>
     )
   }
-} 
+}
 
 WeeklyReportCommentBox = observer(WeeklyReportCommentBox);
 export default withStyles(useStyles)(WeeklyReportCommentBox);

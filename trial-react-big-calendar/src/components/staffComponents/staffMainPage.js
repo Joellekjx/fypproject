@@ -5,7 +5,7 @@ import LeftSideColumn from '../leftSideColumn';
 import { Grid } from '@material-ui/core';
 import { observer } from "mobx-react";
 import axiosGetFullData from "../AxiosCalling/axiosGetFullData";
-
+import axiosGetIdsAndUsernames from '../AxiosCalling/axiosGetIdsAndUsernames';
 import { connect } from 'react-redux';
 import * as actions from '../../login-store/actions/auth';
 
@@ -19,6 +19,7 @@ class StaffMainPage extends Component {
     if(calendarStore.getStaffStudentData.length === 0){
       console.log(paramQuery);
       axiosGetFullData(calendarStore, paramQuery);
+      axiosGetIdsAndUsernames(calendarStore)
     }
   }
 

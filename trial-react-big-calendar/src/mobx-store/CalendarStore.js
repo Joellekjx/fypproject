@@ -32,6 +32,7 @@ class CalendarStore {
     staffStudentData = []; //original bucket
     staffStudentFilteredData = []; //filtered bucket ==> is the bucket that'll display on calendar page for staff
     checkboxes = [];
+    listOfAllIdsAndUsernames = [];
 
     addData = (e) => {
         this.newData.push(e);
@@ -107,6 +108,11 @@ class CalendarStore {
         this.checkboxes.push(obj)
     }
 
+    setListOfAllIdsAndUsernames = (obj) => {
+        //Should only expect id and username
+        this.listOfAllIdsAndUsernames.push(obj)
+    }
+
     get getData() {
         return this.newData;
     }
@@ -150,6 +156,10 @@ class CalendarStore {
     get getCheckboxes() {
         return this.checkboxes;
     }
+
+    get getListOfAllIdsAndUsernames() {
+        return this.listOfAllIdsAndUsernames;
+    }
 }
 
 decorate(CalendarStore, {
@@ -162,6 +172,7 @@ decorate(CalendarStore, {
     staffStudentData: observable,
     staffStudentFilteredData: observable,
     checkboxes: observable,
+    listOfAllIdsAndUsernames: observable,
     addData: action,
     addSelectedData: action,
     changeDefaultState: action,
@@ -174,6 +185,7 @@ decorate(CalendarStore, {
     setCheckboxes: action,
     addStaffStudentData: action,
     clearNewData: action,
+    setListOfAllIdsAndUsernames: action,
     getData: computed,
     getSelectedData: computed,
     getDataLength: computed,
@@ -185,6 +197,7 @@ decorate(CalendarStore, {
     getStaffStudentFilteredData: computed,
     getStaffStudentFilteredDataLength: computed,
     getCheckboxes: computed,
+    getListOfAllIdsAndUsernames: computed,
 })
 
 export default CalendarStore;

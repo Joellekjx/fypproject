@@ -6,7 +6,7 @@ export default function axiosPostComment(task_id, user_id, commentContent, creat
         // task_type
         // task_created
         // task_due_date
-        user_id: "2",
+        user_id: user_id,
         task_id: task_id,
         content: commentContent,
         creation_date: creation_date,
