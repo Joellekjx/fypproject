@@ -6,7 +6,9 @@ import { Paper, Grid, Typography, Box, ExpansionPanel, ExpansionPanelSummary, Ex
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MeetingNotesAttachmentPage from './meetingNotesAttachmentPage';
 import MeetingNotesSubmissionPage from './meetingNotesSubmissionPage';
-import { get } from 'mobx';
+import * as dates from '../../utils/dates'
+import axios from 'axios';
+import ReusableExpansionHeader from './ReusableComponents/ReusableExpansionHeader';
 
 const useStyles = (theme) => ({
   root: {
@@ -29,48 +31,58 @@ const useStyles = (theme) => ({
 })
 
 class MeetingsContent extends Component {
+  constructor(props) {
+  super(props);
+  this.state = {
+    semesterTwoStart: '',
+    semesterOneStart: '',
+  }
+}
+
+componentDidMount() {
+  const BASEURL = 'http://127.0.0.1:8000'
+  axios.get(`${BASEURL}/api/semesterStart/`)
+    .then(res => {
+      this.setState({ semesterOneStart: res.data[0].start_date, semesterTwoStart: res.data[1].start_date })
+    })
+}
+
   renderHeader = () => {
     return(
-      <Grid container spacing={3}>
-        <Grid item xs={1}/>
-        <Grid item xs={2}>
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">
-              Week No.
-            </Box>
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">
-              Meeting Date
-            </Box>
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">
-              Meeting Notes
-            </Box>
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">
-              Attachments?
-            </Box>
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">
-              Comments
-            </Box>
-          </Typography>
-        </Grid>
-        <Grid item xs={1} />
-      </Grid>
+      <ReusableExpansionHeader 
+        week_no='Week No.'
+        title1='Meeting Date'
+        title2='Meeting Notes'
+        title3='Attachments?'
+        title4='Comments'
+      />
     )
+  }
+
+  calculateWeekNo = (date) => {
+    //If we just focus on sem 2 and disregard anything in sem1...
+    const { semesterTwoStart } = this.state;
+    var date = moment(date)
+    var formattedSemesterTwoStart = moment(semesterTwoStart)
+    let week_no = dates.diff(date, formattedSemesterTwoStart, 'day') / 7 + 1
+    if (date >= formattedSemesterTwoStart) {
+      if (week_no <= 14) {
+        switch (week_no) {
+          case 8: week_no = 'Recess Week'
+            break;
+          case 9:
+          case 10:
+          case 11:
+          case 12:
+          case 13:
+          case 14: week_no -= 1
+            break;
+          default: break;
+        }
+        return week_no
+      }
+    }
+    return week_no
   }
 
   renderMeetingsExpansionPanel = () => {
@@ -92,7 +104,7 @@ class MeetingsContent extends Component {
                     <Grid item xs={2}>
                       {/* Week nos. */}
                       {/* NOTE TO SELF: Pls remove this afterwards. This is just a tester!! */}
-                      <Typography  className={classes.secondaryHeading}>{text.student_id}</Typography>
+                      <Typography  className={classes.secondaryHeading}>{this.calculateWeekNo(text.end)}</Typography>
                     </Grid>
                     <Grid item xs={2}>
                       {/* Meeting Date */}
@@ -137,21 +149,6 @@ class MeetingsContent extends Component {
         )
       )
   }
-
-  // jumpToId = () => {
-  //   const { calendarStore } = this.props;
-  //   const { getSelectedData } = calendarStore;
-  //   if(getSelectedData.Id === undefined){
-  //     alert ('nah')
-  //   } else {
-  //     var element = document.getElementById(getSelectedData.Id) //but i need to FIND this instead of map
-  //     element.scrollIntoView({
-  //       behavior: 'smooth',
-  //       block: 'nearest',
-  //       inline: 'nearest'
-  //     });
-  //   }
-  // }
 
   render(){
     return (

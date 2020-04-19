@@ -8,6 +8,7 @@ import WeeklyReportSubmissionPage from './weeklyReportSubmissionPage';
 import WeeklyReportCommentBox from './weeklyReportCommentBox';
 import axios from 'axios';
 import * as dates from '../../utils/dates'
+import ReusableExpansionHeader from './ReusableComponents/ReusableExpansionHeader';
 
 const useStyles = (theme) => ({
   root: {
@@ -37,7 +38,6 @@ class WeeklyReportContent extends Component {
       testArray: [1, 2, 3, 4, 5],
       semesterTwoStart: '',
       semesterOneStart: '',
-      semesterStartDates: []
     }
   }
 
@@ -139,45 +139,13 @@ class WeeklyReportContent extends Component {
 
   renderHeader = () => {
     return (
-      <Grid container spacing={3}>
-        <Grid item xs={1} />
-        <Grid item xs={2}>
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">
-              Week No.
-            </Box>
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">
-              Submission Status
-            </Box>
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">
-              Deadline
-            </Box>
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">
-              Submitted Date
-            </Box>
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">
-              No. of hours
-            </Box>
-          </Typography>
-        </Grid>
-        <Grid item xs={1} />
-      </Grid>
+      <ReusableExpansionHeader
+        week_no='Week No.'
+        title1='Submission Status'
+        title2='Deadline'
+        title3='Submitted Date'
+        title4='No. of hours'
+      />
     )
   }
 

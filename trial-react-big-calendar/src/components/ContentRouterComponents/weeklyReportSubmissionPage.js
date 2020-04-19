@@ -6,6 +6,7 @@ import axiosPut from '../AxiosCalling/axiosPut';
 import moment from 'moment';
 import axios from 'axios';
 import RenderDocumentPreview from './renderDocumentPreview';
+import ReusableNotesSubmission from './ReusableComponents/ReusableNotesSubmission';
 
 const useStyles = (theme) => ({
   root: {
@@ -141,42 +142,19 @@ class WeeklyReportSubmissionPage extends Component {
     const { hoursSpent, thingsCompleted } = this.state;
 
     return (
-      <form noValidate autoComplete="off" onSubmit={this.onSubmitForm} method="POST">
-        <Paper elevation={2} className={classes.paper}>
-          <div style={{ display: 'flex' }}>
-            <Typography className={classes.secondaryHeading}>
-              Hours spent: &nbsp;
-            </Typography>
-            <TextField
-              variant="outlined"
-              size="small"
-              type="number"
-              style={{ width: '12%' }}
-              value={hoursSpent}
-              onChange={this.handleChange}
-              name="hoursSpent"
-            />
-          </div>
-          <Typography className={classes.secondaryHeading}>
-            Things completed:
-          </Typography>
-          <TextField
-            variant="outlined"
-            multiline
-            rows="7"
-            style={{ width: '100%' }}
-            value={thingsCompleted}
-            onChange={this.handleChange}
-            name="thingsCompleted"
-          />
-          <div style={{ padding: '10px 0px 5px 0px' }}>
-            <input type="file" name="file" onChange={this.addAttachment} />
-            <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>
-            {/* <Button onClick={this.addAttachment} style={{}}><strong>Add attachment</strong></Button> */}
-            <Button type="submit" color="primary" variant="contained" style={{ float: 'right' }}>Submit Report</Button>
-          </div>
-        </Paper>
-      </form>
+      <ReusableNotesSubmission 
+        type="Weekly Report"
+        onSubmitForm={this.onSubmitForm}
+        handleChange={this.handleChange}
+        addAttachment={this.addAttachment}
+        textfieldValue={thingsCompleted}
+        textfieldName="thingsCompleted"
+        buttonLabel="Submit"
+        textfieldValue2={hoursSpent}
+        textfieldName2="hoursSpent"
+        onClickHandler={this.onClickHandler}
+        noOfRows="7"
+      />
     )
   }
 

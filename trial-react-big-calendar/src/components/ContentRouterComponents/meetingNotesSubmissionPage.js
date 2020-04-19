@@ -5,6 +5,7 @@ import { Typography, Paper, TextField, Button } from '@material-ui/core';
 import moment from 'moment';
 import axiosPut from '../AxiosCalling/axiosPut';
 import axios from 'axios';
+import ReusableNotesSubmission from './ReusableComponents/ReusableNotesSubmission';
 
 const useStyles = (theme) => ({
     root: {
@@ -137,28 +138,17 @@ class MeetingNotesSubmissionPage extends Component {
         const { classes, data } = this.props;
         const { meetingNotes } = this.state;
         return(
-            <form  noValidate autoComplete="off" onSubmit={this.onSubmitForm} method="POST">
-              <Paper elevation={2} className={classes.paper}>
-                {/* <Typography className={classes.secondaryHeading}>
-                  Things completed:
-                </Typography> */}
-                <TextField 
-                  variant="outlined"
-                  multiline
-                  rows="4"
-                  style={{width: '100%'}}
-                  value={meetingNotes}
-                  onChange={this.handleChange}
-                  name="meetingNotes"
-                />
-                <div style={{padding: '10px 0px 5px 0px'}}>
-                  <input type="file" name="file" onChange={this.addAttachment}/>
-                  {/* <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>  */}
-                  {/* <Button onClick={this.addAttachment} style={{}}><strong>Add attachment</strong></Button> */}
-                  <Button type="submit" color="primary" variant="contained" style={{float: 'right'}}>Submit Notes</Button>
-                </div>
-              </Paper>
-            </form>
+          <ReusableNotesSubmission 
+            type="Meeting Notes"
+            onSubmitForm={this.onSubmitForm}
+            handleChange={this.handleChange}
+            addAttachment={this.addAttachment}
+            textfieldValue={meetingNotes}
+            textfieldName="meetingNotes"
+            buttonLabel="Submit Notes"
+            onClickHandler={this.onClickHandler}
+            noOfRows="4"
+          />
           )    
     }
 
