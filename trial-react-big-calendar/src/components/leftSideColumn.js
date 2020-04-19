@@ -3,7 +3,7 @@ import { Grid, Checkbox, Typography } from "@material-ui/core";
 import AddEventButton from './MainCalendarComponents/addEventButton';
 import { observer } from "mobx-react";
 // import Checkbox from './staffComponents/Checkbox';
-import ReusableSwipeableTemporaryDrawer from './LeftSideColumnReusableComponents/ReusableSwipeableTemporaryDrawer';
+import ReusableSwipeableTemporaryDrawer from './MainCalendarReusableComponents/ReusableSwipeableTemporaryDrawer';
 
 import { withStyles } from '@material-ui/core/styles';
 const useStyles = (theme) => ({

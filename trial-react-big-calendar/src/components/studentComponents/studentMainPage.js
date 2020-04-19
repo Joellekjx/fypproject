@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import StudentMainCalendar from './studentMainCalendar';
 import LeftSideColumn from '../leftSideColumn';
 import { Grid } from '@material-ui/core';
 import { observer } from "mobx-react";
@@ -7,6 +6,7 @@ import axiosGetStudentData from "../AxiosCalling/axiosGetStudentData";
 import axiosGetIdsAndUsernames from '../AxiosCalling/axiosGetIdsAndUsernames';
 import { connect } from 'react-redux';
 import * as actions from '../../login-store/actions/auth';
+import ReusableMainCalendar from '../MainCalendarReusableComponents/ReusableMainCalendar';
 
 class StudentMainPage extends Component {
   
@@ -29,7 +29,7 @@ class StudentMainPage extends Component {
               <LeftSideColumn calendarStore={calendarStore} history={history} type="Student"/>
             </Grid>
             <Grid item xs={11} md={11}>
-              <StudentMainCalendar calendarStore={calendarStore} />
+              <ReusableMainCalendar calendarStore={calendarStore}  type="Student"/>
             </Grid>
           </Grid>
         </div>
