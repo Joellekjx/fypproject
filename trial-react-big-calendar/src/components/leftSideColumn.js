@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Grid, Checkbox, Typography } from "@material-ui/core";
 import AddEventButton from './MainCalendarComponents/addEventButton';
-import StudentSwipeableTemporaryDrawer from './studentComponents/studentSwipeableTemporaryDrawer';
-import StaffSwipeableTemporaryDrawer from './staffComponents/staffSwipeableTemporaryDrawer';
 import { observer } from "mobx-react";
 // import Checkbox from './staffComponents/Checkbox';
+import ReusableSwipeableTemporaryDrawer from './LeftSideColumnReusableComponents/ReusableSwipeableTemporaryDrawer';
 
 import { withStyles } from '@material-ui/core/styles';
 const useStyles = (theme) => ({
@@ -39,7 +38,7 @@ class LeftSideColumn extends Component {
         const { classes } = this.props;
         return (
             <div>
-                <Typography style={{fontWeight: 'bold'}}>Filter by projects:</Typography>
+                <Typography style={{ fontWeight: 'bold' }}>Filter by projects:</Typography>
                 {this.props.calendarStore.getCheckboxes.map(item => (
                     <React.Fragment
                         key={item.key}>
@@ -67,12 +66,13 @@ class LeftSideColumn extends Component {
                 <Grid container>
                     <Grid item xs={12}>
                         {type === 'Student' ?
-                            <StudentSwipeableTemporaryDrawer history={history} calendarStore={calendarStore} /> :
-                            <StaffSwipeableTemporaryDrawer history={history} calendarStore={calendarStore} />
+                            <ReusableSwipeableTemporaryDrawer type="Student" history={history} calendarStore={calendarStore} />
+                            :
+                            <ReusableSwipeableTemporaryDrawer type="Staff" history={history} calendarStore={calendarStore} />
                         }
                     </Grid>
                     <Grid item xs={12} style={{ paddingTop: '5px', borderTop: '1px solid #ddd' }}>
-                        <AddEventButton calendarStore={calendarStore} type={type}/>
+                        <AddEventButton calendarStore={calendarStore} type={type} />
                     </Grid>
                     <Grid item xs={12} style={{ paddingTop: '5px' }}>
                         {type === 'Student' ?

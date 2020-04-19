@@ -5,7 +5,7 @@ import { Typography, Paper, TextField, Button } from '@material-ui/core';
 import moment from 'moment';
 import axiosPut from '../AxiosCalling/axiosPut';
 import axios from 'axios';
-import ReusableNotesSubmission from './ReusableComponents/ReusableNotesSubmission';
+import ReusableNotesSubmission from './ContentRouterReusableComponents/ReusableNotesSubmission';
 
 const useStyles = (theme) => ({
     root: {

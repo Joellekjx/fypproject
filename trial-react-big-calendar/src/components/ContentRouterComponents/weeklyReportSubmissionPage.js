@@ -6,7 +6,7 @@ import axiosPut from '../AxiosCalling/axiosPut';
 import moment from 'moment';
 import axios from 'axios';
 import RenderDocumentPreview from './renderDocumentPreview';
-import ReusableNotesSubmission from './ReusableComponents/ReusableNotesSubmission';
+import ReusableNotesSubmission from './ContentRouterReusableComponents/ReusableNotesSubmission';
 
 const useStyles = (theme) => ({
   root: {

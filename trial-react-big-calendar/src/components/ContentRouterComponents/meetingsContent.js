@@ -8,7 +8,7 @@ import MeetingNotesAttachmentPage from './meetingNotesAttachmentPage';
 import MeetingNotesSubmissionPage from './meetingNotesSubmissionPage';
 import * as dates from '../../utils/dates'
 import axios from 'axios';
-import ReusableExpansionHeader from './ReusableComponents/ReusableExpansionHeader';
+import ReusableExpansionHeader from './ContentRouterReusableComponents/ReusableExpansionHeader';
 
 const useStyles = (theme) => ({
   root: {

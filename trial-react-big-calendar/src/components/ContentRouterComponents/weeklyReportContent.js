@@ -8,7 +8,7 @@ import WeeklyReportSubmissionPage from './weeklyReportSubmissionPage';
 import WeeklyReportCommentBox from './weeklyReportCommentBox';
 import axios from 'axios';
 import * as dates from '../../utils/dates'
-import ReusableExpansionHeader from './ReusableComponents/ReusableExpansionHeader';
+import ReusableExpansionHeader from './ContentRouterReusableComponents/ReusableExpansionHeader';
 
 const useStyles = (theme) => ({
   root: {
@@ -114,7 +114,7 @@ class WeeklyReportContent extends Component {
                   </Grid>
                   <Grid item xs={2}>
                     {/* No. of hours */}
-                    <Typography className={classes.secondaryHeading}>{text.hours_spent}</Typography>
+                    <Typography className={classes.secondaryHeading} style={{ textAlign: 'center' }}>{text.hours_spent}</Typography>
                   </Grid>
                 </Grid>
               </ExpansionPanelSummary>
