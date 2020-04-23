@@ -62,7 +62,7 @@ class LeftSideColumn extends Component {
     render() {
         const { calendarStore, history, type } = this.props;
         return (
-            <div className="LeftSideColumn" style={{ paddingTop: '7px' }}>
+            <div className="LeftSideColumn">
                 <Grid container>
                     <Grid item xs={12}>
                         {type === 'Student' ?

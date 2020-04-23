@@ -111,7 +111,7 @@ function ReusableSwipeableTemporaryDrawer({ calendarStore, history, logout, type
     }
 
     return (
-        <div style={{ float: 'center', textAlign: 'center', paddingBottom: '5px' }}>
+        <div style={{ float: 'center', textAlign: 'center', lineHeight: '74px' }}>
             <IconButton onClick={toggleDrawer('left', true)}><MenuIcon /></IconButton>
             <SwipeableDrawer
                 open={state.left}
