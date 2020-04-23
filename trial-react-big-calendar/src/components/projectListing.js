@@ -51,12 +51,10 @@ class ProjectListing extends Component {
     }
 
     handleClickUser = (e, index) => {
-        //Can be used to route to staff's main calendar, then it filters itself
+        //This onclick sends to the student's content page
         const value = index;
-        console.log(value);
-        e.preventDefault();
         this.props.setParam(value, null);
-        this.props.history.push('/');
+        this.props.history.push(`/${value}/content`);
     }
 
     renderAppBar = () => {
@@ -138,11 +136,6 @@ class ProjectListing extends Component {
         const { classes } = this.props;
 
         if (this.props.token != null) {
-            console.log('**********');
-            console.log(this.props.user);
-            console.log(this.props.projects);
-            console.log(this.props.paramQuery);
-            console.log('**********');
             return (
                 <div>
                     {this.renderAppBar()}
