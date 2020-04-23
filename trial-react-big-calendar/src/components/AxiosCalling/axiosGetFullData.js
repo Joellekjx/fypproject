@@ -4,6 +4,7 @@ import axios from 'axios';
  * 
  * Will need a change in logic: 'weekly report' start time stays the same (take from task_due_date and set to 0000)
  * But 'meetings' will take indivRes.creation_date (or the more exact one)
+ * This is for staff/profs only
  */
 
 export default function axiosGetFullData(calendarStore, paramQuery) {
@@ -78,8 +79,6 @@ export default function axiosGetFullData(calendarStore, paramQuery) {
                                 project_name: item.project_name,
                                 color: color
                             })
-
-                            
                         })
                         if (calendarStore.getTotalHoursSpent === "0") {
                             calendarStore.setTotalHoursSpent(totalHours);

@@ -4,13 +4,14 @@ import axios from 'axios';
  * 
  * Will need a change in logic: 'weekly report' start time stays the same (take from task_due_date and set to 0000)
  * But 'meetings' will take indivRes.creation_date (or the more exact one)
+ * This is only for students
  */
 
 export default function axiosGetStudentData(calendarStore, student_id) {
     var totalHours = 0;
-    axios.get('http://127.0.0.1:8000/api/taskComment/?student_id=' + student_id
-    )
+    axios.get('http://127.0.0.1:8000/api/taskComment/?student_id=' + student_id)
         .then(res => {
+            
             res.data.map(indivRes => {
                 var starttime;
                 switch (indivRes.task_type) {

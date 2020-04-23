@@ -33,13 +33,15 @@ class CalendarStore {
     staffStudentFilteredData = []; //filtered bucket ==> is the bucket that'll display on calendar page for staff
     checkboxes = [];
     listOfAllIdsAndUsernames = [];
+    userType='';
 
     addData = (e) => {
-        console.log(e)
-        console.log("whats the format for data that's gg in from database???")
         this.newData.push(e);
     }
 
+    addUserType = (e) => {
+        this.userType = e;
+    }
     // addDocumentsToData = (index, document) => {
     //     //Find the id which documents is to be added
     //     //Filter through the data
@@ -129,6 +131,10 @@ class CalendarStore {
         this.listOfAllIdsAndUsernames.push(obj)
     }
 
+    get getUserType(){
+        return this.userType;
+    }
+
     get getData() {
         return this.newData;
     }
@@ -189,6 +195,7 @@ decorate(CalendarStore, {
     staffStudentFilteredData: observable,
     checkboxes: observable,
     listOfAllIdsAndUsernames: observable,
+    userType: observable,
     addData: action,
     addSelectedData: action,
     changeDefaultState: action,
@@ -202,6 +209,7 @@ decorate(CalendarStore, {
     addStaffStudentData: action,
     clearNewData: action,
     setListOfAllIdsAndUsernames: action,
+    addUserType: action,
     // addDocumentsToData: action,
     getData: computed,
     getSelectedData: computed,
@@ -215,6 +223,7 @@ decorate(CalendarStore, {
     getStaffStudentFilteredDataLength: computed,
     getCheckboxes: computed,
     getListOfAllIdsAndUsernames: computed,
+    getUserType: computed
 })
 
 export default CalendarStore;

@@ -45,8 +45,6 @@ class WeeklyReportSubmissionPage extends Component {
 
   renderWeeklyReportCompletedPaper = () => {
     const { classes, content, hours_spent, documents } = this.props;
-    console.log(documents)
-    console.log("documents inside wrsubmissionpage... what format is this??")
     return (
       <Paper elevation={2} className={classes.paper}>
         <div style={{ display: 'flex', padding: '10px' }}>
@@ -126,7 +124,6 @@ class WeeklyReportSubmissionPage extends Component {
     } else {
       axiosPut(Id, task_type, task_created, submissionTime, project_id, student_id, tutor_id, "Completed", thingsCompleted, hoursSpent);
       this.onClickHandler();
-
       //Update mobx store so that front-end view can be updated simultaneously
       updateWeeklyReportSubmission(Id, 'Completed', thingsCompleted, submissionTime, hoursSpent)
     }
@@ -145,22 +142,30 @@ class WeeklyReportSubmissionPage extends Component {
   renderWeeklyReportPendingPaper = () => {
     const { classes } = this.props;
     const { hoursSpent, thingsCompleted } = this.state;
-
-    return (
-      <ReusableNotesSubmission
-        type="Weekly Report"
-        onSubmitForm={this.onSubmitForm}
-        handleChange={this.handleChange}
-        addAttachment={this.addAttachment}
-        textfieldValue={thingsCompleted}
-        textfieldName="thingsCompleted"
-        buttonLabel="Submit"
-        textfieldValue2={hoursSpent}
-        textfieldName2="hoursSpent"
-        noOfRows="7"
-        selectedFile={this.state.selectedFile}
-      />
-    )
+    const userType = this.props.calendarStore.getUserType;
+    if (userType === 'Student') {
+      return (
+        <ReusableNotesSubmission
+          type="Weekly Report"
+          onSubmitForm={this.onSubmitForm}
+          handleChange={this.handleChange}
+          addAttachment={this.addAttachment}
+          textfieldValue={thingsCompleted}
+          textfieldName="thingsCompleted"
+          buttonLabel="Submit"
+          textfieldValue2={hoursSpent}
+          textfieldName2="hoursSpent"
+          noOfRows="7"
+          selectedFile={this.state.selectedFile}
+        />
+      )
+    } else {
+      return (
+        <Paper style={{ padding: '20px', marginTop: '15px' }}>
+          <Typography className={classes.bodyText} style={{ fontStyle: 'italic' }}>Student has yet to submit notes</Typography>
+        </Paper>
+      )
+    }
   }
 
   renderSwitchPaper = (status) => {
@@ -175,7 +180,6 @@ class WeeklyReportSubmissionPage extends Component {
 
   render() {
     const { classes, status } = this.props;
-
     return (
       <div style={{ width: '100%' }}>
         <Typography className={classes.heading}>Weekly Report Submission</Typography>

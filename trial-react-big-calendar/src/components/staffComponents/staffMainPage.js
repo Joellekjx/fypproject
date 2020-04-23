@@ -20,11 +20,13 @@ class StaffMainPage extends Component {
       console.log(paramQuery);
       axiosGetFullData(calendarStore, paramQuery);
       axiosGetIdsAndUsernames(calendarStore)
+      calendarStore.addUserType('Staff')
     }
   }
 
   render() {
     const { calendarStore, history } = this.props;
+
     return (
         <div className="MainPage">
           {console.log(this.props.paramQuery)}

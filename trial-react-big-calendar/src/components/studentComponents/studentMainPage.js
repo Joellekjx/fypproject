@@ -16,6 +16,7 @@ class StudentMainPage extends Component {
       var student_id = calendarStore.getUserData.id
       axiosGetStudentData(calendarStore, student_id);
       axiosGetIdsAndUsernames(calendarStore)
+      calendarStore.addUserType('Student')
     }
   }
 
