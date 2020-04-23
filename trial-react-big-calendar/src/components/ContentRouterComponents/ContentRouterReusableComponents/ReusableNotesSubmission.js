@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Paper, TextField, Button, Typography } from '@material-ui/core';
+import { Paper, TextField, Button, Typography, Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 /**
  * 
  * @props type Weekly Report or Meeting Notes?
@@ -13,7 +13,6 @@ import { withStyles } from '@material-ui/core/styles';
  * @props buttonLabel
  * @props textfieldValue2
  * @props textfieldName2
- * @props onClickHandler
  * @props noOfRows
  */
 
@@ -28,7 +27,6 @@ const useStyles = (theme) => ({
     secondaryHeading: {
         fontSize: theme.typography.pxToRem(15),
         fontWeight: 'bold',
-        padding: '5px 0px',
     },
     bodyText: {
         fontSize: theme.typography.pxToRem(15),
@@ -37,7 +35,7 @@ const useStyles = (theme) => ({
     },
     paper: {
         width: '80%',
-        padding: '15px',
+        padding: '20px',
         marginTop: '15px',
     }
 })
@@ -48,38 +46,67 @@ const ReusableNotesSubmission = (props) => {
         <div>
             <form noValidate autoComplete="off" onSubmit={props.onSubmitForm} method="POST">
                 <Paper elevation={2} className={classes.paper}>
-                    {props.type === 'Weekly Report' ?
-                        <div style={{ display: 'flex' }}>
-                            <Typography className={classes.secondaryHeading}>
-                                Hours spent: &nbsp;
-                  </Typography>
+                    <Grid container spacing={1}>
+                        <Grid item xs={12} md={12} lg={12}>
+                            {props.type === 'Weekly Report' ?
+                                <div style={{ display: 'flex' }}>
+                                    <Typography className={classes.secondaryHeading} style={{ lineHeight: '40px' }}>
+                                        Hours spent: &nbsp;
+                            </Typography>
+                                    <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        type="number"
+                                        style={{ width: '20%' }}
+                                        value={props.textfieldValue2}
+                                        onChange={props.handleChange}
+                                        name={props.textfieldName2}
+                                    />
+                                </div>
+                                : ''
+                            }
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={12}>
+                            {props.type === 'Weekly Report' ?
+                                <Typography className={classes.secondaryHeading}>Things Completed:</Typography>
+                                : ""
+                            }
                             <TextField
                                 variant="outlined"
-                                size="small"
-                                type="number"
-                                style={{ width: '12%' }}
-                                value={props.textfieldValue2}
+                                multiline
+                                rows={props.noOfRows}
+                                style={{ width: '100%' }}
+                                value={props.textfieldValue}
                                 onChange={props.handleChange}
-                                name={props.textfieldName2}
+                                name={props.textfieldName}
                             />
-                        </div>
-                        : ''
-                    }
-                    <TextField
-                        variant="outlined"
-                        multiline
-                        rows={props.noOfRows}
-                        style={{ width: '100%' }}
-                        value={props.textfieldValue}
-                        onChange={props.handleChange}
-                        name={props.textfieldName}
-                    />
-                    <div style={{ padding: '10px 0px 5px 0px' }}>
-                        <input type="file" name="file" onChange={props.addAttachment} />
-                        <button type="button" className="btn btn-success btn-block" onClick={props.onClickHandler}>Upload</button>
-                        {/* <Button onClick={this.addAttachment} style={{}}><strong>Add attachment</strong></Button> */}
-                        <Button type="submit" color="primary" variant="contained" style={{ float: 'right' }}>{props.buttonLabel}</Button>
-                    </div>
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={12}>
+                            {
+                                props.selectedFile ?
+                                    <div>
+                                        <AttachFileIcon style={{ float: 'left' }} /><Typography style={{ lineHeight: '22px' }} className={classes.bodyText}>{props.selectedFile.name}</Typography>
+                                    </div>
+                                    : ''
+                            }
+                        </Grid>
+                        <Grid item xs={12} md={8} lg={8}>
+                            <input
+                                type="file"
+                                onChange={props.addAttachment}
+                                id="contained-button-file"
+                                style={{ display: 'none' }}
+                            />
+                            <label htmlFor="contained-button-file">
+                                <Button color="primary" component="span" >
+                                    Browse Files
+                                </Button>
+                            </label>
+                        </Grid>
+                        <Grid item xs={12} md={4} lg={4}>
+                            <Button type="submit" color="primary" variant="contained" style={{ float: 'right' }}>{props.buttonLabel}</Button>
+                        </Grid>
+                    </Grid>
                 </Paper>
             </form>
         </div>

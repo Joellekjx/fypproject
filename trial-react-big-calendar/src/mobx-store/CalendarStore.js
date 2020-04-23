@@ -35,8 +35,24 @@ class CalendarStore {
     listOfAllIdsAndUsernames = [];
 
     addData = (e) => {
+        console.log(e)
+        console.log("whats the format for data that's gg in from database???")
         this.newData.push(e);
     }
+
+    // addDocumentsToData = (index, document) => {
+    //     //Find the id which documents is to be added
+    //     //Filter through the data
+    //     var found = this.newData.find((element) => {
+    //         return element.Id === index;
+    //     });
+
+    //     found.documents.push(document)
+    //     // found.status = status;
+    //     // found.content = content;
+    //     // found.submission_date = submission_date;
+    //     // found.hours_spent = hours_spent;
+    // }
 
     clearNewData = () => {
         this.newData.splice(0, this.newData.length)
@@ -186,6 +202,7 @@ decorate(CalendarStore, {
     addStaffStudentData: action,
     clearNewData: action,
     setListOfAllIdsAndUsernames: action,
+    // addDocumentsToData: action,
     getData: computed,
     getSelectedData: computed,
     getDataLength: computed,

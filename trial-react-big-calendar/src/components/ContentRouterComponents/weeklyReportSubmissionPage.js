@@ -45,6 +45,8 @@ class WeeklyReportSubmissionPage extends Component {
 
   renderWeeklyReportCompletedPaper = () => {
     const { classes, content, hours_spent, documents } = this.props;
+    console.log(documents)
+    console.log("documents inside wrsubmissionpage... what format is this??")
     return (
       <Paper elevation={2} className={classes.paper}>
         <div style={{ display: 'flex', padding: '10px' }}>
@@ -67,7 +69,7 @@ class WeeklyReportSubmissionPage extends Component {
         <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>
         <Typography>Attachments: </Typography>
         {documents.map((item, index) => {
-          return <RenderDocumentPreview document={item} key={index}/>
+          return <RenderDocumentPreview document={item} key={index} />
         })}
       </Paper>
     )
@@ -75,12 +77,10 @@ class WeeklyReportSubmissionPage extends Component {
 
   addAttachment = event => {
     //something happens in this attachment side
-    // console.log(event.target.files[0])
     this.setState({
       selectedFile: event.target.files[0],
       loaded: 0,
     })
-    // console.log(this.state.selectedFile)
   }
 
   onClickHandler = () => {
@@ -99,15 +99,18 @@ class WeeklyReportSubmissionPage extends Component {
         console.log(upload_date);
       })
 
+    //Update mobx store so that front-end view can be updated simultaneously
+    //By storing it in 'getData' through 'addDocumentsToData'
+    // const { Id } = this.props;
+    // const { addDocumentsToData } = this.props.calendarStore
+    // addDocumentsToData(Id, data)
+    // console.log(data)
+    // console.log("is the data here the same format as when u load it in initially??")
 
     //reset the state
-    console.log(this.state.selectedFile);
-    console.log("hello do u enter here after submitting?")
     this.setState({
       selectedFile: null,
     })
-    console.log(this.state.selectedFile)
-    console.log("what about after this?")
   }
 
   onSubmitForm = (e) => {
@@ -123,10 +126,12 @@ class WeeklyReportSubmissionPage extends Component {
     } else {
       axiosPut(Id, task_type, task_created, submissionTime, project_id, student_id, tutor_id, "Completed", thingsCompleted, hoursSpent);
       this.onClickHandler();
+
+      //Update mobx store so that front-end view can be updated simultaneously
+      updateWeeklyReportSubmission(Id, 'Completed', thingsCompleted, submissionTime, hoursSpent)
     }
 
-    //Update mobx store so that front-end view can be updated simultaneously
-    updateWeeklyReportSubmission(Id, 'Completed', thingsCompleted, submissionTime, hoursSpent)
+
   }
 
   handleChange = event => {
@@ -142,7 +147,7 @@ class WeeklyReportSubmissionPage extends Component {
     const { hoursSpent, thingsCompleted } = this.state;
 
     return (
-      <ReusableNotesSubmission 
+      <ReusableNotesSubmission
         type="Weekly Report"
         onSubmitForm={this.onSubmitForm}
         handleChange={this.handleChange}
@@ -152,8 +157,8 @@ class WeeklyReportSubmissionPage extends Component {
         buttonLabel="Submit"
         textfieldValue2={hoursSpent}
         textfieldName2="hoursSpent"
-        onClickHandler={this.onClickHandler}
         noOfRows="7"
+        selectedFile={this.state.selectedFile}
       />
     )
   }
