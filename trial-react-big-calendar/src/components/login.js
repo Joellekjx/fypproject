@@ -59,6 +59,11 @@ const useStyles = (theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    backgroundColor: theme.palette.secondary.main,
+    color: 'white',
+    width: '20%',
+    margin: '0 auto',
+    marginTop: '10px',
   },
 })
 
@@ -102,7 +107,8 @@ class Login extends Component {
       let errorMessage = null;
       if (this.props.error) {
           errorMessage = (
-          <p className={classes.errorMsg} >{this.props.error.message}</p>
+          // <p className={classes.errorMsg} >{this.props.error.message}</p>
+          <p className={classes.errorMsg}>Incorrect username or password. Please try again.</p>
           );
       }
 

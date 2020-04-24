@@ -150,6 +150,7 @@ class MeetingNotesSubmissionPage extends Component {
           buttonLabel="Submit Notes"
           onClickHandler={this.onClickHandler}
           noOfRows="4"
+          selectedFile={this.state.selectedFile}
         />
       )
     } else {
