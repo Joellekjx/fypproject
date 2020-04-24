@@ -18,7 +18,7 @@ export default function axiosGetFullData(calendarStore, paramQuery) {
         }).then(res => {
             res.projects.map((item, index) => {
                 var color; //this is NOT GOOD PRACTICE, but i'm gg to hardcode the colors in
-                switch(item.project_id){
+                switch (item.project_id) {
                     case 1:
                         color = 'purple';
                         break;
@@ -43,6 +43,7 @@ export default function axiosGetFullData(calendarStore, paramQuery) {
                     name: item.project_name,
                     color: color,
                 })
+
                 var project_id = item.project_id
                 axios.get(`${BASEURL}/api/taskComment/?project_id=${project_id}`, {
                     paramQuery
@@ -85,6 +86,7 @@ export default function axiosGetFullData(calendarStore, paramQuery) {
                         }
                     })
             })
+
         })
 
 }

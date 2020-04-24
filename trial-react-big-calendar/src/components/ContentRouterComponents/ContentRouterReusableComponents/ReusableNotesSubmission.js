@@ -14,6 +14,7 @@ import AttachFileIcon from '@material-ui/icons/AttachFile';
  * @props textfieldValue2
  * @props textfieldName2
  * @props noOfRows
+ * @props selectedFile
  */
 
 const useStyles = (theme) => ({

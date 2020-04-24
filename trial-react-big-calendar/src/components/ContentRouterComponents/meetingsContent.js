@@ -64,7 +64,7 @@ componentDidMount() {
     const { semesterTwoStart } = this.state;
     var date = moment(date)
     var formattedSemesterTwoStart = moment(semesterTwoStart)
-    let week_no = dates.diff(date, formattedSemesterTwoStart, 'day') / 7 + 1
+    let week_no = Math.floor(dates.diff(date, formattedSemesterTwoStart, 'day') / 7 + 1)
     if (date >= formattedSemesterTwoStart) {
       if (week_no <= 14) {
         switch (week_no) {

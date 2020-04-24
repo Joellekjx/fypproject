@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {  Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 import ReactPDF from '../ReactPDF';
 import FileViewer from 'react-file-viewer';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 
 class RenderDocumentPreview extends Component {
     constructor(props) {
@@ -43,7 +44,7 @@ class RenderDocumentPreview extends Component {
         return (
             <div>
                 <Button onClick={this.handleClickOpen}>
-                    Open {documentName}
+                    <AttachFileIcon style={{ float: 'left' }} />&nbsp;<span style={{fontStyle: 'italic'}}>{documentName}</span>
                 </Button>
                 <Dialog
                     open={openDialog}

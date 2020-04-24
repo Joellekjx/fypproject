@@ -7,6 +7,7 @@ import moment from 'moment';
 import axios from 'axios';
 import RenderDocumentPreview from './renderDocumentPreview';
 import ReusableNotesSubmission from './ContentRouterReusableComponents/ReusableNotesSubmission';
+import ReusableNotesCompleted from './ContentRouterReusableComponents/ReusableNotesCompleted';
 
 const useStyles = (theme) => ({
   root: {
@@ -46,38 +47,29 @@ class WeeklyReportSubmissionPage extends Component {
   renderWeeklyReportCompletedPaper = () => {
     const { classes, content, hours_spent, documents } = this.props;
     return (
-      <Paper elevation={2} className={classes.paper}>
-        <div style={{ display: 'flex', padding: '10px' }}>
-          <Typography className={classes.secondaryHeading}>
-            Hours spent: &nbsp;
-          </Typography>
-          <Typography className={classes.bodyText}>
-            {hours_spent}
-          </Typography>
-        </div>
-        <div style={{ padding: '0 10px 10px 10px' }}>
-          <Typography className={classes.secondaryHeading}>
-            Things completed:
-          </Typography>
-          <Typography className={classes.bodyText}>
-            {content}
-          </Typography>
-        </div>
-        <input type="file" name="file" onChange={this.addAttachment} />
-        <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>
-        <Typography>Attachments: </Typography>
-        {documents.map((item, index) => {
-          return <RenderDocumentPreview document={item} key={index} />
-        })}
-      </Paper>
+      <ReusableNotesCompleted
+        hours_spent={hours_spent}
+        content={content}
+        documents={documents}
+        addAttachment={this.addAttachment}
+        upload={this.onClickHandler}
+        selectedFile={this.state.selectedFile}
+        cancel={this.cancelAddAttachment}
+      />
     )
   }
 
   addAttachment = event => {
-    //something happens in this attachment side
     this.setState({
       selectedFile: event.target.files[0],
       loaded: 0,
+    })
+  }
+
+  cancelAddAttachment = () => {
+    console.log('cancel')
+    this.setState({
+      selectedFile: null,
     })
   }
 
