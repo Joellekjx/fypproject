@@ -80,7 +80,7 @@ const ReusableNotesCompleted = (props) => {
                             <div><Typography className={classes.bodyText} style={{ fontStyle: 'italic' }}>No documents added</Typography></div>
                             :
                             props.documents.map((item, index) => {
-                                return <div><RenderDocumentPreview document={item} key={index} /></div>
+                                return <div key={index}><RenderDocumentPreview document={item} key={index} /></div>
                             })}
 
                         <Divider />

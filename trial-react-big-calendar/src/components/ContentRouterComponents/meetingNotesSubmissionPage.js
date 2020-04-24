@@ -43,7 +43,7 @@ class MeetingNotesSubmissionPage extends Component {
   }
 
   renderMeetingNotesCompletedPaper = () => {
-    const { classes, data } = this.props;
+    const { data } = this.props;
     const { content, documents } = data;
     console.log(this.props)
     console.log("is there no documents for meeting notes???")
@@ -57,15 +57,6 @@ class MeetingNotesSubmissionPage extends Component {
         selectedFile={this.state.selectedFile}
         cancel={this.cancelAddAttachment}
       />
-      // <Paper elevation={2} className={classes.paper}>
-      //   <div style={{ padding: '0 10px 10px 10px' }}>
-      //     <Typography className={classes.bodyText}>
-      //       {data.content}
-      //     </Typography>
-      //   </div>
-      //   <input type="file" name="file" onChange={this.addAttachment} />
-      //   <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>
-      // </Paper>
     )
   }
 

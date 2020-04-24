@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import axiosGetPDF from './AxiosCalling/axiosGetPDF';
 import anotherTestDocument from '../static/another-kind-of-test-document.pdf';
+import { Divider } from "@material-ui/core";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -49,24 +50,25 @@ export default class ReactPDF extends Component {
         const { pageNumber, numPages, fileName } = this.state;
         const { calendarStore } = this.props;
         return (
-            <div>
-                <nav>
+            <div style={{ width: 500, height: 600 }}>
+                <nav style={{ float: 'right' }}>
                     <button onClick={this.goToPrevPage}>Prev</button>
                     <button onClick={this.goToNextPage}>Next</button>
                 </nav>
-
-                <div style={{ width: 600 }}>
+                <p>
+                    Page {pageNumber} of {numPages}
+                </p>
+                <Divider />
+                <div style={{ width: 500 }}>
                     <Document
                         file={fileName}
                         onLoadSuccess={this.onDocumentLoadSuccess}
                     >
-                        <Page pageNumber={pageNumber} width={600} />
+                        <Page pageNumber={pageNumber} width={500} />
                     </Document>
                 </div>
+                <Divider />
 
-                <p>
-                    Page {pageNumber} of {numPages}
-                </p>
                 {/* <button onClick={this.openPdfById}>
                     Open PDF in Id = 4
                 </button> */}

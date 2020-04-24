@@ -64,6 +64,7 @@ const useStyles = (theme) => ({
     width: '20%',
     margin: '0 auto',
     marginTop: '10px',
+    // alignItem: 'center'
   },
 })
 
