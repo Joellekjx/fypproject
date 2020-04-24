@@ -74,6 +74,14 @@ const useStyles = (theme) => ({
         }),
         marginRight: 0,
     },
+    textHeader: {
+        lineHeight: '36px',
+        color: 'grey'
+    },
+    fileHeader: {
+        fontWeight: '500',
+        lineHeight: '36px'
+    }
 });
 
 class InterimReportContent extends Component {
@@ -95,7 +103,7 @@ class InterimReportContent extends Component {
     }
 
     renderDocumentContent = () => {
-        const { calendarStore } = this.props;
+        const { calendarStore, classes } = this.props;
         const { getData } = calendarStore;
         return (
             getData.filter(indivData => indivData.event_type === 'Interim Report')
@@ -109,23 +117,28 @@ class InterimReportContent extends Component {
                             <React.Fragment key={index}>
                                 <Grid item container>
                                     <Grid item xs={12} lg={6} md={6}>
-                                        <Typography>
+                                        <Typography className={classes.fileHeader}>
                                             {documentName}
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={12} lg={2} md={2}>
-                                        <Typography>
+                                        <Typography className={classes.fileHeader}>
                                             {moment(document.uploaded_date).format('LLL')}
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={12} lg={2} md={2} >
-                                        <Typography onClick={() => this.handleDrawerOpen(documentName, noOfComments)}>
+                                        <Button onClick={() => this.handleDrawerOpen(documentName, noOfComments)}>
                                             {text.comments.length === 0 ?
                                                 "0 Comments" :
                                                 `${text.comments.length} Comments`
                                             }
-                                            {/* No. of Comments */}
-                                        </Typography>
+                                        </Button>
+                                        {/* <Typography className={classes.fileHeader} onClick={() => this.handleDrawerOpen(documentName, noOfComments)}>
+                                            {text.comments.length === 0 ?
+                                                "0 Comments" :
+                                                `${text.comments.length} Comments`
+                                            }
+                                        </Typography> */}
                                     </Grid>
                                 </Grid>
                             </React.Fragment>
@@ -157,22 +170,22 @@ class InterimReportContent extends Component {
                         <Grid container spacing={1}>
                             <Grid item container>
                                 <Grid item xs={12} lg={6} md={6}>
-                                    <Typography style={{lineHeight: '36px'}}>
+                                    <Typography className={classes.textHeader}>
                                         File Name
                                 </Typography>
                                 </Grid>
                                 <Grid item xs={12} lg={2} md={2}>
-                                    <Typography style={{lineHeight: '36px'}}>
+                                    <Typography className={classes.textHeader}>
                                         Uploaded Date
                                 </Typography>
                                 </Grid>
                                 <Grid item xs={12} lg={2} md={2}>
-                                    <Typography style={{lineHeight: '36px'}}>
+                                    <Typography className={classes.textHeader}>
                                         No. of Comments
                                 </Typography>
                                 </Grid>
                                 <Grid item xs={12} lg={2} md={2}>
-                                    <Button color="primary">
+                                    <Button color="primary" variant="outlined">
                                         Upload Interim Report
                                     </Button>
                                 </Grid>
