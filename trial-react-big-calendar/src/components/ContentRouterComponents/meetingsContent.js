@@ -136,7 +136,7 @@ componentDidMount() {
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails className={classes.details} style={{paddingBottom: '40px'}}>
                   <div className={classes.column}>
-                    <MeetingNotesSubmissionPage data={text} calendarStore={calendarStore}/>
+                    <MeetingNotesSubmissionPage data={text}  calendarStore={calendarStore}/>
                   </div>
                   <div className={classes.column}>
                     <MeetingNotesAttachmentPage />

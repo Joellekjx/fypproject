@@ -48,6 +48,7 @@ class WeeklyReportSubmissionPage extends Component {
     const { classes, content, hours_spent, documents } = this.props;
     return (
       <ReusableNotesCompleted
+        type="Weekly Report"
         hours_spent={hours_spent}
         content={content}
         documents={documents}

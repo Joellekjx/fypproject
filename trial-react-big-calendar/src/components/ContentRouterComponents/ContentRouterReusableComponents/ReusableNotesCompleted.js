@@ -47,20 +47,27 @@ const ReusableNotesCompleted = (props) => {
         <div>
             <Paper elevation={2} className={classes.paper}>
                 <Grid container spacing={1}>
-                    <Grid item xs={12} md={12} lg={12}>
-                        <div style={{ display: 'flex' }}>
-                            <Typography className={classes.secondaryHeading}>
-                                Hours spent: &nbsp;
+                    {props.type === 'Weekly Report'
+                        ?
+                        <Grid item xs={12} md={12} lg={12}>
+                            <div style={{ display: 'flex' }}>
+                                <Typography className={classes.secondaryHeading}>
+                                    Hours spent: &nbsp;
                             </Typography>
-                            <Typography className={classes.bodyText}>
-                                {props.hours_spent}
-                            </Typography>
-                        </div>
-                    </Grid>
+                                <Typography className={classes.bodyText}>
+                                    {props.hours_spent}
+                                </Typography>
+                            </div>
+                        </Grid>
+                        : ""
+                    }
                     <Grid item xs={12} md={12} lg={12}>
                         <div>
                             <Typography className={classes.secondaryHeading}>
-                                Things completed:
+                                {props.type === 'Weekly Report'
+                                    ? "Things Completed: "
+                                    : "Meeting Notes: "
+                                }
                             </Typography>
                             <Typography className={classes.bodyText}>
                                 {props.content}
@@ -70,7 +77,7 @@ const ReusableNotesCompleted = (props) => {
                     <Grid item xs={12} md={12} lg={12}>
                         <Typography className={classes.secondaryHeading}>Attachments: </Typography>
                         {props.documents.length === 0 ?
-                            <div><Typography className={classes.bodyText} style={{fontStyle: 'italic'}}>No documents added</Typography></div>
+                            <div><Typography className={classes.bodyText} style={{ fontStyle: 'italic' }}>No documents added</Typography></div>
                             :
                             props.documents.map((item, index) => {
                                 return <div><RenderDocumentPreview document={item} key={index} /></div>
