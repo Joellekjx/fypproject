@@ -22,6 +22,9 @@ import axiosGetStudentData from './AxiosCalling/axiosGetStudentData';
 import { connect } from 'react-redux';
 import * as actions from '../login-store/actions/auth';
 import axiosGetIdsAndUsernames from './AxiosCalling/axiosGetIdsAndUsernames';
+import InterimReportContent from './ContentRouterComponents/InterimReportContent';
+import FinalReportContent from './ContentRouterComponents/FinalReportContent';
+import StrategyPlanContent from './ContentRouterComponents/StrategyPlanContent';
 
 const drawerWidth = 240;
 
@@ -145,11 +148,11 @@ class ContentRoutingTest extends Component {
             case 'Weekly Report':
                 return <WeeklyReportContent calendarStore={calendarStore} />
             case 'Strategy Plan':
-                return "Hello strategy"
+                return <StrategyPlanContent calendarStore={calendarStore} />
             case 'Interim Report':
-                return "Hello interim"
+                return <InterimReportContent calendarStore={calendarStore} />
             case 'Final Report':
-                return "Hello final"
+                return <FinalReportContent calendarStore={calendarStore} />
             default:
                 return "No drawer found";
         }

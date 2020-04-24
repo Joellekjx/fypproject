@@ -25,7 +25,8 @@ class CalendarStore {
     newData = [];
     selectedData = {}; //for moving between maincalendar to say weekly report
     //this is a SPECIFIC onClick event
-    defaultState = { state: 'Weekly Report', index: 0 } //available as: 'Weekly Report', 'Meetings', 'Other Submissions'
+    // defaultState = { state: 'Weekly Report', index: 0 } //available as: 'Weekly Report', 'Meetings', 'Other Submissions'
+    defaultState = { state: 'Interim Report', index: 0 }
     totalHoursSpent = "0";
     testFileURL = "";
     userData = '';
