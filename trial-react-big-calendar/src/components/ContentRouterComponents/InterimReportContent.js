@@ -19,9 +19,10 @@ import { Button } from '@material-ui/core'
 import RenderDocumentPreview from './renderDocumentPreview';
 import axiosPostComment from '../AxiosCalling/axiosPostComment';
 import InterimReportRenderDocument from './InterimReportRenderDocument';
+import ReusableCommentBox from './ContentRouterReusableComponents/ReusableCommentBox';
 
 
-const drawerWidth = 340;
+const drawerWidth = 400;
 
 const useStyles = (theme) => ({
     root: {
@@ -85,6 +86,23 @@ const useStyles = (theme) => ({
     fileHeader: {
         fontWeight: '500',
         lineHeight: '36px'
+    },
+    heading: {
+        fontSize: theme.typography.pxToRem(20),
+        fontWeight: 'bold'
+    },
+    secondaryHeading: {
+        fontSize: theme.typography.pxToRem(15),
+        fontWeight: 'bold'
+    },
+    bodyText: {
+        fontSize: theme.typography.pxToRem(15),
+        color: theme.palette.text.secondary,
+    },
+    paper: {
+        padding: '15px',
+        marginTop: '15px',
+        minHeight: '200px',
     }
 });
 
@@ -92,17 +110,24 @@ class InterimReportContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false, //set blank open
+            open: true, //set blank open
             noOfComments: 0,
-            documentName: 'Untitled'
+            documentName: 'Untitled',
+            id: 0, //event id
+            user_id: 0, //user_id
+            comments: "",
+            // dataArray: this.props.calendarStore.getData,
         }
     }
 
-    handleDrawerOpen = (documentName, noOfComments, id, user_id) => {
-        console.log(id)
-        console.log(user_id)
-        console.log("can i detect the id and user_id here???")
-        this.setState({ open: true, documentName: documentName, noOfComments: noOfComments })
+    componentDidMount() {
+        this.setState({
+            user_id: this.props.calendarStore.getUserData.id
+        })
+    }
+
+    handleDrawerOpen = () => {
+        this.setState({ open: true })
     }
 
     handleDrawerClose = () => {
@@ -111,28 +136,23 @@ class InterimReportContent extends Component {
 
     renderDocumentContent = () => {
         const { calendarStore, classes } = this.props;
-        var user_data_id = calendarStore.getUserData.id
         const { getData } = calendarStore;
         return (
             getData.filter(indivData => indivData.event_type === 'Interim Report')
                 .map((text) => {
-                    console.log(text)
+                    // this.setState({id: text.Id})
+                    if (this.state.id === 0) {
+                        this.setState({ id: text.Id, comments: text.comments })
+                    }
+                    console.log(text.Id)
+                    console.log("id of event. anyway else i can access this w/o mapping/filtering??")
                     return text.documents.map((document, index) => {
-                        var regexToRemoveFrontOfURL = /^(http\:\/\/127\.0\.0\.1\:8000\/media\/files\/)/gm
-                        const documentName = document.attach_document.replace(regexToRemoveFrontOfURL, "");
-                        const noOfComments = text.comments.length
                         return (
                             <React.Fragment key={index}>
                                 <InterimReportRenderDocument
-                                    documentName={documentName}
                                     uploaded_date={document.uploaded_date}
-                                    comments={text.comments}
                                     document={document}
                                     index={index}
-                                    noOfComments={noOfComments}
-                                    handleDrawerOpen={this.handleDrawerOpen}
-                                    id={text.Id}
-                                    user_id={user_data_id}
                                 />
                             </React.Fragment>
                         )
@@ -141,72 +161,6 @@ class InterimReportContent extends Component {
         )
     }
 
-    renderCommentSection = () => {
-        return (
-            <div>
-                Blah commenst
-            </div>
-        )
-    }
-
-    onSubmitComment = (e) => {
-        e.preventDefault();
-        const { comment, buttonLabelState } = this.state;
-        const { id, user_id } = this.props;
-        // id={text.Id} user_id={user_data_id}
-        var creation_date = moment()
-        //bruh: u need to be able to determine if the user is student or tutor -- next time when logging in is available
-        if (comment === "") {
-            alert("Please fill in a comment before submitting");
-        } else {
-            axiosPostComment(id, user_id, comment, creation_date);
-
-            //Update calendar store so that comment will be reflected
-            this.updateCalendarStore();
-
-            //clear comment box:
-            this.clearCommentBox();
-        }
-    }
-
-    addAComment = (buttonLabel) => {
-        const { comment } = this.state;
-        const { classes } = this.props;
-        return (
-            <form noValidate autoComplete="off" onSubmit={this.onSubmitComment} method="POST">
-                <div>
-                    <Paper elevation={2} style={{ width: '70%' }} className={classes.paper}>
-                        <TextField
-                            multiline
-                            rows="5"
-                            style={{
-                                width: '100%'
-                            }}
-                            value={comment}
-                            onChange={this.handleChange}
-                            name="comment"
-                            placeholder="Type in your comments"
-                        ></TextField>
-                        <br /><br />
-                        <Button type="submit" color="primary" variant="contained" style={{ padding: '10px', float: 'right' }}>{buttonLabel}</Button>
-                    </Paper>
-                </div>
-            </form>
-        )
-    }
-
-    renderNoCommentsView = () => {
-        return (
-            <div>
-                <List>
-                    <ListItem>
-                        <Typography style={{ fontStyle: 'italic' }}>No comments yet</Typography>
-                    </ListItem>
-                </List>
-                {this.addAComment("Add a new comment")}
-            </div>
-        )
-    }
     render() {
         const { classes, calendarStore } = this.props;
         return (
@@ -230,19 +184,23 @@ class InterimReportContent extends Component {
                                         Uploaded Date
                                 </Typography>
                                 </Grid>
-                                <Grid item xs={12} lg={2} md={2}>
-                                    <Typography className={classes.textHeader}>
-                                        No. of Comments
-                                </Typography>
-                                </Grid>
-                                <Grid item xs={12} lg={2} md={2}>
+                                <Grid item xs={12} lg={2} md={2} style={{ textAlgin: 'right' }}>
                                     <Button color="primary" variant="outlined">
                                         Upload Interim Report
                                     </Button>
                                 </Grid>
+                                {
+                                    this.state.open ?
+                                        ''
+                                        :
+                                        <Grid item xs={12} lg={2} md={2} style={{ textAlign: 'center' }}>
+                                            <Button variant="contained" color="primary" onClick={() => this.handleDrawerOpen()}>
+                                                View Comments
+                                            </Button>
+                                        </Grid>
+                                }
                             </Grid>
                             <hr style={{ width: '100%' }}></hr>
-                            <Divider variant="middle" />
                             {this.renderDocumentContent()}
                         </Grid>
                     </div>
@@ -264,20 +222,17 @@ class InterimReportContent extends Component {
                     <Divider />
                     <List>
                         <ListItem>
-                            <Typography style={{ fontWeight: '600' }}>{this.state.noOfComments} comments on</Typography>
+                            <Typography style={{ fontWeight: '600' }}>{this.state.comments.length} comments on Interim Report</Typography>
                         </ListItem>
                         <ListItem>
-                            {/* Document name here */}
-                            <Typography style={{ width: 320, wordWrap: 'break-word' }}>
-                                {this.state.documentName}
-                            </Typography>
-                            {/* <ListItemText primary={"Document name here"} /> */}
+                            <ReusableCommentBox 
+                                comments={this.state.comments}
+                                calendarStore={calendarStore}
+                                id={this.state.id}
+                                user_id={this.state.user_id}
+                            />
                         </ListItem>
                     </List>
-                    <Divider />
-                    {this.state.noOfComments === 0 ?
-                        this.renderNoCommentsView()
-                        : this.renderCommentSection()}
                 </Drawer>
             </div>
         )

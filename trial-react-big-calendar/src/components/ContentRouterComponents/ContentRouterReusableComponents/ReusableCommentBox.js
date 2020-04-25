@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { withStyles } from '@material-ui/core/styles';
 import { Typography, Button, TextField, Paper } from '@material-ui/core';
-import axiosPostComment from '../AxiosCalling/axiosPostComment';
+import axiosPostComment from '../../AxiosCalling/axiosPostComment';
 import moment from 'moment';
 import axios from 'axios';
 
@@ -29,7 +29,14 @@ const useStyles = (theme) => ({
   }
 })
 
-class WeeklyReportCommentBox extends Component {
+/**
+ * @props comments
+ * @props calendarStore
+ * @props id (event's id)
+ * @props user_id
+ */
+
+class ReusableCommentBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -168,5 +175,5 @@ class WeeklyReportCommentBox extends Component {
   }
 }
 
-WeeklyReportCommentBox = observer(WeeklyReportCommentBox);
-export default withStyles(useStyles)(WeeklyReportCommentBox);
+ReusableCommentBox = observer(ReusableCommentBox);
+export default withStyles(useStyles)(ReusableCommentBox);

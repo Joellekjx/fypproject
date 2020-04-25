@@ -12,32 +12,22 @@ const useStyles = (theme) => ({
 });
 
 class InterimReportRenderDocument extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
     render() {
-        const { classes, documentName, uploaded_date, comments, document, index, noOfComments, id, user_id } = this.props;
+        const { classes, uploaded_date, document, index } = this.props;
         return (
             <React.Fragment key={index}>
                 <Grid item container>
                     <Grid item xs={12} lg={5} md={5}>
-                        {/* <Typography className={classes.fileHeader}> */}
-                            <RenderDocumentPreview document={document} key={index} />
-                        {/* </Typography> */}
+                        <RenderDocumentPreview document={document} key={index} />
                     </Grid>
                     <Grid item xs={12} lg={3} md={3}>
                         <Typography className={classes.fileHeader}>
                             {moment(uploaded_date).format('LLL')}
                         </Typography>
-                    </Grid>
-                    <Grid item xs={12} lg={2} md={2} >
-                        <Button onClick={() => this.props.handleDrawerOpen(documentName, noOfComments, id, user_id)}>
-                            {comments.length === 0 ?
-                                "0 Comments" :
-                                `${comments.length} Comments`
-                            }
-                        </Button>
                     </Grid>
                 </Grid>
             </React.Fragment>

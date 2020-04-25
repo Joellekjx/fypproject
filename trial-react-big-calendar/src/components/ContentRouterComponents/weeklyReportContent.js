@@ -5,7 +5,7 @@ import moment from 'moment';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { withStyles } from '@material-ui/core/styles';
 import WeeklyReportSubmissionPage from './weeklyReportSubmissionPage';
-import WeeklyReportCommentBox from './weeklyReportCommentBox';
+import ReusableCommentBox from './ContentRouterReusableComponents/ReusableCommentBox';
 import axios from 'axios';
 import * as dates from '../../utils/dates'
 import ReusableExpansionHeader from './ContentRouterReusableComponents/ReusableExpansionHeader';
@@ -124,7 +124,7 @@ class WeeklyReportContent extends Component {
                 </div>
                 <div className={classes.column}>
                   {/* Inside comment box, the user_id should be your own, not the student's. Because prof & student can both type in */}
-                  <WeeklyReportCommentBox comments={text.comments} calendarStore={calendarStore} status={text.status} id={text.Id} user_id={user_data_id} />
+                  <ReusableCommentBox comments={text.comments} calendarStore={calendarStore} id={text.Id} user_id={user_data_id} />
                 </div>
               </ExpansionPanelDetails>
               <Divider />
