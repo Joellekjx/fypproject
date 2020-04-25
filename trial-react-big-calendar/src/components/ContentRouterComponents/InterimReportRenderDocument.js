@@ -35,5 +35,4 @@ class InterimReportRenderDocument extends Component {
     }
 }
 
-// InterimReportRenderDocument = 
 export default withStyles(useStyles)(InterimReportRenderDocument)

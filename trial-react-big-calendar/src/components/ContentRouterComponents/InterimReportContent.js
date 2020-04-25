@@ -140,12 +140,9 @@ class InterimReportContent extends Component {
         return (
             getData.filter(indivData => indivData.event_type === 'Interim Report')
                 .map((text) => {
-                    // this.setState({id: text.Id})
                     if (this.state.id === 0) {
                         this.setState({ id: text.Id, comments: text.comments })
                     }
-                    console.log(text.Id)
-                    console.log("id of event. anyway else i can access this w/o mapping/filtering??")
                     return text.documents.map((document, index) => {
                         return (
                             <React.Fragment key={index}>
@@ -170,7 +167,6 @@ class InterimReportContent extends Component {
                         [classes.contentShift]: this.state.open,
                     })}
                 >
-                    {/* {this.renderDocumentContent()} */}
                     <div>
                         <Grid container spacing={1}>
                             <Grid item container>
@@ -184,7 +180,7 @@ class InterimReportContent extends Component {
                                         Uploaded Date
                                 </Typography>
                                 </Grid>
-                                <Grid item xs={12} lg={2} md={2} style={{ textAlgin: 'right' }}>
+                                <Grid item xs={12} lg={2} md={2} style={{ textAlign: 'right' }}>
                                     <Button color="primary" variant="outlined">
                                         Upload Interim Report
                                     </Button>
