@@ -54,7 +54,6 @@ componentDidMount() {
         title1='Meeting Date'
         title2='Meeting Notes'
         title3='Attachments?'
-        title4='Comments'
       />
     )
   }
@@ -124,13 +123,10 @@ componentDidMount() {
                     </Grid>
                     <Grid item xs={2}>
                       {/* Are there any attachments?  */}
-                      <Typography className={classes.secondaryHeading} style={{fontStyle: 'italic'}}>
-                        No attachments
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={2}>
-                      {/* Other comments */}
-                      <Typography className={classes.secondaryHeading} style={{fontStyle: 'italic'}}>No comments</Typography>
+                        {text.documents.length === 0 ? 
+                          <Typography className={classes.secondaryHeading} style={{fontStyle: 'italic'}}>No attachments</Typography> 
+                          : <Typography className={classes.secondaryHeading}>{text.documents.length} attachment(s)</Typography>
+                        } 
                     </Grid>
                   </Grid>
                 </ExpansionPanelSummary>
@@ -139,7 +135,7 @@ componentDidMount() {
                     <MeetingNotesSubmissionPage data={text}  calendarStore={calendarStore}/>
                   </div>
                   <div className={classes.column}>
-                    <MeetingNotesAttachmentPage />
+                    <MeetingNotesAttachmentPage documents={text.documents} Id={text.Id}/>
                   </div>
                 </ExpansionPanelDetails>
                 <Divider/>
