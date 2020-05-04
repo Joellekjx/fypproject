@@ -11,7 +11,6 @@ export default function axiosGetStudentData(calendarStore, student_id) {
     var totalHours = 0;
     axios.get('http://127.0.0.1:8000/api/taskComment/?student_id=' + student_id)
         .then(res => {
-            
             res.data.map(indivRes => {
                 var starttime;
                 switch (indivRes.task_type) {

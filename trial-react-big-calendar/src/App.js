@@ -72,7 +72,6 @@ function App() {
         />
         <PrivateRoute path="/:userID/content" component={ContentRouting}
         calendarStore={calendarStore} 
-        // auth={this.props.isAuthenticated} userInfo={this.props.userInfo}
         />
         <CheckSwitchRoute path='/determiner' 
         calendarStore={calendarStore}
