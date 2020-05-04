@@ -81,9 +81,8 @@ export default function CustomEventWithPopover(props) {
   const onRoutingStaffButtonClick = () => {
     const eventType = event.event.event_type;
     var student_id = event.event.student_id;
-    const { changeDefaultState, addSelectedData } = calendarStore;
+    const { changeDefaultState, addSelectedData, setDefaultNestedState } = calendarStore;
     addSelectedData({ Id: event.event.Id })
-
     switch (eventType) {
       case "Weekly Report":
         changeDefaultState({ state: 'Weekly Report', index: 0 });
@@ -93,6 +92,21 @@ export default function CustomEventWithPopover(props) {
         changeDefaultState({ state: 'Meetings', index: 1 });
         history.push(`/${student_id}/content`);
         break;
+        case "Final Report":
+          changeDefaultState({ state: 'Final Report', index: 2 })
+          setDefaultNestedState(2)
+          history.push(`/${student_id}/content`)
+          break;
+        case "Interim Report":
+          changeDefaultState({ state: 'Interim Report', index: 2 })
+          setDefaultNestedState(1)
+          history.push(`/${student_id}/content`)
+          break;
+        case "FYP Plan Strategy":
+          changeDefaultState({ state: 'Strategy Plan', index: 2 })
+          setDefaultNestedState(0)
+          history.push(`/${student_id}/content`)
+          break;
       default:
         return "Nothing";
     }
@@ -100,9 +114,12 @@ export default function CustomEventWithPopover(props) {
 
   const onRoutingStudentButtonClick = () => {
     const eventType = event.event.event_type;
-    const { changeDefaultState, addSelectedData, getUserData } = calendarStore;
+    const { changeDefaultState, addSelectedData, getUserData, setDefaultNestedState } = calendarStore;
     var student_id = getUserData.id
     addSelectedData({ Id: event.event.Id })
+
+    console.log(eventType)
+    console.log("wtf is this eventtype??? lol")
     switch (eventType) {
       case "Weekly Report":
         changeDefaultState({ state: 'Weekly Report', index: 0 });
@@ -111,6 +128,21 @@ export default function CustomEventWithPopover(props) {
       case "Meeting Notes":
         changeDefaultState({ state: 'Meetings', index: 1 });
         history.push(`/${student_id}/content`);
+        break;
+      case "Final Report":
+        changeDefaultState({ state: 'Final Report', index: 2 })
+        setDefaultNestedState(2)
+        history.push(`/${student_id}/content`)
+        break;
+      case "Interim Report":
+        changeDefaultState({ state: 'Interim Report', index: 2 })
+        setDefaultNestedState(1)
+        history.push(`/${student_id}/content`)
+        break;
+      case "FYP Plan Strategy":
+        changeDefaultState({ state: 'Strategy Plan', index: 2 })
+        setDefaultNestedState(0)
+        history.push(`/${student_id}/content`)
         break;
       default:
         return "Nothing";

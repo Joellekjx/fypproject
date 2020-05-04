@@ -26,6 +26,7 @@ class CalendarStore {
     selectedData = {}; //for moving between maincalendar to say weekly report
     //this is a SPECIFIC onClick event
     defaultState = { state: 'Weekly Report', index: 0 } //available as: 'Weekly Report', 'Meetings', 'Other Submissions'
+    defaultNestedState = '';
     // defaultState = { state: 'Interim Report', index: 0 }
     totalHoursSpent = "0";
     testFileURL = "";
@@ -132,6 +133,10 @@ class CalendarStore {
         this.listOfAllIdsAndUsernames.push(obj)
     }
 
+    setDefaultNestedState = (index) => {
+        this.defaultNestedState = index;
+    }
+
     get getUserType(){
         return this.userType;
     }
@@ -183,6 +188,10 @@ class CalendarStore {
     get getListOfAllIdsAndUsernames() {
         return this.listOfAllIdsAndUsernames;
     }
+
+    get getDefaultNestedState(){
+        return this.defaultNestedState;
+    }
 }
 
 decorate(CalendarStore, {
@@ -197,6 +206,7 @@ decorate(CalendarStore, {
     checkboxes: observable,
     listOfAllIdsAndUsernames: observable,
     userType: observable,
+    defaultNestedState: observable,
     addData: action,
     addSelectedData: action,
     changeDefaultState: action,
@@ -211,6 +221,7 @@ decorate(CalendarStore, {
     clearNewData: action,
     setListOfAllIdsAndUsernames: action,
     addUserType: action,
+    setDefaultNestedState: action,
     // addDocumentsToData: action,
     getData: computed,
     getSelectedData: computed,
@@ -224,7 +235,8 @@ decorate(CalendarStore, {
     getStaffStudentFilteredDataLength: computed,
     getCheckboxes: computed,
     getListOfAllIdsAndUsernames: computed,
-    getUserType: computed
+    getUserType: computed,
+    getDefaultNestedState: computed
 })
 
 export default CalendarStore;

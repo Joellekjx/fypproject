@@ -127,7 +127,8 @@ class ContentRoutingTest extends Component {
         }
         this.setState({
             currentPageEvent: calendarStore.getDefaultState.state,
-            selectedIndex: calendarStore.getDefaultState.index
+            selectedIndex: calendarStore.getDefaultState.index,
+            selectedNestedIndex: calendarStore.getDefaultNestedState
         })
     }
 
