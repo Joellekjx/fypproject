@@ -6,11 +6,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import { useHistory } from 'react-router-dom';
 import * as actions from '../../login-store/actions/auth';
 import { connect } from 'react-redux';
 import Divider from '@material-ui/core/Divider';
-
+import history from '../../history';
 const useStyles = makeStyles({
     list: {
         width: 250,
@@ -25,7 +24,7 @@ const useStyles = makeStyles({
  * @props {type} : Student or Staff? 
  */
 
-function ReusableSwipeableTemporaryDrawer({ calendarStore, history, logout, type }) {
+function ReusableSwipeableTemporaryDrawer({ calendarStore,  logout, type }) {
     const classes = useStyles();
     const [state, setState] = React.useState({
         left: false,
@@ -34,8 +33,6 @@ function ReusableSwipeableTemporaryDrawer({ calendarStore, history, logout, type
     });
     const [currentPageEvent, setCurrentPageEvent] = React.useState('')
     const [selectedIndex, setSelectedIndex] = React.useState(0)
-
-    // let history = useHistory()
 
     const toggleDrawer = (side, open) => (event) => {
         setState({ ...state, [side]: open })
@@ -92,8 +89,39 @@ function ReusableSwipeableTemporaryDrawer({ calendarStore, history, logout, type
     );
 
     const onClickHandler = (text, index) => {
-        setSelectedIndex(index)
-        setCurrentPageEvent(text)
+        // setSelectedIndex(index)
+        // setCurrentPageEvent(text)
+        console.log(text)
+        console.log("clickedity")
+        const { changeDefaultState, addSelectedData, setDefaultNestedState } = calendarStore;
+        var user_id = calendarStore.getUserData.id
+        switch (text) {
+            case "Weekly Report":
+                changeDefaultState({ state: 'Weekly Report', index: 0 });
+                history.push(`/${user_id}/content`);
+                break;
+            case "Meetings":
+                changeDefaultState({ state: 'Meetings', index: 1 });
+                history.push(`/${user_id}/content`);
+                break;
+            case "Final Report":
+                changeDefaultState({ state: 'Final Report', index: 2 })
+                setDefaultNestedState(2)
+                history.push(`/${user_id}/content`)
+                break;
+            case "Interim Report":
+                changeDefaultState({ state: 'Interim Report', index: 2 })
+                setDefaultNestedState(1)
+                history.push(`/${user_id}/content`)
+                break;
+            case "Strategy Plan":
+                changeDefaultState({ state: 'Strategy Plan', index: 2 })
+                setDefaultNestedState(0)
+                history.push(`/${user_id}/content`)
+                break;
+            default:
+                return "";
+        }
     }
 
     const renderSwitchCase = () => {
@@ -104,7 +132,8 @@ function ReusableSwipeableTemporaryDrawer({ calendarStore, history, logout, type
             case 'Strategy Plan':
             case 'Interim Report':
             case 'Final Report':
-                return history.push({ path: `/${user_id}/content` })
+                history.push({ path: `/${user_id}/content` })
+                break;
             default:
                 return "";
         }
@@ -119,7 +148,7 @@ function ReusableSwipeableTemporaryDrawer({ calendarStore, history, logout, type
                 onOpen={toggleDrawer('left', true)}
             >
                 {sideList('left')}
-                {renderSwitchCase()}
+                {/* {renderSwitchCase()} */}
             </SwipeableDrawer>
         </div>
     );

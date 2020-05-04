@@ -120,10 +120,7 @@ class ContentRoutingTest extends Component {
     componentDidMount() {
         const { calendarStore } = this.props;
         var student_id = this.props.match.params.userID
-        console.log(calendarStore.getUserData)
-        console.log("what is this userdata btww??")
         if (calendarStore.getData.length === 0) {
-            // axiosGetFullData(calendarStore);
             axiosGetStudentData(calendarStore, student_id)
             axiosGetIdsAndUsernames(calendarStore) 
             if(calendarStore.getUserData.is_staff === 0){ //set userType to be student
@@ -207,7 +204,7 @@ class ContentRoutingTest extends Component {
     render() {
         const { classes, calendarStore } = this.props;
         const { open, openNested, currentPageEvent, selectedIndex, selectedNestedIndex } = this.state;
-
+        console.log("why does push lose me???")
         return ( //Note: pls change the color of the app bar/toolbar lol
             <div className={classes.root}>
                 <CssBaseline />

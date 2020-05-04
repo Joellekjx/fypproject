@@ -21,13 +21,13 @@ class StudentMainPage extends Component {
   }
 
   render() {
-    const { calendarStore, history } = this.props;
+    const { calendarStore } = this.props;
     var paramQuery = paramQuery ? paramQuery : ''
     return (
         <div className="MainPage">
           <Grid container>
             <Grid item xs={1} md={1}>
-              <LeftSideColumn calendarStore={calendarStore} history={history} type="Student"/>
+              <LeftSideColumn calendarStore={calendarStore} type="Student"/>
             </Grid>
             <Grid item xs={11} md={11}>
               <ReusableMainCalendar calendarStore={calendarStore}  type="Student"/>

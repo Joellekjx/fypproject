@@ -60,15 +60,15 @@ class LeftSideColumn extends Component {
     }
 
     render() {
-        const { calendarStore, history, type } = this.props;
+        const { calendarStore, type } = this.props;
         return (
             <div className="LeftSideColumn">
                 <Grid container>
                     <Grid item xs={12}>
                         {type === 'Student' ?
-                            <ReusableSwipeableTemporaryDrawer type="Student" history={history} calendarStore={calendarStore} />
+                            <ReusableSwipeableTemporaryDrawer type="Student" calendarStore={calendarStore} />
                             :
-                            <ReusableSwipeableTemporaryDrawer type="Staff" history={history} calendarStore={calendarStore} />
+                            <ReusableSwipeableTemporaryDrawer type="Staff" calendarStore={calendarStore} />
                         }
                     </Grid>
                     <Grid item xs={12} style={{ paddingTop: '5px', borderTop: '1px solid #ddd' }}>
