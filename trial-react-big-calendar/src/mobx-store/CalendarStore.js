@@ -113,13 +113,34 @@ class CalendarStore {
         this.staffStudentFilteredData.push(data) //fill the filtered array with the same events as original upon calling for axios
     }
 
-    filterStaffStudentData = (removedOption) => { //think about what to do in here lol
+    filterStaffStudentData = (removedOption) => {
         removedOption = parseInt(removedOption)
-        this.staffStudentFilteredData.filter(item => {
-            if (item.project_id !== removedOption) {
-                return item
+        //1. Need to determine if the option chosen has been removed already. If removedOption is removed, we unremove it
+        //2. Else if removedOption is not removed, we remove it.
+        console.log(removedOption)
+        let insideFilteredArrayFlag = false
+        this.staffStudentFilteredData.find(ele => {
+            if(ele.project_id === removedOption){
+                insideFilteredArrayFlag = true
             }
+            return null
         })
+
+        if(insideFilteredArrayFlag){ //if true, remove; else, bring back
+            var filteredItems = this.staffStudentFilteredData.filter(item => {
+                if (item.project_id !== removedOption) {
+                    return item
+                }
+            })
+            this.staffStudentFilteredData = filteredItems
+        } else {
+            this.staffStudentData.filter(item => {
+                if(item.project_id === removedOption){
+                    this.staffStudentFilteredData.push(item)
+                }
+            })
+        }
+        
     }
 
     //Actually, checkboxes might be changed to contain everything inside /api/usersAndProjects instead heh
