@@ -8,9 +8,8 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
         {...rest}
         render={props => {
             const token = localStorage.getItem("token")
-            const expiry = localStorage.getItem("expirationDate")
-            // const currentTime = new Date().getTime();
-            const currentTime = moment().toDate()
+            const expiry = new Date(localStorage.getItem("expirationDate"))
+            const currentTime = new Date();
             rest.calendarStore.setUserData(JSON.parse(localStorage.getItem("user")))
             if (currentTime > expiry) {
                 return <Redirect
@@ -43,12 +42,8 @@ export const LoginRoute = ({ component: Component, ...rest }) => (
         {...rest}
         render={props => {
             const token = localStorage.getItem("token")
-            const expiry = localStorage.getItem("expirationDate")
-            // const currentTime = new Date().getTime();
-            const currentTime = moment().toDate()
-            console.log(currentTime)
-            console.log(expiry)
-            console.log("current time first then expiry")
+            const expiry = new Date(localStorage.getItem("expirationDate"))
+            const currentTime = new Date();
             if (currentTime > expiry) {
                 return <Component {...props} />
             }
@@ -83,13 +78,8 @@ export const StudentOnlyRoute = ({ component: Component, ...rest }) => (
         {...rest}
         render={props => {
             const token = localStorage.getItem("token")
-            const expiry = localStorage.getItem("expirationDate")
-            // const currentTime = new Date().getTime();
-            const currentTime = moment().toDate()
-            console.log(currentTime)
-            console.log(expiry)
-            console.log("current time first then expiry")
-            console.log(currentTime > expiry)
+            const expiry = new Date(localStorage.getItem("expirationDate"))
+            const currentTime = new Date();
             rest.calendarStore.setUserData(JSON.parse(localStorage.getItem("user")))
             if (currentTime > expiry) {
                 return <Redirect
@@ -134,12 +124,8 @@ export const StaffOnlyRoute = ({ component: Component, ...rest }) => (
         {...rest}
         render={props => {
             const token = localStorage.getItem("token")
-            const expiry = localStorage.getItem("expirationDate")
-            // const currentTime = new Date().getTime();
-            const currentTime = moment().toDate()
-            console.log(currentTime)
-            console.log(expiry)
-            console.log("current time first then expiry")
+            const expiry = new Date(localStorage.getItem("expirationDate"))
+            const currentTime = new Date();
             rest.calendarStore.setUserData(JSON.parse(localStorage.getItem("user")))
             if (currentTime > expiry) {
                 return <Redirect
@@ -185,9 +171,8 @@ export const CheckSwitchRoute = ({ component: Component, ...rest }) => (
         {...rest}
         render={props => {
             const token = localStorage.getItem("token")
-            const expiry = localStorage.getItem("expirationDate")
-            // const currentTime = new Date().getTime();
-            const currentTime = moment().toDate()
+            const expiry = new Date(localStorage.getItem("expirationDate"))
+            const currentTime = new Date();
             console.log(currentTime)
             console.log(expiry)
             console.log("current time first then expiry")
