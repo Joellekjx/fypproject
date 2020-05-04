@@ -91,7 +91,7 @@ python manage.py runserver
 ```
 
 ## Issues that needs to be fixed:
-1. Comment box: ~~axios~~ or pull in server like express & socket.io?
+1. ~Comment box: ~~axios~~ or pull in server like express & socket.io?~
 2. ~How to 'focus' when you click on an event? Look at alternatives to history.push else Link? Alternatively look at createRef mapped -- else you might want to remove "Hash Link" in yr dependencies~ very likely skipping this
 3. ~~Top bar of weekly report table must be able to stay at the top and not disappear as you scroll~~
 4. ~~Meetings page~~
@@ -115,3 +115,6 @@ python manage.py runserver
 22. ~PDF View needs clean up (make dialog size a bit bigger to fit better. And have better looking buttons in the pdf viewer + change position of close button to top right corner)~
 23. 12/3/20: ~~Need to incorporate docx viewer~~
 24. Need to incorporate img viewer (might skip)
+25. ~Seems to be a little bug on the viewer. Apparently have access to student calendar but the meetings page is supervisor view?? ==> this happens because the auto logout doesn't work.~
+26. Fix auto logout
+27. Sometimes adding attachments seems to add to the wrong interface

@@ -149,6 +149,8 @@ class MeetingNotesSubmissionPage extends Component {
     const { classes } = this.props;
     const { meetingNotes } = this.state;
     const userType = this.props.calendarStore.getUserType;
+    console.log(userType)
+    console.log("why do i lose this usertype upon refresh???")
     if (userType === 'Student') {
       return (
         <ReusableNotesSubmission
