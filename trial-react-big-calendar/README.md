@@ -118,6 +118,7 @@ python manage.py runserver
 25. ~Seems to be a little bug on the viewer. Apparently have access to student calendar but the meetings page is supervisor view?? ==> this happens because the auto logout doesn't work.~
 26. ~Fix auto logout~
 27. Sometimes adding attachments seems to add to the wrong interface
-28. Check if the comment section for Other Submissions is ok lol
-29. Fix filtering of project issue sigh
+28. ~Check if the comment section for Other Submissions is ok lol ==> it's ok~
+29. ~Fix filtering of project issue sigh~
 30. When adding events, if u change date, it's quite buggy. Doesn't save correctly??? Check again else disable LOL
+31. "Upload x report" in other submissions doesn't work

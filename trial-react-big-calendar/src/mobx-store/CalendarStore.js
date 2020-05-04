@@ -44,19 +44,16 @@ class CalendarStore {
     addUserType = (e) => {
         this.userType = e;
     }
-    // addDocumentsToData = (index, document) => {
-    //     //Find the id which documents is to be added
-    //     //Filter through the data
-    //     var found = this.newData.find((element) => {
-    //         return element.Id === index;
-    //     });
 
-    //     found.documents.push(document)
-    //     // found.status = status;
-    //     // found.content = content;
-    //     // found.submission_date = submission_date;
-    //     // found.hours_spent = hours_spent;
-    // }
+    addDocumentsToData = (index, document) => {
+        //Find the id which documents is to be added
+        //Filter through the data
+        var found = this.newData.find((element) => {
+            return element.Id === index;
+        });
+
+        found.documents.push({attach_document: document.name})
+    }
 
     clearNewData = () => {
         this.newData.splice(0, this.newData.length)
@@ -243,7 +240,7 @@ decorate(CalendarStore, {
     setListOfAllIdsAndUsernames: action,
     addUserType: action,
     setDefaultNestedState: action,
-    // addDocumentsToData: action,
+    addDocumentsToData: action,
     getData: computed,
     getSelectedData: computed,
     getDataLength: computed,

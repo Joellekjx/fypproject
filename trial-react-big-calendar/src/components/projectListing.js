@@ -5,19 +5,15 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
 import { connect } from 'react-redux';
 import * as actions from '../login-store/actions/auth';
-
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemText from '@material-ui/core/ListItemText';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import history from '../history';
 
 const useStyles = (theme) => ({
     root: {
@@ -54,7 +50,7 @@ class ProjectListing extends Component {
         //This onclick sends to the student's content page
         const value = index;
         this.props.setParam(value, null);
-        this.props.history.push(`/${value}/content`);
+        history.push(`/${value}/content`);
     }
 
     renderAppBar = () => {
@@ -108,6 +104,8 @@ class ProjectListing extends Component {
                                 // }
                                 className={classes.root}
                             >
+                                {console.log(item)}
+                                {console.log("can i get more infor??")}
                                 {item.students.map((item, key) =>
                                     <ListItem button key={item.id}
                                         onClick={(event) => this.handleClickUser(event, item.id)}>

@@ -120,8 +120,6 @@ class WeeklyReportSubmissionPage extends Component {
       //Update mobx store so that front-end view can be updated simultaneously
       updateWeeklyReportSubmission(Id, 'Completed', thingsCompleted, submissionTime, hoursSpent)
     }
-
-
   }
 
   handleChange = event => {

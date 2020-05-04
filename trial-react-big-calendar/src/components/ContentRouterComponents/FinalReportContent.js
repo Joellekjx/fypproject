@@ -20,6 +20,7 @@ import RenderDocumentPreview from './renderDocumentPreview';
 import axiosPostComment from '../AxiosCalling/axiosPostComment';
 import InterimReportRenderDocument from './InterimReportRenderDocument';
 import ReusableCommentBox from './ContentRouterReusableComponents/ReusableCommentBox';
+import ReusableUploadReportButton from './ContentRouterReusableComponents/ReusableUploadReportButton';
 
 
 const drawerWidth = 400;
@@ -160,6 +161,8 @@ class FinalReportContent extends Component {
 
     render() {
         const { classes, calendarStore } = this.props;
+        console.log(this.state.id)
+        console.log("is this the project id??")
         return (
             <div className={classes.root}>
                 <main
@@ -181,9 +184,13 @@ class FinalReportContent extends Component {
                                 </Typography>
                                 </Grid>
                                 <Grid item xs={12} lg={2} md={2} style={{ textAlign: 'right' }}>
-                                    <Button color="primary" variant="outlined">
+                                    {/* <Button color="primary" variant="outlined">
                                         Upload Final Report
-                                    </Button>
+                                    </Button> */}
+                                    <ReusableUploadReportButton 
+                                        id={this.state.id}
+                                        calendarStore={calendarStore}
+                                    />
                                 </Grid>
                                 {
                                     this.state.open ?
