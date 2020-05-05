@@ -7,6 +7,7 @@ import EventIcon from '@material-ui/icons/Event';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import ClassIcon from '@material-ui/icons/Class';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import moment from 'moment';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -19,29 +20,33 @@ const useStyles = makeStyles(theme => ({
     secondaryHeading: {
         fontSize: theme.typography.pxToRem(15),
         padding: '5px 5px',
-    },
-    // selectMenu: {
-    //   maxHeight: '100px'
-    // },
-    // selected:{
-    //   maxHeight: '100px'
-    // }
+    }
 }));
 
 function EventForm({ handleClose, start, end, calendarStore }) {
-    const initialState = {
+    // const initialState = {
+    //     category: 'Meeting Notes',
+    //     selectedStartDate: start,
+    //     selectedEndDate: end,
+    //     repeatValue: 0,
+    // }
+
+    const classes = useStyles();
+    // const [{ category, selectedStartDate, selectedEndDate, repeatValue }, setState] = useState(initialState)
+    const [state, setState] = useState({
         category: 'Meeting Notes',
         selectedStartDate: start,
         selectedEndDate: end,
         repeatValue: 0,
-    }
+    })
 
-    const classes = useStyles();
-    const [{ category, selectedStartDate, selectedEndDate, repeatValue }, setState] = useState(initialState)
+    console.log(state.selectedStartDate)
+    console.log(state.selectedEndDate)
+    console.log("selected start then end dates")
 
     const onSubmit = (e) => {
         e.preventDefault()
-
+        const { selectedEndDate, selectedStartDate, category } = state;
         //Check if end date is earlier than start date
         if (selectedEndDate < selectedStartDate) {
             return alert("Your end date is earlier than your start date. Please add a proper timing again.")
@@ -62,41 +67,48 @@ function EventForm({ handleClose, start, end, calendarStore }) {
 
     const handleCategoryChange = (e) => { //handles category change
         const value = e.target.value;
-        setState(state => ({
+        setState({
             ...state,
             [e.target.name]: value
-        }));
+        })
     }
 
     const handleStartDateChange = (e) => {
         //If category is "meeting", datepicker has to change selected start and selected end's date ONLY, NOT TIME
         //If it's not a meeting, we need to send the handleStartDate, then also a different setState (where both start and end == e)
-        if (category === 'Meeting Notes') {
-            setState(state => ({
-                ...state,
-                selectedStartDate: e
-            }))
-        } else {
-            setState(state => ({
-                ...state,
-                selectedStartDate: e,
-                selectedEndDate: e
-            }))
-        }
+
+        setState({
+            ...state,
+            selectedEndDate: e,
+            selectedStartDate: e
+        })
     }
 
     const handleEndDateChange = (e) => {
-        setState(state => ({
-            ...state,
-            selectedEndDate: e
-        }))
+        //only extract time. NO DATE.
+        e = moment(e)
+        var momentEndDate
+        if (!isNaN(e)) {
+            momentEndDate = moment(state.selectedStartDate)
+            momentEndDate.set({
+                'h': e.get('hour'),
+                'm': e.get('minute'),
+                's': e.get('second')
+            })
+            setState({
+                ...state,
+                selectedEndDate: momentEndDate.toDate()
+            })
+        }
+
     }
 
     const renderOthersFormView = () => {
+        const { selectedStartDate } = state;
         return (
             <React.Fragment>
                 <Grid item xs={1}>
-                    <CalendarTodayIcon fontSize="small" style={{float: 'right'}}/>
+                    <CalendarTodayIcon fontSize="small" style={{ float: 'right' }} />
                 </Grid>
                 <Grid item xs={11} spacing={1}>
                     <div style={{ display: 'flex' }}>
@@ -112,7 +124,7 @@ function EventForm({ handleClose, start, end, calendarStore }) {
                 </Grid>
 
                 <Grid item xs={1}>
-                    <ScheduleIcon fontSize="small" style={{float: 'right'}}/>
+                    <ScheduleIcon fontSize="small" style={{ float: 'right' }} />
                 </Grid>
                 <Grid item xs={11} spacing={1}>
                     <div style={{ display: 'flex' }}>
@@ -132,25 +144,29 @@ function EventForm({ handleClose, start, end, calendarStore }) {
     }
 
     const renderMeetingFormView = () => {
+        const { selectedStartDate, selectedEndDate } = state;
+        console.log(selectedStartDate)
+        console.log(selectedEndDate)
+        console.log("these r the dates INSIDE meeting viewerwerwerwer")
         return (
             <React.Fragment>
                 <Grid item xs={1} md={1}>
-                    <EventIcon fontSize="small" style={{float: 'right'}}/>
+                    <EventIcon fontSize="small" style={{ float: 'right' }} />
                 </Grid>
                 <Grid item xs={11} md={11}>
                     <div style={{ display: 'flex' }}>
                         {/* <Typography className={classes.secondaryHeading}>Meeting Date: </Typography> */}
-                        <DatePicker 
-                        value={selectedStartDate} 
-                        name="selectedStartDate" 
-                        onChange={(e) => handleStartDateChange(e)}
-                        style={{width: '30%'}}
+                        <DatePicker
+                            value={selectedStartDate}
+                            name="selectedStartDate"
+                            onChange={(e) => handleStartDateChange(e)}
+                            style={{ width: '30%' }}
                         >Choose Submission Date:</DatePicker>
                     </div>
                 </Grid>
-                
+
                 <Grid item xs={1}>
-                    <ScheduleIcon fontSize="small" style={{float: 'right'}} />
+                    <ScheduleIcon fontSize="small" style={{ float: 'right' }} />
                 </Grid>
                 <Grid item xs={11}>
                     <div style={{ display: 'flex' }}>
@@ -163,7 +179,7 @@ function EventForm({ handleClose, start, end, calendarStore }) {
                                 'aria-label': 'change time',
                             }}
                             mask="__:__ _M"
-                            style={{width: '30%'}}
+                            style={{ width: '30%' }}
                         />
                         <Typography className={classes.secondaryHeading}>-</Typography>
                         <KeyboardTimePicker
@@ -173,7 +189,7 @@ function EventForm({ handleClose, start, end, calendarStore }) {
                             KeyboardButtonProps={{
                                 'aria-label': 'change time',
                             }}
-                            style={{width: '30%'}}
+                            style={{ width: '30%' }}
                             mask="__:__ _M"
                         />
                     </div>
@@ -183,7 +199,7 @@ function EventForm({ handleClose, start, end, calendarStore }) {
     }
 
     const decideView = () => {
-        switch (category) {
+        switch (state.category) {
             case "Weekly Report":
             case "FYP Plan Strategy":
             case "Interim Report":
@@ -199,7 +215,7 @@ function EventForm({ handleClose, start, end, calendarStore }) {
                 )
         }
     }
-    
+
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <div>
@@ -207,23 +223,23 @@ function EventForm({ handleClose, start, end, calendarStore }) {
                 <DialogContent>
                     <form onSubmit={onSubmit} method="POST">
                         <Grid container className={classes.root} spacing={1}>
-                            <Grid item xs={1}><ClassIcon fontSize="small" style={{float: 'right'}}/></Grid>
+                            <Grid item xs={1}><ClassIcon fontSize="small" style={{ float: 'right' }} /></Grid>
                             <Grid item xs={11}>
                                 {/* <div style={{ display: 'flex' }}> */}
-                                    {/* <Typography className={classes.secondaryHeading}>Category: </Typography> */}
-                                    <Select
-                                        labelId="demo-dialog-select-label"
-                                        value={category}
-                                        onChange={(e) => handleCategoryChange(e)}
-                                        id="select-category"
-                                        name="category"
-                                    >
-                                        <MenuItem value="Weekly Report">Weekly Report</MenuItem>
-                                        <MenuItem value="Meeting Notes" label="Meeting">Meeting</MenuItem>
-                                        <MenuItem value="FYP Plan Strategy">FYP Plan Submission</MenuItem>
-                                        <MenuItem value="Interim Report">Interim Report Submission</MenuItem>
-                                        <MenuItem value="Final Report">Final Report Submission</MenuItem>
-                                    </Select>
+                                {/* <Typography className={classes.secondaryHeading}>Category: </Typography> */}
+                                <Select
+                                    labelId="demo-dialog-select-label"
+                                    value={state.category}
+                                    onChange={(e) => handleCategoryChange(e)}
+                                    id="select-category"
+                                    name="category"
+                                >
+                                    <MenuItem value="Weekly Report">Weekly Report</MenuItem>
+                                    <MenuItem value="Meeting Notes" label="Meeting">Meeting</MenuItem>
+                                    <MenuItem value="FYP Plan Strategy">FYP Plan Submission</MenuItem>
+                                    <MenuItem value="Interim Report">Interim Report Submission</MenuItem>
+                                    <MenuItem value="Final Report">Final Report Submission</MenuItem>
+                                </Select>
                                 {/* </div> */}
                             </Grid>
 
