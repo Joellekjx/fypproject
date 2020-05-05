@@ -40,16 +40,16 @@ function EventForm({ handleClose, start, end, calendarStore }) {
         repeatValue: 0,
     })
 
-    console.log(state.selectedStartDate)
-    console.log(state.selectedEndDate)
-    console.log("selected start then end dates")
-
     const onSubmit = (e) => {
         e.preventDefault()
         const { selectedEndDate, selectedStartDate, category } = state;
         //Check if end date is earlier than start date
         if (selectedEndDate < selectedStartDate) {
             return alert("Your end date is earlier than your start date. Please add a proper timing again.")
+        }
+
+        if (selectedStartDate.getDay() === 6 || selectedStartDate.getDay() === 0) {
+            return alert("Weekends are not allowed to be added. Please choose another date instead.")
         }
 
         //Add new event by using calendarstore's add data
@@ -100,7 +100,23 @@ function EventForm({ handleClose, start, end, calendarStore }) {
                 selectedEndDate: momentEndDate.toDate()
             })
         }
+    }
 
+    const handleStartTimeChange = (e) => {
+        e = moment(e)
+        var momentStartDate
+        if (!isNaN(e)) {
+            momentStartDate = moment(state.selectedEndDate)
+            momentStartDate.set({
+                'h': e.get('hour'),
+                'm': e.get('minute'),
+                's': e.get('second')
+            })
+            setState({
+                ...state,
+                selectedStartDate: momentStartDate.toDate()
+            })
+        }
     }
 
     const renderOthersFormView = () => {
@@ -174,7 +190,7 @@ function EventForm({ handleClose, start, end, calendarStore }) {
                         <KeyboardTimePicker
                             value={selectedStartDate}
                             name="selectedStartDate"
-                            onChange={(e) => handleStartDateChange(e)}
+                            onChange={(e) => handleStartTimeChange(e)}
                             KeyboardButtonProps={{
                                 'aria-label': 'change time',
                             }}

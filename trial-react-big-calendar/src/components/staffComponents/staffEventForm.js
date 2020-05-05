@@ -9,6 +9,7 @@ import ClassIcon from '@material-ui/icons/Class';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import PeopleIcon from '@material-ui/icons/People';
 import { useTheme } from '@material-ui/core/styles';
+import moment from 'moment';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -21,13 +22,7 @@ const useStyles = makeStyles(theme => ({
     secondaryHeading: {
         fontSize: theme.typography.pxToRem(15),
         padding: '5px 5px',
-    },
-    // selectMenu: {
-    //   maxHeight: '100px'
-    // },
-    // selected:{
-    //   maxHeight: '100px'
-    // }
+    }
 }));
 
 const ITEM_HEIGHT = 48;
@@ -63,14 +58,20 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
     // const [projectID, setProjectID] = React.useState([]);
 
     const classes = useStyles();
-    const [{ category, selectedStartDate, selectedEndDate }, setState] = useState(initialState)
+    // const [{ category, selectedStartDate, selectedEndDate }, setState] = useState(initialState)
+    const [state, setState] = useState({
+        category: 'Meeting Notes',
+        selectedStartDate: start,
+        selectedEndDate: end,
+        repeatValue: 0,
+    })
 
     const onSubmit = (e) => {
         e.preventDefault()
         let stringOfSelectedProjects = e.target[1].value.toString()
         let arrayOfSelectedProjects = stringOfSelectedProjects.split(",");
         const { getCheckboxes } = calendarStore;
-
+        const { selectedStartDate, selectedEndDate, category } = state;
         arrayOfSelectedProjects.map((project_name) => {
             getCheckboxes.find((item) => {
                 if (project_name === item.label) { //from there, we axios post each time to the corresponding project_id and student_id
@@ -79,6 +80,10 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
                     //Check if end date is earlier than start date
                     if (selectedEndDate < selectedStartDate) {
                         return alert("Your end date is earlier than your start date. Please add a proper timing again.")
+                    }
+
+                    if (selectedStartDate.getDay() === 6 || selectedStartDate.getDay() === 0) {
+                        return alert("Weekends are not allowed to be added. Please choose another date instead.")
                     }
 
                     calendarStore.addData({ project_id: project_id, title: category, start: selectedStartDate, end: selectedEndDate });
@@ -93,37 +98,59 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
 
     const handleCategoryChange = (e) => { //handles category change
         const value = e.target.value;
-        setState(state => ({
+        setState({
             ...state,
             [e.target.name]: value
-        }));
+        })
     }
 
     const handleStartDateChange = (e) => {
         //If category is "meeting", datepicker has to change selected start and selected end's date ONLY, NOT TIME
         //If it's not a meeting, we need to send the handleStartDate, then also a different setState (where both start and end == e)
-        if (category === 'Meeting Notes') {
-            setState(state => ({
+        setState({
+            ...state,
+            selectedEndDate: e,
+            selectedStartDate: e
+        })
+    }
+
+    const handleStartTimeChange = (e) => {
+        e = moment(e)
+        var momentStartDate
+        if (!isNaN(e)) {
+            momentStartDate = moment(state.selectedEndDate)
+            momentStartDate.set({
+                'h': e.get('hour'),
+                'm': e.get('minute'),
+                's': e.get('second')
+            })
+            setState({
                 ...state,
-                selectedStartDate: e
-            }))
-        } else {
-            setState(state => ({
-                ...state,
-                selectedStartDate: e,
-                selectedEndDate: e
-            }))
+                selectedStartDate: momentStartDate.toDate()
+            })
         }
     }
 
     const handleEndDateChange = (e) => {
-        setState(state => ({
-            ...state,
-            selectedEndDate: e
-        }))
+        //only extract time. NO DATE.
+        e = moment(e)
+        var momentEndDate
+        if (!isNaN(e)) {
+            momentEndDate = moment(state.selectedStartDate)
+            momentEndDate.set({
+                'h': e.get('hour'),
+                'm': e.get('minute'),
+                's': e.get('second')
+            })
+            setState({
+                ...state,
+                selectedEndDate: momentEndDate.toDate()
+            })
+        }
     }
 
     const renderOthersFormView = () => {
+        const { selectedStartDate } = state;
         return (
             <React.Fragment>
                 <Grid item xs={1}>
@@ -163,6 +190,7 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
     }
 
     const renderMeetingFormView = () => {
+        const { selectedStartDate, selectedEndDate } = state;
         return (
             <React.Fragment>
                 <Grid item xs={1} md={1}>
@@ -189,7 +217,7 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
                         <KeyboardTimePicker
                             value={selectedStartDate}
                             name="selectedStartDate"
-                            onChange={(e) => handleStartDateChange(e)}
+                            onChange={(e) => handleStartTimeChange(e)}
                             KeyboardButtonProps={{
                                 'aria-label': 'change time',
                             }}
@@ -214,6 +242,7 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
     }
 
     const decideView = () => {
+        const { category } = state;
         switch (category) {
             case "Weekly Report":
             case "FYP Plan Strategy":
@@ -246,7 +275,7 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
                             <Grid item xs={11}>
                                 <Select
                                     labelId="demo-dialog-select-label"
-                                    value={category}
+                                    value={state.category}
                                     onChange={(e) => handleCategoryChange(e)}
                                     id="select-category"
                                     name="category"
