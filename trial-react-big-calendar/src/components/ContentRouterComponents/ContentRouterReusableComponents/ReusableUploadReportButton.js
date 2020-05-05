@@ -86,6 +86,8 @@ class ReusableUploadReportButton extends Component {
 
         //Update mobx store so that front-end view can be updated simultaneously
         //By storing it in 'getData' through 'addDocumentsToData'
+        //HELP 5/5/20: How to send the pdf into the store, so that "renderDocumentPreview" can view the pdf/docx when it is uploaded?
+        //What should even be the format? Else how to send it to "http://127.0.0.1:8000/media/files/..." to generate the document?
         const { id } = this.props;
         const { addDocumentsToData } = this.props.calendarStore
         addDocumentsToData(id, this.state.selectedFile)

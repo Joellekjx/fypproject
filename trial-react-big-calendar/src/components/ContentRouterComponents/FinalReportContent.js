@@ -184,9 +184,6 @@ class FinalReportContent extends Component {
                                 </Typography>
                                 </Grid>
                                 <Grid item xs={12} lg={2} md={2} style={{ textAlign: 'center' }}>
-                                    {/* <Button color="primary" variant="outlined">
-                                        Upload Final Report
-                                    </Button> */}
                                     <ReusableUploadReportButton 
                                         id={this.state.id}
                                         calendarStore={calendarStore}

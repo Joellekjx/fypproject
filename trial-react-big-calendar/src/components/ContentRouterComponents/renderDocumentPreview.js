@@ -23,7 +23,8 @@ class RenderDocumentPreview extends Component {
     typeTester = (itemURL) => {
         var regexPDFTest = /(.pdf)$/gm
         var regexDOCXTest = /(.docx)$/gm
-
+        console.log(itemURL)
+        console.log("let's see the difference ni the name???")
         if (regexPDFTest.test(itemURL)) { //if pdf, render ReactPDF
             return <ReactPDF url={itemURL} />
         } else if (regexDOCXTest.test(itemURL)) { //if docx render FileViewer to display
