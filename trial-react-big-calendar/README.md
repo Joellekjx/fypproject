@@ -101,24 +101,24 @@ python manage.py runserver
 8. Backend should be able to auto update statuses (e.g. late submission detection)
 9. ~Nitpicking: weekly report header try and align w the content~
 10. ~Nitpicking: meetings header try and align w the content~
-11. Nitpicking: clean up the props sent to weeklyreportsubmissionpage & weeklyreportcommentbox pls
+11. ~Nitpicking: clean up the props sent to weeklyreportsubmissionpage & weeklyreportcommentbox pls~
 12. ~~Double check if it is possible to POST/update to backend alr or not~~
 13. ~Try to tweak yr toolbar's month/week button again pls~
 14. 4/3/20  ~~Working On It (see point 21)Attachments -- once api is ok, rmb to add that in~~
-15. Clean up "SwipeableDrawer" file -- router might be a bit funky/error + design of the drawer  ==> plus onClick it should jump to the right drawer page
+15. ~Clean up "SwipeableDrawer" file -- router might be a bit funky/error + design of the drawer  ==> plus onClick it should jump to the right drawer page~
 16. ~The appbar design in the meetings/weekly report etc. pages need a bit of clean up ya. Make it look nicer~
-17. How do I track the dates (e.g. semester x week y) inside the weekly report/meetings? hmmm -- might have to pull the semester api, compare the date then add week (need to fix this asap LOL)
+17. ~How do I track the dates (e.g. semester x week y) inside the weekly report/meetings? hmmm -- might have to pull the semester api, compare the date then add week (need to fix this asap LOL)~
 18. ~Will need to refactor in a better way. E.g. maybe set a common "Paper" for all the different pages.~
-19. Set the document to reset once you upload it. (i.e. "No file chosen")
-20. After uploading to the backend, your frontend again needs to be able to view the uploaded item
+19. ~Set the document to reset once you upload it. (i.e. "No file chosen")~
+20. ~After uploading to the backend, your frontend again needs to be able to view the uploaded item~
 21. 8/3/20: ~~How to access the item once you pull from backend? Blob? What about the name? Privacy issue need to make sure we don't get the converted 'name'~~
 22. ~PDF View needs clean up (make dialog size a bit bigger to fit better. And have better looking buttons in the pdf viewer + change position of close button to top right corner)~
 23. 12/3/20: ~~Need to incorporate docx viewer~~
-24. Need to incorporate img viewer (might skip)
+24. ~Need to incorporate img viewer~
 25. ~Seems to be a little bug on the viewer. Apparently have access to student calendar but the meetings page is supervisor view?? ==> this happens because the auto logout doesn't work.~
 26. ~Fix auto logout~
 27. Sometimes adding attachments seems to add to the wrong interface
 28. ~Check if the comment section for Other Submissions is ok lol ==> it's ok~
 29. ~Fix filtering of project issue sigh~
-30. When adding events, if u change date, it's quite buggy. Doesn't save correctly??? Check again else disable LOL
-31. "Upload x report" in other submissions doesn't work
+30. ~When adding events, if u change date, it's quite buggy. Doesn't save correctly??? Check again else disable LOL~
+31. ~"Upload x report" in other submissions doesn't work~
