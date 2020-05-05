@@ -313,11 +313,22 @@ function StaffEventForm({ handleClose, start, end, calendarStore }) {
                                     <MenuItem value="" disabled>
                                         Select Projects Involved
                                     </MenuItem>
-                                    {calendarStore.getCheckboxes.map((name) => (
-                                        <MenuItem key={name.key} value={name.label} style={getStyles(name.label, projectName, theme)}>
-                                            {name.label}
-                                        </MenuItem>
-                                    ))}
+                                    {calendarStore.getCheckboxes.map((name, index) => {
+                                        if (index === 2) {
+                                            return (
+                                                <MenuItem disabled key={name.key} value={name.label} style={getStyles(name.label, projectName, theme)}>
+                                                    {name.label}
+                                                </MenuItem>
+                                            )
+                                        }
+                                        return (
+                                            <MenuItem key={name.key} value={name.label} style={getStyles(name.label, projectName, theme)}>
+                                                {name.label}
+                                            </MenuItem>
+                                        )
+                                    }
+
+                                    )}
                                 </Select>
                             </Grid>
 
