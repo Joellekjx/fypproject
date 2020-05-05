@@ -4,14 +4,9 @@ import { Typography, Grid, Paper, TextField } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-// import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
-// import ListItemIcon from '@material-ui/core/ListItemIcon';
-// import ListItemText from '@material-ui/core/ListItemText';
-// import InboxIcon from '@material-ui/icons/MoveToInbox';
-// import MailIcon from '@material-ui/icons/Mail';
 import clsx from 'clsx';
 import CloseIcon from '@material-ui/icons/Close';
 import moment from 'moment';
@@ -20,7 +15,7 @@ import RenderDocumentPreview from './renderDocumentPreview';
 import axiosPostComment from '../AxiosCalling/axiosPostComment';
 import InterimReportRenderDocument from './InterimReportRenderDocument';
 import ReusableCommentBox from './ContentRouterReusableComponents/ReusableCommentBox';
-
+import ReusableUploadReportButton from './ContentRouterReusableComponents/ReusableUploadReportButton';
 
 const drawerWidth = 400;
 
@@ -180,10 +175,12 @@ class InterimReportContent extends Component {
                                         Uploaded Date
                                 </Typography>
                                 </Grid>
-                                <Grid item xs={12} lg={2} md={2} style={{ textAlign: 'right' }}>
-                                    <Button color="primary" variant="outlined">
-                                        Upload Interim Report
-                                    </Button>
+                                <Grid item xs={12} lg={2} md={2} style={{ textAlign: 'center' }}>
+                                    <ReusableUploadReportButton 
+                                        id={this.state.id}
+                                        calendarStore={calendarStore}
+                                        buttonLabel="Interim Report"
+                                    />
                                 </Grid>
                                 {
                                     this.state.open ?

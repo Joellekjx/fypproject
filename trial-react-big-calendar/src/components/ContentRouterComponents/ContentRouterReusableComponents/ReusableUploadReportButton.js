@@ -1,26 +1,41 @@
 import React, { Component } from 'react';
-import { Paper, Button, Dialog, DialogTitle } from '@material-ui/core';
+import { Paper, Button, Dialog, DialogTitle, Typography } from '@material-ui/core';
 import moment from 'moment';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
 
 /**
  * Pass through prop for buttonLabel i.e. "Upload X Report"
  */
+const useStyles = makeStyles({
+    paper: {
+        padding: '20px'
+    }
+});
 
 function SimpleDialog(props) {
-    // const classes = useStyles();
+    const classes = useStyles();
     const { onClose, selectedValue, open } = props;
 
     const handleClose = () => {
         onClose(selectedValue);
     };
 
-
     return (
-        <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+        <Dialog
+            maxWidth='md'
+            classes={{
+                paper: classes.paper,
+            }}
+            onClose={handleClose}
+            aria-labelledby="simple-dialog-title"
+            open={open}
+        >
             <DialogTitle id="simple-dialog-title">Confirm Uploading File</DialogTitle>
-            {props.file ? props.file.name : ''}
+            <Typography style={{ textAlign: 'center', paddingBottom: '15px' }}>
+                {props.file ? props.file.name : ''}
+            </Typography>
             <Button style={{ float: 'right' }} variant="contained" color="primary" component="span" onClick={props.upload}>
                 Upload
             </Button>
@@ -82,9 +97,6 @@ class ReusableUploadReportButton extends Component {
             selectedFile: null,
             addedFile: false,
         })
-
-        // window.location.reload(false);
-        this.forceUpdate()
     }
 
     cancelAddAttachment = () => {
@@ -95,42 +107,8 @@ class ReusableUploadReportButton extends Component {
         })
     }
 
-    /**
-     * 
-    onSubmitForm = (e) => {
-    e.preventDefault();
-    //Note to self: Can u like lol reduce the props here some how???
-    const { Id, task_type, task_created, student_id, project_id, tutor_id, calendarStore } = this.props;
-    const { hoursSpent, thingsCompleted } = this.state;
-
-    const { updateWeeklyReportSubmission } = calendarStore;
-    var submissionTime = moment();
-    if (hoursSpent === "" || thingsCompleted === "") {
-      alert("Please fill in all fields");
-    } else {
-      axiosPut(Id, task_type, task_created, submissionTime, project_id, student_id, tutor_id, "Completed", thingsCompleted, hoursSpent);
-      this.onClickHandler();
-      //Update mobx store so that front-end view can be updated simultaneously
-      updateWeeklyReportSubmission(Id, 'Completed', thingsCompleted, submissionTime, hoursSpent)
-    }
-  }
-     */
-
-    uploadedFilePaper = () => {
-        return (
-            <div>
-                <Paper>
-                    Hellooo
-                     {console.log(this.state.selectedFile)}
-                    {this.state.selectedFile.name}
-                </Paper>
-            </div>
-        )
-    }
-
     render() {
-        console.log(this.state.addedFile)
-        console.log("hmmm some cmomponent error??")
+        const { buttonLabel } = this.props;
         return (
             <div>
                 <input
@@ -141,20 +119,15 @@ class ReusableUploadReportButton extends Component {
                 />
                 <label htmlFor="contained-button-file">
                     <Button color="primary" variant="outlined" component="span">
-                        Upload Final Report
+                        Upload {buttonLabel}
                     </Button>
                 </label>
-                {/* <Button color="primary" variant="outlined" onClick={() => this.onClickUpload()}>
-                    Upload Final Report
-                </Button> */}
                 <SimpleDialog
                     open={this.state.addedFile}
                     file={this.state.selectedFile}
                     upload={this.onClickHandler}
                     cancel={this.cancelAddAttachment}
-                // onClose={handleClose}
                 />
-                {/* {this.state.addedFile ? this.uploadedFilePaper() : ""} */}
             </div>
         )
     }

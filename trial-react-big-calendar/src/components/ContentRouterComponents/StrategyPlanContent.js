@@ -20,6 +20,7 @@ import RenderDocumentPreview from './renderDocumentPreview';
 import axiosPostComment from '../AxiosCalling/axiosPostComment';
 import InterimReportRenderDocument from './InterimReportRenderDocument';
 import ReusableCommentBox from './ContentRouterReusableComponents/ReusableCommentBox';
+import ReusableUploadReportButton from './ContentRouterReusableComponents/ReusableUploadReportButton';
 
 
 const drawerWidth = 400;
@@ -182,10 +183,12 @@ class StrategyPlanContent extends Component {
                                         Uploaded Date
                                 </Typography>
                                 </Grid>
-                                <Grid item xs={12} lg={2} md={2} style={{ textAlign: 'right' }}>
-                                    <Button color="primary" variant="outlined">
-                                        Upload Strategy Plan
-                                    </Button>
+                                <Grid item xs={12} lg={2} md={2} style={{ textAlign: 'center' }}>
+                                    <ReusableUploadReportButton 
+                                        id={this.state.id}
+                                        calendarStore={calendarStore}
+                                        buttonLabel="Strategy Plan"
+                                    />
                                 </Grid>
                                 {
                                     this.state.open ?

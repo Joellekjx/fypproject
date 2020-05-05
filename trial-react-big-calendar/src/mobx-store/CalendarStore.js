@@ -51,7 +51,6 @@ class CalendarStore {
         var found = this.newData.find((element) => {
             return element.Id === index;
         });
-
         found.documents.push({attach_document: document.name})
     }
 
@@ -137,7 +136,6 @@ class CalendarStore {
                 }
             })
         }
-        
     }
 
     //Actually, checkboxes might be changed to contain everything inside /api/usersAndProjects instead heh
