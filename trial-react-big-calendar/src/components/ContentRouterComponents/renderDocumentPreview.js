@@ -23,8 +23,8 @@ class RenderDocumentPreview extends Component {
     typeTester = (itemURL) => {
         var regexPDFTest = /(.pdf)$/gm
         var regexDOCXTest = /(.docx)$/gm
-        console.log(itemURL)
-        console.log("let's see the difference ni the name???")
+        // console.log(itemURL)
+        // console.log("let's see the difference ni the name???")
         if (regexPDFTest.test(itemURL)) { //if pdf, render ReactPDF
             return <ReactPDF url={itemURL} />
         } else if (regexDOCXTest.test(itemURL)) { //if docx render FileViewer to display
@@ -41,8 +41,8 @@ class RenderDocumentPreview extends Component {
         const { document } = this.props;
         const { openDialog } = this.state;
         var regexToRemoveFrontOfURL = /^(http\:\/\/127\.0\.0\.1\:8000\/media\/files\/)/gm
-        console.log(document.attach_document)
-        console.log("what if i hack this shit...")
+        // console.log(document.attach_document)
+        // console.log("what if i hack this shit...")
         const documentName = document.attach_document.replace(regexToRemoveFrontOfURL, "");
         return (
             <div>

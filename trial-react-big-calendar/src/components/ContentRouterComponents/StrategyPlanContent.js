@@ -118,6 +118,7 @@ class StrategyPlanContent extends Component {
             user_id: 0, //user_id
             comments: "",
             // dataArray: this.props.calendarStore.getData,
+            disabled: true,
         }
     }
 
@@ -138,11 +139,19 @@ class StrategyPlanContent extends Component {
     renderDocumentContent = () => {
         const { calendarStore, classes } = this.props;
         const { getData } = calendarStore;
+        console.log("hello renderdocumentcontent!")
         return (
-            getData.filter(indivData => indivData.event_type === 'FYP Plan Strategy')
+            getData.filter(indivData => {
+                if (indivData.event_type === 'FYP Plan Strategy') {
+                    if (this.state.disabled) {
+                        this.setState({
+                            disabled: false
+                        })
+                    }
+                    return indivData;
+                }
+            })
                 .map((text) => {
-                    console.log(text)
-                    console.log("theres prolly multiple of this isit")
                     if (this.state.id === 0) {
                         this.setState({ id: text.Id, comments: text.comments })
                     }
@@ -184,10 +193,11 @@ class StrategyPlanContent extends Component {
                                 </Typography>
                                 </Grid>
                                 <Grid item xs={12} lg={2} md={2} style={{ textAlign: 'center' }}>
-                                    <ReusableUploadReportButton 
+                                    <ReusableUploadReportButton
                                         id={this.state.id}
                                         calendarStore={calendarStore}
                                         buttonLabel="Strategy Plan"
+                                        disabled={this.state.disabled}
                                     />
                                 </Grid>
                                 {
@@ -203,6 +213,7 @@ class StrategyPlanContent extends Component {
                             </Grid>
                             <hr style={{ width: '100%' }}></hr>
                             {this.renderDocumentContent()}
+                            {this.state.disabled ? "Please add an event in order to add documents" : ""}
                         </Grid>
                     </div>
                 </main>
@@ -226,7 +237,7 @@ class StrategyPlanContent extends Component {
                             <Typography style={{ fontWeight: '600' }}>{this.state.comments.length} comments on Strategy Plan</Typography>
                         </ListItem>
                         <ListItem>
-                            <ReusableCommentBox 
+                            <ReusableCommentBox
                                 comments={this.state.comments}
                                 calendarStore={calendarStore}
                                 id={this.state.id}

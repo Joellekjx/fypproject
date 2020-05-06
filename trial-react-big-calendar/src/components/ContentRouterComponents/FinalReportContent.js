@@ -118,6 +118,7 @@ class FinalReportContent extends Component {
             user_id: 0, //user_id
             comments: "",
             // dataArray: this.props.calendarStore.getData,
+            disabled: true,
         }
     }
 
@@ -139,7 +140,17 @@ class FinalReportContent extends Component {
         const { calendarStore, classes } = this.props;
         const { getData } = calendarStore;
         return (
-            getData.filter(indivData => indivData.event_type === 'Final Report')
+            getData.filter(indivData => {
+                if (indivData.event_type === 'Final Report') {
+                    if (this.state.disabled) {
+                        this.setState({
+                            disabled: false
+                        })
+                    }
+                    return indivData;
+                }
+                // indivData.event_type === 'Final Report'
+            })
                 .map((text) => {
                     if (this.state.id === 0) {
                         this.setState({ id: text.Id, comments: text.comments })
@@ -184,10 +195,11 @@ class FinalReportContent extends Component {
                                 </Typography>
                                 </Grid>
                                 <Grid item xs={12} lg={2} md={2} style={{ textAlign: 'center' }}>
-                                    <ReusableUploadReportButton 
+                                    <ReusableUploadReportButton
                                         id={this.state.id}
                                         calendarStore={calendarStore}
                                         buttonLabel="Final Report"
+                                        disabled={this.state.disabled}
                                     />
                                 </Grid>
                                 {
@@ -203,6 +215,7 @@ class FinalReportContent extends Component {
                             </Grid>
                             <hr style={{ width: '100%' }}></hr>
                             {this.renderDocumentContent()}
+                            {this.state.disabled ? "Please add an event in order to add documents" : ""}
                         </Grid>
                     </div>
                 </main>
@@ -226,7 +239,7 @@ class FinalReportContent extends Component {
                             <Typography style={{ fontWeight: '600' }}>{this.state.comments.length} comments on Final Report</Typography>
                         </ListItem>
                         <ListItem>
-                            <ReusableCommentBox 
+                            <ReusableCommentBox
                                 comments={this.state.comments}
                                 calendarStore={calendarStore}
                                 id={this.state.id}

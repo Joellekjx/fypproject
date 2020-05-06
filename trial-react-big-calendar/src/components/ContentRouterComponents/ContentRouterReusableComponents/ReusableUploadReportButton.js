@@ -16,11 +16,11 @@ const useStyles = makeStyles({
 
 function SimpleDialog(props) {
     const classes = useStyles();
-    const { onClose, selectedValue, open } = props;
+    const { open } = props;
 
-    const handleClose = () => {
-        onClose(selectedValue);
-    };
+    // const handleClose = () => {
+    //     onClose(selectedValue);
+    // };
 
     return (
         <Dialog
@@ -28,7 +28,7 @@ function SimpleDialog(props) {
             classes={{
                 paper: classes.paper,
             }}
-            onClose={handleClose}
+            // onClose={handleClose}
             aria-labelledby="simple-dialog-title"
             open={open}
         >
@@ -47,9 +47,9 @@ function SimpleDialog(props) {
 }
 
 SimpleDialog.propTypes = {
-    onClose: PropTypes.func.isRequired,
+    // onClose: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
-    selectedValue: PropTypes.string.isRequired,
+    // selectedValue: PropTypes.string.isRequired,
 };
 
 class ReusableUploadReportButton extends Component {
@@ -110,7 +110,7 @@ class ReusableUploadReportButton extends Component {
     }
 
     render() {
-        const { buttonLabel } = this.props;
+        const { buttonLabel, disabled } = this.props;
         return (
             <div>
                 <input
@@ -118,9 +118,10 @@ class ReusableUploadReportButton extends Component {
                     onChange={this.addAttachment}
                     id="contained-button-file"
                     style={{ display: 'none' }}
+                    disabled={disabled}
                 />
                 <label htmlFor="contained-button-file">
-                    <Button color="primary" variant="outlined" component="span">
+                    <Button color="primary" variant="outlined" component="span" disabled={disabled}>
                         Upload {buttonLabel}
                     </Button>
                 </label>

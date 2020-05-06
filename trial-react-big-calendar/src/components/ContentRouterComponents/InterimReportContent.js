@@ -112,6 +112,7 @@ class InterimReportContent extends Component {
             user_id: 0, //user_id
             comments: "",
             // dataArray: this.props.calendarStore.getData,
+            disabled: true,
         }
     }
 
@@ -133,7 +134,16 @@ class InterimReportContent extends Component {
         const { calendarStore, classes } = this.props;
         const { getData } = calendarStore;
         return (
-            getData.filter(indivData => indivData.event_type === 'Interim Report')
+            getData.filter(indivData => {
+                if (indivData.event_type === 'Interim Report') {
+                    if (this.state.disabled) {
+                        this.setState({
+                            disabled: false
+                        })
+                    }
+                    return indivData;
+                }
+            })
                 .map((text) => {
                     if (this.state.id === 0) {
                         this.setState({ id: text.Id, comments: text.comments })
@@ -180,6 +190,7 @@ class InterimReportContent extends Component {
                                         id={this.state.id}
                                         calendarStore={calendarStore}
                                         buttonLabel="Interim Report"
+                                        disabled={this.state.disabled}
                                     />
                                 </Grid>
                                 {
@@ -195,6 +206,7 @@ class InterimReportContent extends Component {
                             </Grid>
                             <hr style={{ width: '100%' }}></hr>
                             {this.renderDocumentContent()}
+                            {this.state.disabled ? "Please add an event in order to add documents" : ""}
                         </Grid>
                     </div>
                 </main>
