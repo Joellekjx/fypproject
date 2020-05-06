@@ -47,7 +47,7 @@ class RenderDocumentPreview extends Component {
         return (
             <div>
                 <Button onClick={this.handleClickOpen}>
-                    <AttachFileIcon style={{ float: 'left' }} />&nbsp;<span >{documentName}</span>
+                    <AttachFileIcon style={{ float: 'left' }} />&nbsp;<span style={{wordBreak: 'break-word'}} >{documentName}</span>
                 </Button>
                 <Dialog
                     open={openDialog}
