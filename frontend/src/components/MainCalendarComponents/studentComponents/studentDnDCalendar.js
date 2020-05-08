@@ -1,11 +1,11 @@
 import React from 'react';
-import WorkMonth from '../../lib/WorkMonth';
+import WorkMonth from '../../../lib/WorkMonth';
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import moment from "moment";
-import CustomToolBar from '../MainCalendarComponents/CustomToolBar';
+import CustomToolBar from '../CustomToolBar';
 import { Dialog, Typography } from "@material-ui/core";
 import { Calendar, momentLocalizer } from 'react-big-calendar';
-import CustomEventWithPopover from '../MainCalendarComponents/indivEvent';
+import CustomEventWithPopover from '../indivEvent';
 import { withStyles } from '@material-ui/core/styles'
 const localizer = momentLocalizer(moment);
 const DnDCalendar = withDragAndDrop(Calendar);

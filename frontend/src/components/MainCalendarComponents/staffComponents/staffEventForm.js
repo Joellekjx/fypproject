@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DateFnsUtils from '@date-io/date-fns';
 import { DatePicker, MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
 import { DialogTitle, DialogContent, makeStyles, Grid, Typography, Select, MenuItem, DialogActions, Button, TextField, Input, InputLabel } from '@material-ui/core';
-import axiosPost from '../AxiosCalling/axiosPost';
+import axiosPost from '../../AxiosCalling/axiosPost';
 import EventIcon from '@material-ui/icons/Event';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import ClassIcon from '@material-ui/icons/Class';

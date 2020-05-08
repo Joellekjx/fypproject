@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import LeftSideColumn from '../leftSideColumn';
+import LeftSideColumn from '../../leftSideColumn';
 import { Grid } from '@material-ui/core';
 import { observer } from "mobx-react";
-import axiosGetStudentData from "../AxiosCalling/axiosGetStudentData";
-import axiosGetIdsAndUsernames from '../AxiosCalling/axiosGetIdsAndUsernames';
+import axiosGetStudentData from "../../AxiosCalling/axiosGetStudentData";
+import axiosGetIdsAndUsernames from '../../AxiosCalling/axiosGetIdsAndUsernames';
 import { connect } from 'react-redux';
-import * as actions from '../../login-store/actions/auth';
+import * as actions from '../../../login-store/actions/auth';
 import ReusableMainCalendar from '../MainCalendarReusableComponents/ReusableMainCalendar';
 
 class StudentMainPage extends Component {
