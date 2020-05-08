@@ -9,8 +9,9 @@ To install, please go into the instructions folder to read the document and foll
 ## Folders
 ##### `backend`
 This folder contains all the back-end codes. To run the backend, please start the env first then run manage.py runserver in fyp_dip_ms folder.
-###### `backend` Folder Structure
+###### `backend` Folder Structure 
 ```
+the files that are mostly untouched are not specified
 .
 +-- env
 +-- fyp_dip_ms
