@@ -16,6 +16,7 @@ To install, please go into the instructions folder to read the document and foll
 This folder contains all front-end codes. To run the frontend, please `cd` into this folder and `npm start`. 
 
 ###### `frontend` Folder Structure
+```
 .
 +-- components
     |
@@ -32,6 +33,7 @@ This folder contains all front-end codes. To run the frontend, please `cd` into 
     |   +-- ContentRouterReusableComponents folder
     |
     +-- AxiosCalling folder (includes all required axios calls)
+```
 
 ##### instructions
 This contains the instructions document to refer to when you need to install or run the project.
