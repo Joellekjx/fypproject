@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 /**
  * Pass through prop for buttonLabel i.e. "Upload X Report"
  */
+
 const useStyles = makeStyles({
     paper: {
         padding: '20px'
@@ -18,17 +19,12 @@ function SimpleDialog(props) {
     const classes = useStyles();
     const { open } = props;
 
-    // const handleClose = () => {
-    //     onClose(selectedValue);
-    // };
-
     return (
         <Dialog
             maxWidth='md'
             classes={{
                 paper: classes.paper,
             }}
-            // onClose={handleClose}
             aria-labelledby="simple-dialog-title"
             open={open}
         >
@@ -47,9 +43,7 @@ function SimpleDialog(props) {
 }
 
 SimpleDialog.propTypes = {
-    // onClose: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
-    // selectedValue: PropTypes.string.isRequired,
 };
 
 class ReusableUploadReportButton extends Component {
@@ -74,27 +68,23 @@ class ReusableUploadReportButton extends Component {
         data.append('attach_document', this.state.selectedFile)
         var upload_date = moment(new Date()).format('YYYY-MM-DD HH:mm')
         data.append('uploaded_date', upload_date)
+        const { id } = this.props;
         axios.post("http://127.0.0.1:8000/api/document/", data, { // receive two parameter endpoint url ,form data 
         })
-            .then(res => { // then print response status
-                console.log(res.statusText);
+            .then(res => {
+                axios.get(`http://127.0.0.1:8000/api/taskComment/${id}/`)
+                .then( res => {
+                    var document_name = res.data.documents[res.data.documents.length - 1].attach_document
+                    const { calendarStore } = this.props;
+                    const { addDocumentsToData } = calendarStore;
+                    addDocumentsToData(id, document_name);
+                })
             })
             .catch((error) => {
                 console.log(error.response);
                 console.log(upload_date);
             })
-
-        //Update mobx store so that front-end view can be updated simultaneously
-        //By storing it in 'getData' through 'addDocumentsToData'
-        //HELP 5/5/20: How to send the pdf into the store, so that "renderDocumentPreview" can view the pdf/docx when it is uploaded?
-        //What should even be the format? Else how to send it to "http://127.0.0.1:8000/media/files/..." to generate the document?
-        const { id } = this.props;
-        const { addDocumentsToData } = this.props.calendarStore
-        addDocumentsToData(id, this.state.selectedFile)
-        // console.log(data.get('attach_document'))
-        // console.log("is the data here the same format as when u load it in initially??")
-
-        //reset the state
+        //Reset the state
         this.setState({
             selectedFile: null,
             addedFile: false,
@@ -113,24 +103,26 @@ class ReusableUploadReportButton extends Component {
         const { buttonLabel, disabled } = this.props;
         return (
             <div>
-                <input
-                    type="file"
-                    onChange={this.addAttachment}
-                    id="contained-button-file"
-                    style={{ display: 'none' }}
-                    disabled={disabled}
-                />
-                <label htmlFor="contained-button-file">
-                    <Button color="primary" variant="outlined" component="span" disabled={disabled}>
-                        Upload {buttonLabel}
-                    </Button>
-                </label>
-                <SimpleDialog
-                    open={this.state.addedFile}
-                    file={this.state.selectedFile}
-                    upload={this.onClickHandler}
-                    cancel={this.cancelAddAttachment}
-                />
+                <form>
+                    <input
+                        type="file"
+                        onChange={this.addAttachment}
+                        id="contained-button-file"
+                        style={{ display: 'none' }}
+                        disabled={disabled}
+                    />
+                    <label htmlFor="contained-button-file">
+                        <Button color="primary" variant="outlined" component="span" disabled={disabled}>
+                            Upload {buttonLabel}
+                        </Button>
+                    </label>
+                    <SimpleDialog
+                        open={this.state.addedFile}
+                        file={this.state.selectedFile}
+                        upload={this.onClickHandler}
+                        cancel={this.cancelAddAttachment}
+                    />
+                </form>
             </div>
         )
     }
