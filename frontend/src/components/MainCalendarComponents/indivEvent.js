@@ -184,7 +184,6 @@ export default function CustomEventWithPopover(props) {
 
   // Other things you can add: Meeting's description (mainly location), status of submission, whether there's attachments
   const renderPopoverPaper = () => {
-    //NOTE: pls check how to pass the Id and wtf is Data? LOL
     return (
       <div className={classes.root}>
         <Paper style={{ position: 'relative' }}>

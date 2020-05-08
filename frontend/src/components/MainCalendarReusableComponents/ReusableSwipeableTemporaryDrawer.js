@@ -28,8 +28,6 @@ function ReusableSwipeableTemporaryDrawer({ calendarStore,  logout, type }) {
     const classes = useStyles();
     const [state, setState] = React.useState({
         left: false,
-        // currentPageEvent: '',
-        // selectedIndex: 0
     });
     const [currentPageEvent, setCurrentPageEvent] = React.useState('')
     const [selectedIndex, setSelectedIndex] = React.useState(0)
@@ -43,7 +41,6 @@ function ReusableSwipeableTemporaryDrawer({ calendarStore,  logout, type }) {
     }
 
     const seeProjectListings = () => {
-        //note: need to double check and make sure only admin sees this!!
         history.push('/staff/projectlistings')
     }
 
@@ -120,21 +117,6 @@ function ReusableSwipeableTemporaryDrawer({ calendarStore,  logout, type }) {
         }
     }
 
-    const renderSwitchCase = () => {
-        var user_id = calendarStore.getUserData.id
-        switch (currentPageEvent) {
-            case 'Meetings':
-            case 'Weekly Report':
-            case 'Strategy Plan':
-            case 'Interim Report':
-            case 'Final Report':
-                history.push({ path: `/${user_id}/content` })
-                break;
-            default:
-                return "";
-        }
-    }
-
     return (
         <div style={{ float: 'center', textAlign: 'center', lineHeight: '74px' }}>
             <IconButton onClick={toggleDrawer('left', true)}><MenuIcon /></IconButton>
@@ -144,7 +126,6 @@ function ReusableSwipeableTemporaryDrawer({ calendarStore,  logout, type }) {
                 onOpen={toggleDrawer('left', true)}
             >
                 {sideList('left')}
-                {/* {renderSwitchCase()} */}
             </SwipeableDrawer>
         </div>
     );

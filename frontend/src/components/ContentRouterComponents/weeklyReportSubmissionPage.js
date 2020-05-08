@@ -88,7 +88,7 @@ class WeeklyReportSubmissionPage extends Component {
         console.log(error.response);
         console.log(upload_date);
       })
-      
+
     //reset the state
     this.setState({
       selectedFile: null,
@@ -96,8 +96,7 @@ class WeeklyReportSubmissionPage extends Component {
   }
 
   onSubmitForm = (e) => {
-    e.preventDefault();
-    //Note to self: Can u like lol reduce the props here some how???
+    e.preventDefault(
     const { Id, task_type, task_created, student_id, project_id, tutor_id, calendarStore } = this.props;
     const { hoursSpent, thingsCompleted } = this.state;
 
