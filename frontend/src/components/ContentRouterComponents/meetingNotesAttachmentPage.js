@@ -52,7 +52,6 @@ class MeetingNotesAttachmentPage extends Component {
   }
 
   cancelAddAttachment = () => {
-    console.log('cancel')
     this.setState({
       selectedFile: null,
     })

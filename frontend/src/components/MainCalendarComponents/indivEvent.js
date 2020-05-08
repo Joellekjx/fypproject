@@ -118,8 +118,6 @@ export default function CustomEventWithPopover(props) {
     var student_id = getUserData.id
     addSelectedData({ Id: event.event.Id })
 
-    console.log(eventType)
-    console.log("wtf is this eventtype??? lol")
     switch (eventType) {
       case "Weekly Report":
         changeDefaultState({ state: 'Weekly Report', index: 0 });

@@ -172,8 +172,6 @@ class FinalReportContent extends Component {
 
     render() {
         const { classes, calendarStore } = this.props;
-        console.log(this.state.id)
-        console.log("is this the project id??")
         return (
             <div className={classes.root}>
                 <main

@@ -139,7 +139,6 @@ class StrategyPlanContent extends Component {
     renderDocumentContent = () => {
         const { calendarStore, classes } = this.props;
         const { getData } = calendarStore;
-        console.log("hello renderdocumentcontent!")
         return (
             getData.filter(indivData => {
                 if (indivData.event_type === 'FYP Plan Strategy') {

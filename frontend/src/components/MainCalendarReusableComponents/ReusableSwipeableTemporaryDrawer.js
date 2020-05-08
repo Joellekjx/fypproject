@@ -89,10 +89,6 @@ function ReusableSwipeableTemporaryDrawer({ calendarStore,  logout, type }) {
     );
 
     const onClickHandler = (text, index) => {
-        // setSelectedIndex(index)
-        // setCurrentPageEvent(text)
-        console.log(text)
-        console.log("clickedity")
         const { changeDefaultState, addSelectedData, setDefaultNestedState } = calendarStore;
         var user_id = calendarStore.getUserData.id
         switch (text) {

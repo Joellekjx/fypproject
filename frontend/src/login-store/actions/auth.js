@@ -161,7 +161,6 @@ export const tasklistParam = (paramQuery) => {
 }
 
 export const addTasklistParams = (student_id, project_id) => {
-    // console.log("flag flag")
     return dispatch => {
         var paramQuery = ''
         if (student_id != null) {
@@ -171,7 +170,6 @@ export const addTasklistParams = (student_id, project_id) => {
         } else {
             paramQuery = null;
         }
-        // console.log(paramQuery);
         localStorage.setItem('paramQuery', paramQuery);
         dispatch(tasklistParam(paramQuery));
     }

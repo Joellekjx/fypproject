@@ -92,7 +92,6 @@ class ReusableUploadReportButton extends Component {
     }
 
     cancelAddAttachment = () => {
-        console.log('cancel')
         this.setState({
             selectedFile: null,
             addedFile: false,

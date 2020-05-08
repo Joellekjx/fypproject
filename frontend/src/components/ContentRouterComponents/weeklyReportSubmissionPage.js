@@ -68,7 +68,6 @@ class WeeklyReportSubmissionPage extends Component {
   }
 
   cancelAddAttachment = () => {
-    console.log('cancel')
     this.setState({
       selectedFile: null,
     })
@@ -89,15 +88,7 @@ class WeeklyReportSubmissionPage extends Component {
         console.log(error.response);
         console.log(upload_date);
       })
-
-    //Update mobx store so that front-end view can be updated simultaneously
-    //By storing it in 'getData' through 'addDocumentsToData'
-    // const { Id } = this.props;
-    // const { addDocumentsToData } = this.props.calendarStore
-    // addDocumentsToData(Id, data)
-    // console.log(data)
-    // console.log("is the data here the same format as when u load it in initially??")
-
+      
     //reset the state
     this.setState({
       selectedFile: null,

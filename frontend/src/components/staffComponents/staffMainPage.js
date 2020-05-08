@@ -17,7 +17,6 @@ class StaffMainPage extends Component {
    componentDidMount(){
     const { calendarStore, paramQuery } = this.props;
     if(calendarStore.getStaffStudentData.length === 0){
-      console.log(paramQuery);
       axiosGetFullData(calendarStore, paramQuery);
       axiosGetIdsAndUsernames(calendarStore)
       calendarStore.addUserType('Staff')
@@ -29,7 +28,6 @@ class StaffMainPage extends Component {
 
     return (
         <div className="MainPage">
-          {console.log(this.props.paramQuery)}
           <Grid container>
             <Grid item xs={1} md={1}>
               <LeftSideColumn calendarStore={calendarStore} type="Staff"/>

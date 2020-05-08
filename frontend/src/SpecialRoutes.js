@@ -173,9 +173,6 @@ export const CheckSwitchRoute = ({ component: Component, ...rest }) => (
             const token = localStorage.getItem("token")
             const expiry = new Date(localStorage.getItem("expirationDate"))
             const currentTime = new Date();
-            console.log(currentTime)
-            console.log(expiry)
-            console.log("current time first then expiry")
             rest.calendarStore.setUserData(JSON.parse(localStorage.getItem("user")))
             if (currentTime > expiry) {
                 return <Redirect

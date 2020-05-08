@@ -7,7 +7,6 @@ import axios from 'axios';
  */
 export default function axiosPost(project_id, student_id, taskCreatedDate, taskDueDate, taskType, taskStatus) {
     axios.post('http://127.0.0.1:8000/api/task/', {
-        // task_id: taskId,
         project_id: project_id, 
         student_id: student_id, 
         tutor_id: "1", //set default

@@ -93,19 +93,11 @@ class ProjectListing extends Component {
                             <Typography className={classes.heading}>{item.project_name}</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                            {/* {item.student} */}
                             <List
                                 component="nav"
                                 aria-labelledby="nested-list-subheader"
-                                // subheader={
-                                //     <ListSubheader component="div" id="nested-list-subheader">
-                                //     Nested List Items
-                                //     </ListSubheader>
-                                // }
                                 className={classes.root}
                             >
-                                {console.log(item)}
-                                {console.log("can i get more infor??")}
                                 {item.students.map((item, key) =>
                                     <ListItem button key={item.id}
                                         onClick={(event) => this.handleClickUser(event, item.id)}>

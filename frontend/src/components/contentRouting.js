@@ -204,8 +204,7 @@ class ContentRoutingTest extends Component {
     render() {
         const { classes, calendarStore } = this.props;
         const { open, openNested, currentPageEvent, selectedIndex, selectedNestedIndex } = this.state;
-        console.log("why does push lose me???")
-        return ( //Note: pls change the color of the app bar/toolbar lol
+        return (
             <div className={classes.root}>
                 <CssBaseline />
                 <AppBar

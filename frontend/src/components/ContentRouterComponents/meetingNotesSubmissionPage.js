@@ -45,8 +45,6 @@ class MeetingNotesSubmissionPage extends Component {
   renderMeetingNotesCompletedPaper = () => {
     const { data } = this.props;
     const { content, documents } = data;
-    console.log(this.props)
-    console.log("is there no documents for meeting notes???")
     return (
       <ReusableNotesCompleted
         type="Meeting Notes"
@@ -61,20 +59,16 @@ class MeetingNotesSubmissionPage extends Component {
   }
 
   cancelAddAttachment = () => {
-    console.log('cancel')
     this.setState({
       selectedFile: null,
     })
   }
 
   addAttachment = event => {
-    //something happens in this attachment side
-    // console.log(event.target.files[0])
     this.setState({
       selectedFile: event.target.files[0],
       loaded: 0,
     })
-    // console.log(this.state.selectedFile)
   }
 
   onClickHandler = () => {
@@ -119,10 +113,7 @@ class MeetingNotesSubmissionPage extends Component {
     updateWeeklyReportSubmission(Id, 'Completed', meetingNotes, submissionTime, 0)
 
     //Submits the attachment to backend here:
-    //Note: Please refactor this -- put it into its own file
     const formData = new FormData()
-    // console.log(this.state.selectedFile);
-    // console.log('what is this selectedfile')
     formData.append('task_id', this.props.data.Id)
 
 
@@ -149,8 +140,6 @@ class MeetingNotesSubmissionPage extends Component {
     const { classes } = this.props;
     const { meetingNotes } = this.state;
     const userType = this.props.calendarStore.getUserType;
-    console.log(userType)
-    console.log("why do i lose this usertype upon refresh???")
     if (userType === 'Student') {
       return (
         <ReusableNotesSubmission

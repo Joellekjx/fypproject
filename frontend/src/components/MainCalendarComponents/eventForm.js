@@ -161,9 +161,6 @@ function EventForm({ handleClose, start, end, calendarStore }) {
 
     const renderMeetingFormView = () => {
         const { selectedStartDate, selectedEndDate } = state;
-        console.log(selectedStartDate)
-        console.log(selectedEndDate)
-        console.log("these r the dates INSIDE meeting viewerwerwerwer")
         return (
             <React.Fragment>
                 <Grid item xs={1} md={1}>

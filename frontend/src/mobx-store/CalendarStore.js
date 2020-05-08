@@ -113,7 +113,6 @@ class CalendarStore {
         removedOption = parseInt(removedOption)
         //1. Need to determine if the option chosen has been removed already. If removedOption is removed, we unremove it
         //2. Else if removedOption is not removed, we remove it.
-        console.log(removedOption)
         let insideFilteredArrayFlag = false
         this.staffStudentFilteredData.find(ele => {
             if(ele.project_id === removedOption){
