@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import EventForm from '../MainCalendarComponents/eventForm';
+import EventForm from '../eventForm';
 import { withRouter } from "react-router-dom";
-import '../styles.scss';
+import '../../styles.scss';
 import { observer } from "mobx-react";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Dialog } from "@material-ui/core";
-import CustomEventWithPopover from '../MainCalendarComponents/indivEvent';
+import CustomEventWithPopover from '../indivEvent';
 import { withStyles } from '@material-ui/core/styles';
 import StaffEventForm from '../staffComponents/staffEventForm'
 import StaffDnDCalendar from '../staffComponents/staffDnDCalendar';

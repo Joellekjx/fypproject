@@ -6,10 +6,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import * as actions from '../../login-store/actions/auth';
+import * as actions from '../../../login-store/actions/auth';
 import { connect } from 'react-redux';
 import Divider from '@material-ui/core/Divider';
-import history from '../../history';
+import history from '../../../history';
 const useStyles = makeStyles({
     list: {
         width: 250,

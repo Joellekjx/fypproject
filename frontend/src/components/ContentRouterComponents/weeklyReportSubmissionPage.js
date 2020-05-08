@@ -96,7 +96,7 @@ class WeeklyReportSubmissionPage extends Component {
   }
 
   onSubmitForm = (e) => {
-    e.preventDefault(
+    e.preventDefault();
     const { Id, task_type, task_created, student_id, project_id, tutor_id, calendarStore } = this.props;
     const { hoursSpent, thingsCompleted } = this.state;
 
