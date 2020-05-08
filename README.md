@@ -16,21 +16,22 @@ To install, please go into the instructions folder to read the document and foll
 This folder contains all front-end codes. To run the frontend, please `cd` into this folder and `npm start`. 
 
 ###### `frontend` Folder Structure
-______ components
+.
++-- components
     |
-    |____MainCalendarComponents folder
+    +-- MainCalendarComponents folder
     |   |
-    |   |____MainCalendarReusableComponents folder
+    |   +-- MainCalendarReusableComponents folder
     |   |
-    |   |____StaffComponents folder
+    |   +-- StaffComponents folder
     |   |
-    |   |____StudentComponents folder
+    |   +-- StudentComponents folder
     |
-    |____ContentRouterComponents folder (includes components for Weekly Report, Final Report, Strategy Plan, Interim Report and Meeting Notes)
+    +-- ContentRouterComponents folder (includes components for Weekly Report, Final Report, Strategy Plan, Interim Report and Meeting Notes)
     |   |
-    |   |____ContentRouterReusableComponents folder
+    |   +-- ContentRouterReusableComponents folder
     |
-    |____AxiosCalling folder (includes all required axios calls)
+    +-- AxiosCalling folder (includes all required axios calls)
 
 ##### instructions
 This contains the instructions document to refer to when you need to install or run the project.
