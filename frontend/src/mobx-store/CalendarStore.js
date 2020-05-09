@@ -39,6 +39,7 @@ class CalendarStore {
 
     addData = (e) => {
         this.newData.push(e);
+        this.staffStudentFilteredData.push(e)
     }
 
     addUserType = (e) => {
@@ -84,8 +85,10 @@ class CalendarStore {
     }
 
     deleteSelectedEvent = (id) => {
-        var filterEvent = this.newData.filter((el) => { return el.Id !== id; });
-        this.newData = filterEvent
+        var filterStudentEvent = this.newData.filter((el) => { return el.Id !== id; });
+        var filterSupervisorEvent = this.staffStudentFilteredData.filter((el) => { return el.Id !== id })
+        this.staffStudentFilteredData = filterSupervisorEvent
+        this.newData = filterStudentEvent
     }
 
     changeDefaultState = (e) => {

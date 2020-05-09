@@ -52,12 +52,17 @@ function EventForm({ handleClose, start, end, calendarStore }) {
             return alert("Weekends are not allowed to be added. Please choose another date instead.")
         }
 
-        //Add new event by using calendarstore's add data
-        //No need to add everything because on refresh, the data from backend will be replaced with this
-        calendarStore.addData({ title: category, start: selectedStartDate, end: selectedEndDate });
-        //Add event to backend by axios.post
         var project_id = calendarStore.getUserData.project_id
         var student_id = calendarStore.getUserData.id
+        //Add new event by using calendarstore's add data
+        //No need to add everything because on refresh, the data from backend will be replaced with this
+        calendarStore.addData({ title: category, start: selectedStartDate, end: selectedEndDate, project_id: project_id, student_id: student_id, status: 'Pending' });
+        
+        //Add event to backend by axios.post
+       
+        console.log(project_id)
+        console.log(student_id)
+        console.log("is this corresponding to the right group and student?")
         axiosPost(project_id, student_id, selectedStartDate, selectedEndDate, category, 'Pending')
 
         handleClose();

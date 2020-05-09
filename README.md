@@ -14,6 +14,7 @@ This folder contains all the back-end codes. To run the backend, please start th
 the files that are mostly untouched are not specified
 .
 +-- env
+|
 +-- fyp_dip_ms
     |
     +-- files folder (documents uploaded from the website)
@@ -48,21 +49,33 @@ This folder contains all front-end codes. To run the frontend, please `cd` into 
 ###### `frontend` Folder Structure
 ```
 .
+|
++-- App.js (all routes are placed in here)
+|
++-- SpecialRoutes.js (conditionals on routes are in here)
+|
 +-- components
-    |
-    +-- MainCalendarComponents folder
-    |   |
-    |   +-- MainCalendarReusableComponents folder
-    |   |
-    |   +-- StaffComponents folder
-    |   |
-    |   +-- StudentComponents folder
-    |
-    +-- ContentRouterComponents folder (includes components for Weekly Report, Final Report, Strategy Plan, Interim Report and Meeting Notes)
-    |   |
-    |   +-- ContentRouterReusableComponents folder
-    |
-    +-- AxiosCalling folder (includes all required axios calls)
+|   |
+|   +-- MainCalendarComponents folder
+|   |   |
+|   |   +-- MainCalendarReusableComponents folder
+|   |   |
+|   |   +-- StaffComponents folder
+|   |   |
+|   |   +-- StudentComponents folder
+|   |
+|   +-- ContentRouterComponents folder (includes components for Weekly Report, Final Report, Strategy Plan, Interim Report and Meeting Notes)
+|   |   |
+|   |   +-- ContentRouterReusableComponents folder
+|   |
+|   +-- AxiosCalling folder (includes all required axios calls)
+|
++-- mobx-store (this is the MobX store)
+|   |
+|   +-- CalendarStore.js (this store is the main state management across most components)
+|
++-- login-store (this is the Redux store mainly for login and logout functionalities)
+
 ```
 
 ##### instructions

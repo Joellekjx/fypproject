@@ -117,7 +117,6 @@ export default function CustomEventWithPopover(props) {
     const { changeDefaultState, addSelectedData, getUserData, setDefaultNestedState } = calendarStore;
     var student_id = getUserData.id
     addSelectedData({ Id: event.event.Id })
-
     switch (eventType) {
       case "Weekly Report":
         changeDefaultState({ state: 'Weekly Report', index: 0 });
