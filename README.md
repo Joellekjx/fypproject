@@ -83,3 +83,6 @@ This contains the instructions document to refer to when you need to install or 
 
 ##### report
 This contains our final year report in word document.
+
+##### mock-data
+This file contains the mock data in .sql if you'd like to have the database set up prior to running the project.
