@@ -16,7 +16,7 @@
     "cors": "^2.8.5",
     "date-arithmetic": "3.1.0",
     "date-fns": "^2.0.0-beta.5",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "mobx": "^5.15.1",
     "mobx-react": "^6.1.4",
     "mobx-react-lite": "^1.5.2",
